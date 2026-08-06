@@ -49,3 +49,13 @@ jobs:
           TRADE_DATE=$(python3 -c "import json;print(json.load(open('dashboard/data.json'))['tradeDate'])")
           git commit -m "بيانات جلسة $TRADE_DATE"
           git push
+
+      # النشر على Cloudflare Pages. بيشتغل حتى لو مفيش commit جديد
+      # عشان لو الخطوة السابقة فشلت لأي سبب، الموقع يفضل متطابق مع آخر داتا.
+      - name: النشر على Cloudflare Pages
+        if: always()
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dashboard --project-name=egx-radar --branch=main
