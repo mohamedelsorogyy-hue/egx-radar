@@ -1,0 +1,51 @@
+name: تحديث بيانات البورصة
+
+on:
+  schedule:
+    # البورصة المصرية بتقفل 2:30 ظهراً بتوقيت القاهرة، والمصدر بياخد
+    # ساعات يحدّث. بنشغّل 3:00 عصراً UTC (6 مساءً بتوقيت القاهرة صيفاً)
+    # الأحد للخميس — أيام التداول في مصر.
+    - cron: "0 15 * * 0-4"
+  workflow_dispatch:        # تشغيل يدوي من واجهة GitHub
+
+# صلاحية الكتابة عشان يقدر يعمل commit للداتا الجديدة
+permissions:
+  contents: write
+
+concurrency:
+  group: egx-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # مفيش pip install — السكريبتات كلها على مكتبات بايثون الأساسية
+
+      - name: تشغيل خط الأنابيب
+        run: python3 run_all.py --top 24
+
+      - name: حفظ الداتا الجديدة
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add egx_data.csv egx_shortlist.csv egx_technical.csv dashboard/data.json
+
+          # لو مفيش تغيير (عطلة رسمية مثلاً) منعملش commit فاضي
+          if git diff --staged --quiet; then
+            echo "مفيش تغيير في الداتا — يمكن يوم إجازة"
+            exit 0
+          fi
+
+          TRADE_DATE=$(python3 -c "import json;print(json.load(open('dashboard/data.json'))['tradeDate'])")
+          git commit -m "بيانات جلسة $TRADE_DATE"
+          git push
