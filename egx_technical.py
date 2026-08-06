@@ -192,28 +192,122 @@ def atr(bars, period=14):
     return sum(true_ranges[-period:]) / period
 
 
-def swing_levels(bars, lookback=120, window=5):
+def find_pivots(closes, window=8):
     """
-    مستويات الدعم والمقاومة من القمم والقيعان المحلية.
-    القمة = أعلى سعر في نافذة حواليها، والعكس للقاع.
-    بنرجّع أقرب مقاومة فوق السعر وأقرب دعم تحته.
+    نقاط الانعكاس: سعر أعلى (أو أقل) من كل الجلسات في نافذة على جنبيه.
+    بنستخدم الإغلاقات لأن التاريخ الطويل متاح بيها بس — والإغلاق
+    أهم من الظل اللحظي في تحديد المستويات اللي السوق بيحترمها فعلاً.
     """
-    recent = [b for b in bars[-lookback:] if b["high"] is not None and b["low"] is not None]
-    if len(recent) < window * 2 + 1:
-        return None, None
-
-    price = recent[-1]["close"]
     highs, lows = [], []
-    for i in range(window, len(recent) - window):
-        neighborhood = recent[i - window: i + window + 1]
-        if recent[i]["high"] == max(b["high"] for b in neighborhood):
-            highs.append(recent[i]["high"])
-        if recent[i]["low"] == min(b["low"] for b in neighborhood):
-            lows.append(recent[i]["low"])
+    for i in range(window, len(closes) - window):
+        neighborhood = closes[i - window: i + window + 1]
+        if closes[i] == max(neighborhood):
+            highs.append((i, closes[i]))
+        elif closes[i] == min(neighborhood):
+            lows.append((i, closes[i]))
+    return highs, lows
 
-    resistance = min((h for h in highs if h > price), default=None)
-    support = max((l for l in lows if l < price), default=None)
-    return support, resistance
+
+def cluster_levels(pivots, tolerance=0.02, total_sessions=1):
+    """
+    بيجمّع نقاط الانعكاس القريبة من بعضها في مستوى واحد.
+
+    ليه التجميع؟ لأن السوق نادراً ما بيرتد من سعر واحد بالظبط —
+    بيرتد من *منطقة*. قمتين عند 100.2 و101.5 مش مستويين، دول واحد.
+
+    كل مستوى بياخد وزن = عدد اللمسات + حداثة آخر لمسة.
+    المستوى اللي اتلمس 5 مرات أقوى من اللي اتلمس مرة.
+    """
+    if not pivots:
+        return []
+
+    ordered = sorted(pivots, key=lambda p: p[1])
+    clusters = []
+    current = [ordered[0]]
+
+    for idx, price in ordered[1:]:
+        if abs(price - current[-1][1]) / current[-1][1] <= tolerance:
+            current.append((idx, price))
+        else:
+            clusters.append(current)
+            current = [(idx, price)]
+    clusters.append(current)
+
+    levels = []
+    for group in clusters:
+        prices = [p for _, p in group]
+        last_touch = max(i for i, _ in group)
+        recency = last_touch / total_sessions if total_sessions else 0
+        levels.append({
+            "price": round(sum(prices) / len(prices), 2),
+            "touches": len(group),
+            # الوزن: اللمسات أهم، والحداثة بتضيف ترجيح خفيف
+            "weight": round(len(group) * (0.6 + 0.4 * recency), 2),
+            "lastTouch": last_touch,
+        })
+    return levels
+
+
+def swing_levels(closes, window=8, tolerance=0.02, min_touches=1):
+    """
+    بيرجّع (دعم, مقاومة, كل المستويات).
+
+    الدعم = أقوى مستوى تحت السعر، والمقاومة = أقوى مستوى فوقه.
+    "أقوى" مش "أقرب" — مستوى اتلمس 4 مرات وبعيد 6% أهم من
+    مستوى اتلمس مرة وبعيد 1%.
+
+    بس بنقيّد البحث في نطاق ±25% حوالين السعر، لأن مستوى بعيد 60%
+    ملوش قيمة عملية في قرار دخول أو خروج.
+    """
+    if len(closes) < window * 2 + 20:
+        return None, None, []
+
+    price = closes[-1]
+    highs, lows = find_pivots(closes, window)
+    total = len(closes)
+
+    # قمم وقيعان في سلة واحدة عن قصد: المقاومة المكسورة بتشتغل دعم
+    # والدعم المكسور بيشتغل مقاومة. اللي بيحدد دور المستوى هو موقعه
+    # من السعر النهاردة، مش نوع الانعكاس اللي كوّنه.
+    levels = cluster_levels(highs + lows, tolerance, total)
+
+    near_lo, near_hi = price * 0.75, price * 1.25
+
+    def pick(above):
+        """
+        بيختار المستوى العملي مش الأقوى.
+
+        ليه؟ لأن الدعم بيتحوّل لوقف خسارة. مستوى قوي بعيد 25% تحت السعر
+        معناه مخاطرة 25% — رقم مالوش قيمة في قرار. الأقرب المعتبر أنفع.
+
+        الترتيب: أقرب مستوى اتلمس مرتين أو أكتر، وإلا أقرب مستوى أياً كان.
+        """
+        candidates = [
+            l for l in levels
+            if l["touches"] >= min_touches
+            and near_lo <= l["price"] <= near_hi
+            and (l["price"] > price * 1.005 if above else l["price"] < price * 0.995)
+        ]
+        if not candidates:
+            return None
+        by_distance = sorted(candidates, key=lambda l: abs(l["price"] - price))
+        confirmed = [l for l in by_distance if l["touches"] >= 2]
+        return confirmed[0] if confirmed else by_distance[0]
+
+    resistance = pick(True)
+    support = pick(False)
+
+    # كل المستويات القريبة — بتترسم على الشارت
+    all_levels = sorted(
+        [l for l in levels if near_lo <= l["price"] <= near_hi],
+        key=lambda l: -l["weight"]
+    )[:6]
+
+    return (
+        support["price"] if support else None,
+        resistance["price"] if resistance else None,
+        all_levels,
+    )
 
 
 # ---------------------------------------------------------------- analysis
@@ -236,7 +330,9 @@ def analyse(symbol):
     ma20, ma50, ma200 = sma(closes, 20), sma(closes, 50), sma(closes, 200)
     macd_line, signal_line, histogram = macd(closes)
     atr_value = atr(bars)
-    support, resistance = swing_levels(bars)
+    # المستويات بتتحسب من آخر 3 سنين إغلاقات — مش من 6 شهور OHLCV.
+    # 6 شهور كانت بتفوّت مستويات مهمة السوق بيحترمها من سنين.
+    support, resistance, levels = swing_levels(closes[-750:])
 
     year = closes[-252:] if len(closes) >= 252 else closes
     high52, low52 = max(year), min(year)
@@ -263,6 +359,7 @@ def analyse(symbol):
         "macdSignal": "صاعد" if histogram and histogram > 0 else ("هابط" if histogram is not None else None),
         "support": _r(support),
         "resistance": _r(resistance),
+        "levels": levels,
         "high52": round(high52, 2),
         "low52": round(low52, 2),
         "fromHigh52Pct": _pct(price, high52),

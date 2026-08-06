@@ -16,7 +16,7 @@ import json
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from egx_technical import analyse, fetch_closes  # noqa: E402
@@ -93,6 +93,7 @@ def build_one(row):
         "vsMa200": tech["vsMa200Pct"],
         "support": tech["support"],
         "resistance": tech["resistance"],
+        "levels": tech.get("levels") or [],
         "stopLoss": tech["stopLoss"],
         "riskPct": (
             round((tech["price"] - tech["stopLoss"]) / tech["price"] * 100, 1)
@@ -134,9 +135,19 @@ def main():
         (s["series"][-1]["d"] for s in stocks if s["series"]), default=None
     )
 
+    # آخر يوم تداول مفروض يكون فيه جلسة (البورصة المصرية: الأحد–الخميس).
+    # المقارنة بيه بتقول للمستخدم صراحةً: الأرقام دي جلسة النهاردة ولا أقدم؟
+    today = datetime.now(timezone.utc).date()
+    probe = today
+    while probe.weekday() in (4, 5):      # الجمعة والسبت إجازة
+        probe -= timedelta(days=1)
+    expected = probe.isoformat()
+
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "tradeDate": trade_date,
+        "expectedTradeDate": expected,
+        "isLatestSession": trade_date == expected,
         "universe": len(rows),
         "stocks": stocks,
         "summary": {
