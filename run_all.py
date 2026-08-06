@@ -64,7 +64,8 @@ def check_freshness():
 
 def main():
     p = argparse.ArgumentParser(description="تشغيل خط أنابيب البورصة كامل")
-    p.add_argument("--top", type=int, default=24, help="عدد أسهم الداشبورد")
+    p.add_argument("--top", type=int, default=500,
+                   help="عدد أسهم الداشبورد (الافتراضي: كل اللي عدّى الفلترة)")
     p.add_argument("--skip-fetch", action="store_true", help="من غير جلب داتا جديدة")
     args = p.parse_args()
 
@@ -77,7 +78,7 @@ def main():
 
     latest = check_freshness()
 
-    step("2/4  التقييم والفلترة", ["egx_score.py", "--top", "20"])
+    step("2/4  التقييم والفلترة", ["egx_score.py", "--top", "15"])
     step("3/4  التحليل الفني", ["egx_technical.py", "--top", str(args.top)])
     step("4/4  بناء داتا الداشبورد",
          ["egx_dashboard_data.py", "--top", str(args.top)])

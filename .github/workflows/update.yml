@@ -32,7 +32,7 @@ jobs:
       # مفيش pip install — السكريبتات كلها على مكتبات بايثون الأساسية
 
       - name: تشغيل خط الأنابيب
-        run: python3 run_all.py --top 24
+        run: python3 run_all.py
 
       - name: حفظ الداتا الجديدة
         run: |

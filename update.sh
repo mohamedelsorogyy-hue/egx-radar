@@ -57,7 +57,7 @@ fi
 say "بايثون: $PY ($("$PY" -c 'import sys;print(sys.version.split()[0])'))"
 
 say "بشغّل خط الأنابيب..."
-if ! "$PY" run_all.py --top 24 >> "$LOG" 2>&1; then
+if ! "$PY" run_all.py >> "$LOG" 2>&1; then
   say "❌ خط الأنابيب فشل — مفيش نشر (الموقع هيفضل على آخر داتا سليمة)"
   exit 1
 fi

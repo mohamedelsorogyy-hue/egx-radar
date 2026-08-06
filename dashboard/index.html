@@ -119,6 +119,17 @@ h1{
 }
 .count{margin-inline-start:auto; font-family:var(--mono); font-size:.78rem; color:var(--ink-faint)}
 
+/* خانة البحث */
+.search{
+  width:100%; padding:.85rem 1.15rem; border-radius:12px; font-family:var(--body);
+  font-size:.95rem; color:var(--ink); background:var(--slab);
+  border:1px solid var(--edge); outline:none; transition:border-color .25s, box-shadow .25s;
+}
+.search::placeholder{color:var(--ink-faint)}
+.search:focus{border-color:var(--brass-dim); box-shadow:0 0 0 3px var(--brass-glow)}
+.search::-webkit-search-cancel-button{filter:invert(.6)}
+.empty{padding:4rem 0; text-align:center; color:var(--ink-faint); grid-column:1/-1}
+
 /* ── شبكة البطاقات ──────────────────────────────────── */
 .grid{
   display:grid; gap:1.15rem; padding-bottom:5rem;
@@ -327,6 +338,12 @@ footer b{color:var(--ink-dim); font-weight:600}
   </header>
 
   <div class="controls">
+    <input id="q" class="search" type="search" autocomplete="off"
+           placeholder="دوّر على سهم… (الرمز أو الاسم أو القطاع)"
+           aria-label="بحث عن سهم">
+  </div>
+
+  <div class="controls">
     <span class="lbl">ترتيب</span>
     <button class="chip" data-sort="score" aria-pressed="true">الدرجة</button>
     <button class="chip" data-sort="rsi">RSI</button>
@@ -429,10 +446,62 @@ function card(s,i){
   </article>`;
 }
 
+let query='';
+
+/* توحيد النص للبحث: حروف صغيرة، وتوحيد الألف والياء والتاء المربوطة
+   عشان "بنوك" و"البنوك" و"بنك" كلهم يلاقوا بعض. */
+const norm = t => (t||'').toString().toLowerCase()
+  .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')
+  .replace(/[ًٌٍَُِّْ]/g,'')
+  // شيل "ال" التعريف من أول كل كلمة عشان "البنوك" تلاقي "بنوك"
+  .replace(/(^|\s)ال/g,'$1')
+  .trim();
+
+/* القطاعات جاية من المصدر بالإنجليزي، فبنربطها بمصطلحات عربية
+   عشان تقدر تدوّر بـ"بنك" أو "أسمنت" مش بـ"Cement" بس. */
+const SECTOR_AR = [
+  [/bank/i,            'بنك بنوك مصرف مصارف'],
+  [/cement/i,          'اسمنت اسمنتيه مواد بناء'],
+  [/steel|iron/i,      'حديد صلب معادن'],
+  [/pharma|drug|medic/i,'دواء ادويه صيدله طبي'],
+  [/chemical|fertil/i, 'كيماويات اسمده كيماوي'],
+  [/real estate|land|housing|develop/i, 'عقارات عقاري اسكان تعمير اراضي'],
+  [/food|sugar|dairy|poultry|agric/i,   'اغذيه غذائي سكر البان دواجن زراعه'],
+  [/telecom|communicat/i, 'اتصالات تليفون محمول'],
+  [/insur/i,           'تامين تأمين'],
+  [/textile|garment|cotton|apparel/i, 'غزل نسيج ملابس قطن'],
+  [/oil|gas|petro|energy/i, 'بترول غاز طاقه نفط'],
+  [/tourism|hotel|resort/i, 'سياحه فنادق منتجعات'],
+  [/transport|ship|marine|logistic/i, 'نقل شحن ملاحه لوجستيات'],
+  [/broker|financ|invest|securit/i, 'مالي استثمار وساطه اوراق ماليه'],
+  [/paper|packag|print/i, 'ورق تعبئه تغليف طباعه'],
+  [/build|construct|engineer|contract/i, 'مقاولات انشاءات هندسه بناء'],
+];
+
+function arabicHints(s){
+  const text = `${s.industry||''} ${s.name||''}`;
+  return SECTOR_AR.filter(([re]) => re.test(text)).map(([,ar]) => ar);
+}
+
 function render(){
-  const list=[...DATA.stocks].sort(SORTS[sortKey]);
-  $('#grid').innerHTML=list.map(card).join('');
-  $('#count').textContent=`${list.length} سهم من ${DATA.universe} بعد الفلترة`;
+  let list=[...DATA.stocks].sort(SORTS[sortKey]);
+
+  if(query){
+    const q=norm(query);
+    list=list.filter(s=>
+      norm(s.symbol).includes(q) ||
+      norm(s.name).includes(q) ||
+      norm(s.industry).includes(q) ||
+      arabicHints(s).some(h=>h.includes(q)));
+  }
+
+  $('#grid').innerHTML = list.length
+    ? list.map(card).join('')
+    : `<div class="empty">مفيش سهم بالاسم ده</div>`;
+
+  $('#count').textContent = query
+    ? `${list.length} نتيجة من ${DATA.stocks.length}`
+    : `${list.length} سهم عدّوا الفلترة${DATA.universe?` من ${DATA.universe} في السوق`:''}`;
   bindCards();
 }
 
@@ -689,6 +758,8 @@ function openPanel(sym){
 function closePanel(){ $('#panel').classList.remove('on'); $('#scrim').classList.remove('on'); }
 $('#scrim').addEventListener('click',closePanel);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
+
+$('#q').addEventListener('input',e=>{ query=e.target.value; render(); });
 
 document.querySelectorAll('.chip').forEach(btn=>{
   btn.addEventListener('click',()=>{

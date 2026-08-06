@@ -40,6 +40,19 @@ def num(value):
     return round(f, 4)
 
 
+def count_market():
+    """
+    إجمالي أسهم السوق قبل أي فلترة.
+    بيتقري من ملف الداتا الخام مش من الشورت-ليست، عشان العداد
+    يقول "102 من 224" مش "102 من 102".
+    """
+    try:
+        with open("egx_data.csv", encoding="utf-8-sig") as fh:
+            return sum(1 for _ in csv.DictReader(fh))
+    except FileNotFoundError:
+        return None
+
+
 def build_one(row):
     """بيدمج أرقام السهم الأساسية مع الفنية مع سلسلة السعر."""
     symbol = row["symbol"]
@@ -112,7 +125,9 @@ def build_one(row):
 
 def main():
     p = argparse.ArgumentParser(description="بناء ملف داتا الداشبورد")
-    p.add_argument("--top", type=int, default=24)
+    # الافتراضي: كل الأسهم اللي عدّت الفلترة.
+    # الملف بيطلع ~1.2 ميجا خام لكن Cloudflare بيضغطه لـ~220 كيلوبايت.
+    p.add_argument("--top", type=int, default=500)
     p.add_argument("--shortlist", default=SHORTLIST)
     p.add_argument("--out", default=OUT_FILE)
     args = p.parse_args()
@@ -148,7 +163,8 @@ def main():
         "tradeDate": trade_date,
         "expectedTradeDate": expected,
         "isLatestSession": trade_date == expected,
-        "universe": len(rows),
+        "passedFilters": len(rows),
+        "universe": count_market(),
         "stocks": stocks,
         "summary": {
             "uptrend": sum(1 for s in stocks if s["trend"] in ("صاعد قوي", "صاعد")),
