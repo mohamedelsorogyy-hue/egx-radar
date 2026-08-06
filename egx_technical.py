@@ -58,7 +58,10 @@ def http_get(url):
             )
             with urllib.request.urlopen(req, timeout=30) as resp:
                 return json.loads(resp.read().decode("utf-8"))
-        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as err:
+        # OSError بتغطي انقطاع الشبكة و socket.timeout و URLError و HTTPError.
+        # في بايثون 3.9 الـ socket.timeout مش نوع من TimeoutError، فكان
+        # بيعدّي من غير ما يتمسك ويوقّع الرن كله بسبب سهم واحد.
+        except OSError as err:
             last_err = err
             if attempt < RETRIES - 1:
                 time.sleep((2 ** attempt) + random.random())

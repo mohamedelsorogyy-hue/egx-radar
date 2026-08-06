@@ -27,8 +27,34 @@ if [ "$DOW" = "5" ] || [ "$DOW" = "6" ]; then
   exit 0
 fi
 
-# مسار بايثون: launchd بيشتغل ببيئة محدودة مش شايفة PATH العادي
-PY=$(command -v python3 || echo /usr/bin/python3)
+# اختيار بايثون: launchd بيشتغل ببيئة محدودة مش شايفة PATH العادي.
+# مش كفاية نلاقي بايثون — لازم نلاقي واحد شهادات SSL بتاعته متثبّتة.
+# (نسخ python.org بتيجي من غير شهادات لحد ما تشغّل Install Certificates)
+export PATH="/opt/anaconda3/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+PY=""
+for candidate in /opt/anaconda3/bin/python3 /opt/homebrew/bin/python3 \
+                 /usr/local/bin/python3 /usr/bin/python3; do
+  [ -x "$candidate" ] || continue
+  if "$candidate" -c "
+import ssl, urllib.request, sys
+try:
+    ctx = ssl.create_default_context()
+    urllib.request.urlopen('https://stockanalysis.com/robots.txt', timeout=15, context=ctx)
+except urllib.error.HTTPError:
+    pass                       # وصلنا للسيرفر — يبقى SSL تمام
+except Exception:
+    sys.exit(1)
+" >/dev/null 2>&1; then
+    PY="$candidate"; break
+  fi
+done
+
+if [ -z "$PY" ]; then
+  say "❌ مفيش نسخة بايثون شهاداتها سليمة — مفيش تحديث"
+  exit 1
+fi
+say "بايثون: $PY ($("$PY" -c 'import sys;print(sys.version.split()[0])'))"
 
 say "بشغّل خط الأنابيب..."
 if ! "$PY" run_all.py --top 24 >> "$LOG" 2>&1; then

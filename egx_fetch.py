@@ -38,10 +38,10 @@ RETRIES = 3
 
 # ---------------------------------------------------------------- fetching
 
-def http_get(url, timeout=30):
+def http_get(url, timeout=30, retries=None):
     """طلب HTTP مع إعادة محاولة و backoff تصاعدي."""
     last_err = None
-    for attempt in range(RETRIES):
+    for attempt in range(retries or RETRIES):
         try:
             req = urllib.request.Request(
                 url,
@@ -53,9 +53,12 @@ def http_get(url, timeout=30):
             )
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return json.loads(resp.read().decode("utf-8"))
-        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as err:
+        # OSError بتغطي انقطاع الشبكة و socket.timeout و URLError و HTTPError.
+        # في بايثون 3.9 الـ socket.timeout مش نوع من TimeoutError، فكان
+        # بيعدّي من غير ما يتمسك ويوقّع الرن كله بسبب سهم واحد.
+        except OSError as err:
             last_err = err
-            if attempt < RETRIES - 1:
+            if attempt < (retries or RETRIES) - 1:
                 # backoff مع عشوائية بسيطة عشان الطلبات ما تتزامنش
                 time.sleep((2 ** attempt) + random.random())
     raise RuntimeError(f"فشل تحميل {url}: {last_err}")
@@ -129,8 +132,13 @@ def first_number(text):
 
 
 def get_symbols(limit=None):
-    """قايمة كل الأسهم المصرية مرتبة بالقيمة السوقية تنازلياً."""
-    data = load_node(http_get(LIST_URL), 2)
+    """
+    قايمة كل الأسهم المصرية مرتبة بالقيمة السوقية تنازلياً.
+
+    دي الخطوة الوحيدة اللي لو فشلت مفيش شغل بعدها، فبنديها
+    مهلة أطول ومحاولات أكتر من الطلبات العادية.
+    """
+    data = load_node(http_get(LIST_URL, timeout=60, retries=5), 2)
     rows = (data or {}).get("stockData") or []
     symbols = [
         {
