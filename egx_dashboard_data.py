@@ -15,6 +15,7 @@ import csv
 import json
 import os
 import sys
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
@@ -69,6 +70,28 @@ def build_one(row):
     if len(tail) > 1 and tail[0]["c"]:
         change_pct = round((tail[-1]["c"] - tail[0]["c"]) / tail[0]["c"] * 100, 1)
 
+    # مقارنة الجلسات: آخر 6 جلسات، كل واحدة والتغير بينها وبين اللي قبلها.
+    # 6 عشان نقدر نحسب تغير 5 جلسات كاملة (أول واحدة مرجع بس).
+    recent = []
+    for i in range(max(1, len(series) - 6), len(series)):
+        today_close = series[i]["c"]
+        prev_close = series[i - 1]["c"]
+        recent.append({
+            "d": series[i]["d"],
+            "c": today_close,
+            "chg": round(today_close - prev_close, 3),
+            "pct": round((today_close - prev_close) / prev_close * 100, 2)
+            if prev_close else None,
+        })
+
+    last = recent[-1] if recent else None
+    prev_close = series[-2]["c"] if len(series) > 1 else None
+
+    # تغير 3 جلسات — الأفق اللي طلبه محمد للمقارنة
+    change_3d = None
+    if len(series) >= 4 and series[-4]["c"]:
+        change_3d = round((series[-1]["c"] - series[-4]["c"]) / series[-4]["c"] * 100, 2)
+
     return {
         "symbol": symbol,
         "name": row.get("name") or symbol,
@@ -117,6 +140,12 @@ def build_one(row):
         "fromHigh52": tech["fromHigh52Pct"],
         "atrPct": tech["atrPct"],
         "volumeRatio": tech["volumeRatio"],
+        # مقارنة الجلسات
+        "prevClose": prev_close,
+        "dayChange": last["chg"] if last else None,
+        "dayChangePct": last["pct"] if last else None,
+        "change3d": change_3d,
+        "recent": recent,
         # السلسلة
         "series": series,
         "seriesChange": change_pct,
@@ -146,9 +175,18 @@ def main():
     if not stocks:
         sys.exit("❌ مفيش داتا")
 
-    trade_date = max(
-        (s["series"][-1]["d"] for s in stocks if s["series"]), default=None
-    )
+    # تاريخ الجلسة المعلن = الأكثر شيوعاً بين الأسهم، مش الأحدث.
+    # سهم واحد اتداول متأخر كان بيخلّي العنوان يقول تاريخ مش صحيح
+    # لباقي الـ124 سهم — وده أخطر من إن التاريخ يبان قديم.
+    date_counts = Counter(s["series"][-1]["d"] for s in stocks if s["series"])
+    trade_date = date_counts.most_common(1)[0][0] if date_counts else None
+
+    # كل سهم بياخد تاريخ جلسته وعلامة لو كان متأخر عن الأغلبية.
+    # 19 سهم كانوا واقفين من الخميس ومحدش كان هياخد باله.
+    for s in stocks:
+        s["sessionDate"] = s["series"][-1]["d"] if s["series"] else None
+        s["isStale"] = bool(s["sessionDate"] and trade_date
+                            and s["sessionDate"] < trade_date)
 
     # آخر يوم تداول مفروض يكون فيه جلسة (البورصة المصرية: الأحد–الخميس).
     # المقارنة بيه بتقول للمستخدم صراحةً: الأرقام دي جلسة النهاردة ولا أقدم؟
@@ -166,6 +204,7 @@ def main():
         "passedFilters": len(rows),
         "universe": count_market(),
         "stocks": stocks,
+        "staleCount": sum(1 for s in stocks if s["isStale"]),
         "summary": {
             "uptrend": sum(1 for s in stocks if s["trend"] in ("صاعد قوي", "صاعد")),
             "downtrend": sum(1 for s in stocks if s["trend"] in ("هابط قوي", "هابط")),

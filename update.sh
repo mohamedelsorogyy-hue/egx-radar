@@ -20,12 +20,9 @@ say() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG"; }
 trim_log
 say "──────── بداية التحديث ────────"
 
-# البورصة المصرية بتشتغل الأحد للخميس. الجمعة والسبت مفيش داعي.
-DOW=$(date +%u)          # 1=الاثنين … 5=الجمعة 6=السبت 7=الأحد
-if [ "$DOW" = "5" ] || [ "$DOW" = "6" ]; then
-  say "إجازة أسبوعية — مفيش تحديث"
-  exit 0
-fi
+# مفيش تخطّي لأيام الأسبوع عن قصد: إغلاق الخميس ساعات بينزل الجمعة
+# بالليل، فلو عدّينا الجمعة كنا هنفوّته لحد الأحد. فحص "فيه جلسة
+# جديدة؟" اللي تحت بيتكفّل بالإجازات لوحده وبتكلفة طلب واحد.
 
 # اختيار بايثون: launchd بيشتغل ببيئة محدودة مش شايفة PATH العادي.
 # مش كفاية نلاقي بايثون — لازم نلاقي واحد شهادات SSL بتاعته متثبّتة.
@@ -56,6 +53,38 @@ if [ -z "$PY" ]; then
 fi
 say "بايثون: $PY ($("$PY" -c 'import sys;print(sys.version.split()[0])'))"
 
+# فحص رخيص قبل الشغل الكبير: طلب واحد بيقول آخر جلسة عند المصدر.
+# لو هي نفس اللي معروضة على الموقع، مفيش داعي نشغّل 300 طلب وننشر من جديد.
+# ده اللي بيخلينا نقدر نجرّب كذا مرة في اليوم من غير تكلفة.
+LATEST=$("$PY" - <<'PYEOF' 2>/dev/null
+import json, urllib.request
+req = urllib.request.Request(
+    "https://stockanalysis.com/api/quotes/a/EGX-COMI",
+    headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"})
+try:
+    print(json.load(urllib.request.urlopen(req, timeout=25))["data"]["td"])
+except Exception:
+    print("")
+PYEOF
+)
+
+CURRENT=$("$PY" -c "
+import json
+try: print(json.load(open('dashboard/data.json'))['tradeDate'])
+except Exception: print('')
+" 2>/dev/null)
+
+if [ -z "$LATEST" ]; then
+  say "⚠️  مقدرتش أوصل للمصدر — هجرّب في الميعاد الجاي"
+  exit 1
+fi
+
+if [ "$LATEST" = "$CURRENT" ]; then
+  say "مفيش جلسة جديدة (آخر جلسة $LATEST وهي معروضة أصلاً) — مفيش داعي للتحديث"
+  exit 0
+fi
+
+say "فيه جلسة جديدة: $LATEST (المعروض حالياً $CURRENT)"
 say "بشغّل خط الأنابيب..."
 if ! "$PY" run_all.py >> "$LOG" 2>&1; then
   say "❌ خط الأنابيب فشل — مفيش نشر (الموقع هيفضل على آخر داتا سليمة)"
