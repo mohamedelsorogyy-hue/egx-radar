@@ -20,7 +20,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from egx_technical import analyse, fetch_closes  # noqa: E402
+from egx_technical import analyse, fetch_closes, resample  # noqa: E402
 
 SHORTLIST = "egx_shortlist.csv"
 OUT_FILE = "dashboard/data.json"
@@ -39,6 +39,30 @@ def num(value):
     except (TypeError, ValueError):
         return None
     return round(f, 4)
+
+
+def slim(bars):
+    """
+    بيختصر الشمعة لأقل حجم ممكن للرسم: تاريخ وافتتاح وأعلى وأدنى وإغلاق وحجم.
+    الأسماء حرف واحد لأن الملف بيتكرر 100+ مرة والفرق بيبان.
+    """
+    out = []
+    for b in bars:
+        if b.get("close") is None:
+            continue
+        out.append({
+            "d": b["date"],
+            "o": _r2(b.get("open")),
+            "h": _r2(b.get("high")),
+            "l": _r2(b.get("low")),
+            "c": _r2(b["close"]),
+            "v": b.get("volume"),
+        })
+    return out
+
+
+def _r2(v):
+    return round(v, 3) if isinstance(v, (int, float)) else None
 
 
 def count_market():
@@ -61,8 +85,10 @@ def build_one(row):
     if not tech:
         return None
 
-    history = fetch_closes(symbol)[-SPARK_SESSIONS:]
-    series = [{"d": d.isoformat(), "c": round(c, 3)} for d, c in history]
+    # الشموع اليومية هي المصدر الوحيد للسلسلة — قبل كده كنا بنجيب
+    # سلسلة إغلاقات منفصلة كمان، وده كان بيكرّر الداتا ويكبّر الملف 4 أضعاف.
+    series = [{"d": b["date"], "c": round(b["close"], 3)}
+              for b in tech["bars"] if b.get("close") is not None]
 
     # التغير على آخر ~9 شهور — بيستخدم في لون الرسم المصغّر على الكارت
     tail = series[-180:]
@@ -140,6 +166,18 @@ def build_one(row):
         "fromHigh52": tech["fromHigh52Pct"],
         "atrPct": tech["atrPct"],
         "volumeRatio": tech["volumeRatio"],
+        # الاتجاه على 3 أطر زمنية
+        "frames": tech.get("frames") or {},
+        # إغلاقات مختصرة للرسم المصغّر على الكارت بس.
+        # الشموع الكاملة بتروح لملف منفصل لكل سهم عشان الصفحة
+        # الرئيسية تفتح بسرعة — بتتحمّل لما تفتح السهم.
+        "spark": [round(b["close"], 3) for b in tech["bars"][-90:]
+                  if b.get("close") is not None],
+        "_candles": {
+            "daily": slim(tech["bars"][-130:]),
+            "weekly": slim(resample(tech["bars"], "W")[-104:]),
+            "monthly": slim(resample(tech["bars"], "M")[-60:]),
+        },
         # مقارنة الجلسات
         "prevClose": prev_close,
         "dayChange": last["chg"] if last else None,
@@ -147,7 +185,8 @@ def build_one(row):
         "change3d": change_3d,
         "recent": recent,
         # السلسلة
-        "series": series,
+        # السلسلة نفسها مش بتتصدّر — الداشبورد بيرسم من candles.daily.
+        # بنسيب التغير التراكمي بس لأنه رقم واحد.
         "seriesChange": change_pct,
     }
 
@@ -178,13 +217,16 @@ def main():
     # تاريخ الجلسة المعلن = الأكثر شيوعاً بين الأسهم، مش الأحدث.
     # سهم واحد اتداول متأخر كان بيخلّي العنوان يقول تاريخ مش صحيح
     # لباقي الـ124 سهم — وده أخطر من إن التاريخ يبان قديم.
-    date_counts = Counter(s["series"][-1]["d"] for s in stocks if s["series"])
+    # تاريخ آخر جلسة لكل سهم بيتقري من الشموع اليومية
+    last_day = lambda st: (st["_candles"]["daily"][-1]["d"]
+                           if st.get("_candles", {}).get("daily") else None)
+    date_counts = Counter(d for d in map(last_day, stocks) if d)
     trade_date = date_counts.most_common(1)[0][0] if date_counts else None
 
     # كل سهم بياخد تاريخ جلسته وعلامة لو كان متأخر عن الأغلبية.
     # 19 سهم كانوا واقفين من الخميس ومحدش كان هياخد باله.
     for s in stocks:
-        s["sessionDate"] = s["series"][-1]["d"] if s["series"] else None
+        s["sessionDate"] = last_day(s)
         s["isStale"] = bool(s["sessionDate"] and trade_date
                             and s["sessionDate"] < trade_date)
 
@@ -217,7 +259,22 @@ def main():
         },
     }
 
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
+    out_dir = os.path.dirname(args.out) or "."
+    os.makedirs(out_dir, exist_ok=True)
+
+    # الشموع بتتكتب في ملف لكل سهم وبتتشال من الملف الرئيسي.
+    # كده الصفحة بتحمّل ~150 كيلوبايت بدل 2.7 ميجا، والشموع
+    # بتتجاب وقت فتح السهم بس.
+    candle_dir = os.path.join(out_dir, "candles")
+    os.makedirs(candle_dir, exist_ok=True)
+    for stock in stocks:
+        candles = stock.pop("_candles", None)
+        if not candles:
+            continue
+        path = os.path.join(candle_dir, f"{stock['symbol']}.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(candles, fh, ensure_ascii=False, separators=(",", ":"))
+
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, separators=(",", ":"))
 

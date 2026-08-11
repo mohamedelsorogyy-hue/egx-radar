@@ -92,11 +92,16 @@ def fetch_closes(symbol):
     ]
 
 
-def fetch_ohlcv(symbol):
-    """آخر ~6 شهور بأعلى وأقل وحجم. بترتيب زمني تصاعدي."""
-    payload = http_get(f"{BASE}/quote/EGX/{symbol}/history/__data.json")
-    node = payload["nodes"][2]
-    rows = ((unflatten(node["data"]) or {}).get("data") or {}).get("data") or []
+def fetch_ohlcv(symbol, years="10Y"):
+    """
+    شموع كاملة (افتتاح/أعلى/أدنى/إغلاق/حجم) بترتيب زمني تصاعدي.
+
+    نقطة النهاية دي بتقبل range=5Y/10Y/Max وبترجّع لحد 7400 شمعة
+    من 1995. الافتراضي 10 سنين — كفاية للاتجاهات الشهرية
+    من غير ما الملف يكبر أوي.
+    """
+    payload = http_get(f"{BASE}/api/symbol/a/EGX-{symbol}/history?range={years}")
+    rows = payload.get("data") or []
     out = []
     for r in rows:
         if r.get("c") is None:
@@ -104,8 +109,10 @@ def fetch_ohlcv(symbol):
         out.append({
             "date": r["t"],
             "open": r.get("o"), "high": r.get("h"),
-            "low": r.get("l"), "close": r["c"], "volume": r.get("v"),
+            "low": r.get("l"), "close": r["c"],
+            "adj": r.get("a"), "volume": r.get("v"),
         })
+    # المصدر بيرجّعها من الأحدث للأقدم
     return list(reversed(out))
 
 
@@ -370,6 +377,14 @@ def analyse(symbol):
         "atrPct": round(atr_value / price * 100, 2) if atr_value and price else None,
         "stopLoss": _stop(price, support, atr_value),
         "volumeRatio": volume_ratio,
+        # قراءة الاتجاه على 3 أطر زمنية.
+        # الإطار اليومي بيمسك الحركة القريبة، والأسبوعي بيصفّي الضوضاء،
+        # والشهري بيدّي الصورة الكبيرة. اتفاقهم إشارة أقوى من أي واحد لوحده.
+        "frames": {
+            "daily":   timeframe_view(bars, 20, 50),
+            "weekly":  timeframe_view(resample(bars, "W"), 10, 30),
+            "monthly": timeframe_view(resample(bars, "M"), 6, 12),
+        },
         "bars": bars,
         "closes": closes,
     }
@@ -383,6 +398,68 @@ def _pct(price, reference):
     if not reference:
         return None
     return round((price - reference) / reference * 100, 1)
+
+
+def resample(bars, period="W"):
+    """
+    بيحوّل الشموع اليومية لأسبوعية أو شهرية.
+
+    الشمعة الأسبوعية = افتتاح أول يوم، أعلى قمة، أدنى قاع، إغلاق آخر يوم.
+    ده اللي بيخلّي "الاتجاه الأسبوعي" معناه حقيقي: بنقيس حركة
+    أسابيع كاملة مش أيام.
+    """
+    groups = {}
+    for b in bars:
+        y, m, d = (int(x) for x in b["date"].split("-"))
+        if period == "W":
+            # رقم الأسبوع حسب ISO — الأسبوع بيبدأ الاثنين
+            key = datetime(y, m, d).isocalendar()[:2]
+        else:
+            key = (y, m)
+        groups.setdefault(key, []).append(b)
+
+    out = []
+    for key in sorted(groups):
+        chunk = groups[key]
+        highs = [c["high"] for c in chunk if c["high"] is not None]
+        lows = [c["low"] for c in chunk if c["low"] is not None]
+        vols = [c["volume"] for c in chunk if c["volume"] is not None]
+        out.append({
+            "date": chunk[-1]["date"],
+            "open": chunk[0]["open"],
+            "high": max(highs) if highs else None,
+            "low": min(lows) if lows else None,
+            "close": chunk[-1]["close"],
+            "volume": sum(vols) if vols else None,
+            "bars": len(chunk),
+        })
+    return out
+
+
+def timeframe_view(bars, fast, slow, rsi_period=14):
+    """
+    قراءة الاتجاه على إطار زمني واحد.
+
+    بنستخدم متوسطات أقصر على الأطر الأطول: 10 و30 شمعة أسبوعية
+    = ~شهرين ونص و~7 شهور، وده المعتاد في التحليل الأسبوعي.
+    """
+    closes = [b["close"] for b in bars if b["close"] is not None]
+    if len(closes) < slow + 2:
+        return None
+
+    price = closes[-1]
+    ma_fast, ma_slow = sma(closes, fast), sma(closes, slow)
+    prev = closes[-2] if len(closes) > 1 else None
+
+    return {
+        "price": round(price, 2),
+        "change": round((price - prev) / prev * 100, 2) if prev else None,
+        "maFast": _r(ma_fast),
+        "maSlow": _r(ma_slow),
+        "trend": _trend(price, ma_fast, ma_slow),
+        "rsi": rsi(closes, rsi_period),
+        "candles": len(closes),
+    }
 
 
 def _trend(price, ma50, ma200):

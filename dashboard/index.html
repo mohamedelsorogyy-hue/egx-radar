@@ -197,6 +197,16 @@ h1{
 .card.stale{opacity:.72}
 .card.stale:hover{opacity:1}
 
+/* مؤشرات الاتجاه الثلاثة على الكارت */
+.tfrow{display:flex; gap:.4rem; margin-top:.55rem}
+.tfc{display:flex; align-items:center; gap:.3rem; font-size:.66rem;
+  color:var(--ink-faint); padding:.22rem .5rem; border-radius:5px; background:var(--ridge)}
+.tfc i{width:0; height:0; border-inline:3.5px solid transparent}
+.tfc.up i{border-bottom:5px solid var(--jade)}
+.tfc.dn i{border-top:5px solid var(--rust)}
+.tfc.flat i{width:6px; height:2px; border:0; background:var(--steel); border-radius:2px}
+.tfc.up{color:var(--jade)} .tfc.dn{color:var(--rust)}
+
 /* صف الأرقام السريعة */
 .mini{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin-top:.95rem;
   padding-top:.9rem; border-top:1px solid var(--ridge)}
@@ -277,6 +287,41 @@ h1{
 .spans-note li{font-size:.75rem; color:var(--ink-dim); display:flex; gap:.5rem; line-height:1.5}
 .spans-note li b{color:var(--brass); font-family:var(--mono); font-size:.72rem;
   min-width:5.6rem; flex-shrink:0}
+
+/* جدول الجلسات */
+.sess{display:flex; flex-direction:column; gap:.35rem}
+.sess-r{display:flex; align-items:center; gap:.9rem; padding:.6rem .9rem;
+  border-radius:9px; background:var(--slab); border:1px solid var(--edge)}
+.sess-r.last{border-color:var(--brass-dim);
+  background:linear-gradient(100deg,var(--brass-glow),var(--slab))}
+.sess-d{flex:1; display:flex; flex-direction:column; gap:.1rem}
+.sess-d b{font-size:.82rem; font-weight:600; color:var(--ink)}
+.sess-d small{font-size:.68rem; color:var(--ink-faint)}
+.sess-c{font-family:var(--mono); font-size:.95rem; font-weight:600}
+.sess-p{font-family:var(--mono); font-size:.82rem; font-weight:600; min-width:4.2rem; text-align:end}
+
+/* صفوف الاتجاه على المدد */
+.frames{display:flex; flex-direction:column; gap:.45rem}
+.fr{display:flex; align-items:center; gap:.9rem; padding:.7rem .95rem;
+  border-radius:10px; background:var(--slab); border:1px solid var(--edge)}
+.fr-l{font-size:.85rem; color:var(--ink-dim); min-width:4rem}
+.fr-t{flex:1; font-size:.9rem; font-weight:600}
+.fr-t.pos{color:var(--jade)} .fr-t.neg{color:var(--rust)}
+.fr-r{font-family:var(--mono); font-size:.78rem; color:var(--ink-faint)}
+.fr-r b{color:var(--ink)} .fr-r b.pos{color:var(--jade)} .fr-r b.neg{color:var(--rust)}
+.frames-note{margin-top:.9rem; font-size:.84rem; color:var(--ink-dim); line-height:1.6}
+
+/* أزرار الإطار الزمني */
+.tf{display:flex; gap:.4rem; margin-bottom:.9rem; flex-wrap:wrap}
+.tf-b{flex:1; min-width:88px; font-family:var(--body); font-size:.76rem;
+  padding:.5rem .5rem; border-radius:9px; cursor:pointer; color:var(--ink-dim);
+  background:var(--slab); border:1px solid var(--edge); transition:all .2s}
+.tf-b:hover{color:var(--ink); border-color:var(--steel)}
+.tf-b[aria-pressed="true"]{background:linear-gradient(140deg,var(--brass),var(--brass-dim));
+  color:#12100a; border-color:transparent; font-weight:600}
+.chart-empty{color:var(--ink-faint); font-size:.82rem; padding:2rem 0; text-align:center}
+.chart-note{margin-top:.7rem; font-size:.73rem; color:var(--ink-faint); line-height:1.65}
+.chart-note b{color:var(--ink-dim)}
 
 /* الشارت الكبير */
 .chart{width:100%; height:auto; display:block; overflow:visible}
@@ -416,9 +461,9 @@ const SORTS = {
 };
 
 /* رسم الخط المصغّر */
-function sparkPath(series,w=286,h=52,pad=4){
-  if(!series||series.length<2) return {d:'',up:true};
-  const v=series.map(p=>p.c), lo=Math.min(...v), hi=Math.max(...v), span=(hi-lo)||1;
+function sparkPath(values,w=286,h=52,pad=4){
+  if(!values||values.length<2) return {d:'',up:true};
+  const v=values, lo=Math.min(...v), hi=Math.max(...v), span=(hi-lo)||1;
   const d=v.map((c,i)=>{
     const x=pad+i*(w-pad*2)/(v.length-1);
     const y=h-pad-((c-lo)/span)*(h-pad*2);
@@ -434,7 +479,7 @@ function trendTag(t){
 }
 
 function card(s,i){
-  const {d,up}=sparkPath(s.series);
+  const {d,up}=sparkPath(s.spark||[]);
   const stroke = up?'var(--jade)':'var(--rust)';
   const circ=2*Math.PI*25, off=circ*(1-(s.score||0)/100);
   const tags=[
@@ -476,6 +521,12 @@ function card(s,i){
       <path class="line" d="${d}" stroke="${stroke}" style="animation-delay:${Math.min(i*45,700)+180}ms"/>
     </svg>
     <div class="tags">${tags}</div>
+    <div class="tfrow">${['daily','weekly','monthly'].map((k,j)=>{
+      const f=(s.frames||{})[k], lbl=['يوم','أسبوع','شهر'][j];
+      const up=f&&(f.trend||'').includes('صاعد'), dn=f&&(f.trend||'').includes('هابط');
+      return `<span class="tfc ${up?'up':dn?'dn':'flat'}" title="${f?f.trend:'مفيش داتا'}">
+        <i></i>${lbl}</span>`;
+    }).join('')}</div>
     <div class="mini">
       <div><div class="mv">${fmt(s.pe,1)}</div><div class="ml">مكرر الربح</div></div>
       <div><div class="mv">${s.roe!=null?fmt(s.roe,0)+'%':'—'}</div><div class="ml">العائد على الملكية</div></div>
@@ -587,106 +638,190 @@ function smaSeries(values,period){
   return out;
 }
 
-/* الشارت الكبير: السعر + متوسطين + خطوط الدعم والمقاومة والوقف */
-function bigChart(s){
-  const W=496,H=210,PL=6,PR=52,PT=10,PB=22;
-  const full=s.series||[];
-  if(full.length<30) return '<p style="color:var(--ink-faint);font-size:.82rem">تاريخ غير كافٍ للرسم</p>';
+/* ── شارت الشموع ────────────────────────────────────────────
+   بيرسم شموع يابانية حقيقية: الجسم بين الافتتاح والإغلاق،
+   والفتيل بين الأعلى والأدنى. أخضر = إغلاق فوق الافتتاح.
+   عليه المتوسطات وخطوط الدعم والمقاومة والوقف، وحجم التداول تحت. */
+/* كاش الشموع — مرة واحدة لكل سهم في الجلسة */
+const CANDLES = {};
 
-  // بنحسب المتوسطات على السلسلة الكاملة وبعدين نعرض آخر 250 جلسة
-  const allC=full.map(p=>p.c);
-  const ma50all=smaSeries(allC,50), ma200all=smaSeries(allC,200);
-  const start=Math.max(0,full.length-250);
-  const pts=full.slice(start), c=allC.slice(start);
-  const ma50=ma50all.slice(start), ma200=ma200all.slice(start);
+async function loadCandles(symbol){
+  if(CANDLES[symbol]) return CANDLES[symbol];
+  try{
+    const r = await fetch(`candles/${symbol}.json?v=${DATA.tradeDate||''}`);
+    if(!r.ok) throw new Error(r.status);
+    CANDLES[symbol] = await r.json();
+  }catch(e){ CANDLES[symbol] = null; }
+  return CANDLES[symbol];
+}
 
-  // نطاق رأسي يشمل السعر والمتوسطات والمستويات المهمة
-  const levels=[s.support,s.resistance,s.stopLoss].filter(v=>v!=null);
-  const pool=[...c,...ma50.filter(Boolean),...ma200.filter(Boolean),...levels];
+function candleChart(s, frame){
+  const store = CANDLES[s.symbol];
+  const raw = (store && store[frame]) || [];
+  if(raw.length < 5) return '<p class="chart-empty">مفيش شموع كفاية للرسم</p>';
+
+  const W=496, H=270, VH=42, PL=6, PR=54, PT=10, GAP=8;
+  const PB=22, priceH = H-PT-PB-VH-GAP;
+
+  const closes = raw.map(k=>k.c);
+  const ma = (p) => { const o=[]; let sum=0;
+    for(let i=0;i<closes.length;i++){ sum+=closes[i]; if(i>=p) sum-=closes[i-p];
+      o.push(i>=p-1 ? sum/p : null); } return o; };
+  const [fastP, slowP] = frame==='daily' ? [20,50] : frame==='weekly' ? [10,30] : [6,12];
+  const maFast = ma(fastP), maSlow = ma(slowP);
+
+  // مستويات الدعم والمقاومة اللي تقع داخل نطاق الرسم
+  const levels = (s.levels||[]).map(l=>l.price)
+    .concat([s.support, s.resistance, s.stopLoss]).filter(v=>v!=null);
+
+  const pool = raw.flatMap(k=>[k.h,k.l]).filter(v=>v!=null)
+    .concat(maFast.filter(Boolean), maSlow.filter(Boolean));
   let lo=Math.min(...pool), hi=Math.max(...pool);
-  const padY=(hi-lo)*0.08||1; lo-=padY; hi+=padY;
+  // نضم المستويات القريبة بس، عشان مستوى بعيد ما يضغطش الشموع
+  levels.forEach(v=>{ if(v>lo*0.9 && v<hi*1.1){ lo=Math.min(lo,v); hi=Math.max(hi,v);} });
+  const pad=(hi-lo)*0.06||1; lo-=pad; hi+=pad;
 
-  const X=i=>PL+i*(W-PL-PR)/(c.length-1);
-  const Y=v=>H-PB-((v-lo)/(hi-lo))*(H-PT-PB);
-  const line=arr=>arr.map((v,i)=>v==null?null:`${X(i).toFixed(1)} ${Y(v).toFixed(1)}`)
-                     .filter(Boolean).map((p,i)=>(i?'L':'M')+p).join(' ');
+  const n = raw.length;
+  const step = (W-PL-PR)/n;
+  const bw = Math.max(1.2, Math.min(9, step*0.62));
+  const X = i => PL + step*(i+0.5);
+  const Y = v => PT + priceH - ((v-lo)/(hi-lo))*priceH;
 
-  const area=`M${X(0).toFixed(1)} ${Y(c[0]).toFixed(1)} `+
-    c.map((v,i)=>`L${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ')+
-    ` L${X(c.length-1).toFixed(1)} ${H-PB} L${X(0).toFixed(1)} ${H-PB} Z`;
+  const maxVol = Math.max(...raw.map(k=>k.v||0), 1);
+  const VY = PT + priceH + GAP;
 
-  const hline=(v,color,label,dashed,op)=>v==null?'':
+  /* شموع OHLC بشكل الأعمدة:
+     العمود الرأسي = مدى الجلسة الحقيقي (أدنى ← أعلى)
+     الشرطة اليمين  = الإغلاق
+     الشرطة الشمال  = إغلاق الجلسة السابقة (المرجع)
+
+     ليه مش شموع بأجسام؟ لأن المصدر مش بيدي سعر افتتاح حقيقي —
+     حقل "الافتتاح" عنده هو إغلاق اليوم السابق (اتأكدنا: 22% من
+     الصفوف كان الأعلى فيها أقل من "الافتتاح"، وده مستحيل).
+     رسم جسم شمعة من رقم مش افتتاح = تزوير للشكل، فبنرسم اللي عندنا. */
+  const body = raw.map((k,i)=>{
+    if(k.h==null||k.l==null) return '';
+    const ref = (k.o!=null) ? k.o : k.c;   // إغلاق الجلسة السابقة
+    const up = k.c >= ref;
+    const col = up ? 'var(--jade)' : 'var(--rust)';
+    const x=X(i), tick=Math.max(1.4, bw*0.48);
+    const vh = (k.v||0)/maxVol*VH;
+    // شرطة المرجع بتترسم بس لو جوه مدى الجلسة — لو بره يبقى فيه فجوة
+    const refIn = ref>=k.l && ref<=k.h;
+    return `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}"
+        y1="${Y(k.h).toFixed(1)}" y2="${Y(k.l).toFixed(1)}"
+        stroke="${col}" stroke-width="${Math.max(.8,bw*0.22).toFixed(2)}" opacity=".95"/>
+      ${refIn?`<line x1="${(x-tick).toFixed(1)}" x2="${x.toFixed(1)}"
+        y1="${Y(ref).toFixed(1)}" y2="${Y(ref).toFixed(1)}"
+        stroke="${col}" stroke-width="1" opacity=".55"/>`:''}
+      <line x1="${x.toFixed(1)}" x2="${(x+tick).toFixed(1)}"
+        y1="${Y(k.c).toFixed(1)}" y2="${Y(k.c).toFixed(1)}"
+        stroke="${col}" stroke-width="1.5"/>
+      <rect x="${(x-bw/2).toFixed(1)}" y="${(VY+VH-vh).toFixed(1)}"
+        width="${bw.toFixed(1)}" height="${vh.toFixed(1)}" fill="${col}" opacity=".3"/>`;
+  }).join('');
+
+  const line = (arr,color) => {
+    const pts = arr.map((v,i)=> v==null?null:`${X(i).toFixed(1)} ${Y(v).toFixed(1)}`)
+      .filter(Boolean);
+    return pts.length<2 ? '' :
+      `<path d="M${pts.join(' L')}" fill="none" stroke="${color}"
+         stroke-width="1.2" opacity=".85"/>`;
+  };
+
+  const hline=(v,color,label,w)=> (v==null||v<lo||v>hi) ? '' :
     `<line x1="${PL}" x2="${W-PR}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"
-       stroke="${color}" stroke-width="1" ${dashed?'stroke-dasharray="4 4"':''} opacity="${op??.75}"/>
-     <text x="${W-PR+5}" y="${(Y(v)+3.5).toFixed(1)}" fill="${color}"
-       font-family="var(--mono)" font-size="9.5">${label}</text>`;
+       stroke="${color}" stroke-width="${w||1}" stroke-dasharray="4 4" opacity=".8"/>
+     <text x="${W-PR+4}" y="${(Y(v)+3.3).toFixed(1)}" fill="${color}"
+       font-family="var(--mono)" font-size="9">${label}</text>`;
 
-  // المستويات الثانوية: سمك الخط بيعبّر عن عدد اللمسات
+  // المستويات الثانوية — سمك حسب عدد اللمسات
   const minor=(s.levels||[])
-    .filter(l=>l.price!==s.support && l.price!==s.resistance
-               && l.price>=lo && l.price<=hi)
+    .filter(l=>l.price!==s.support && l.price!==s.resistance && l.price>lo && l.price<hi)
     .map(l=>`<line x1="${PL}" x2="${W-PR}" y1="${Y(l.price).toFixed(1)}"
         y2="${Y(l.price).toFixed(1)}" stroke="var(--steel)"
-        stroke-width="${Math.min(1.6,.5+l.touches*.25).toFixed(2)}"
-        stroke-dasharray="2 5" opacity=".4"/>
-      <text x="${W-PR+5}" y="${(Y(l.price)+3).toFixed(1)}" fill="var(--ink-faint)"
-        font-family="var(--mono)" font-size="8">${l.touches}×</text>`).join('');
+        stroke-width="${Math.min(1.4,.4+l.touches*.22).toFixed(2)}"
+        stroke-dasharray="2 6" opacity=".35"/>
+      <text x="${W-PR+4}" y="${(Y(l.price)+3).toFixed(1)}" fill="var(--ink-faint)"
+        font-family="var(--mono)" font-size="7.5">${l.touches}×</text>`).join('');
 
-  // علامات الشهور على المحور الأفقي (كل شهرين عشان ما تتزحمش)
-  const MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو',
-                'يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-  const ticks=[]; let lastMonth=null, shown=0;
-  pts.forEach((p,i)=>{
-    const m=p.d.slice(0,7);
-    if(m!==lastMonth){
-      lastMonth=m;
-      if(i>6 && i<c.length-8 && shown++%2===0){
-        const mi=+p.d.slice(5,7)-1;
-        ticks.push({x:X(i), y:MONTHS[mi]+(mi===0?' '+p.d.slice(2,4):'')});
-      }
-    }
+  // علامات زمنية
+  const ticks=[]; let last=null, shown=0;
+  const fmtT = d => frame==='monthly'
+    ? d.slice(0,4)
+    : new Date(d+'T00:00:00').toLocaleDateString('ar-EG',{month:'short'});
+  raw.forEach((k,i)=>{
+    const key = frame==='monthly' ? k.d.slice(0,4) : k.d.slice(0,7);
+    if(key!==last){ last=key;
+      if(i>2 && i<n-3 && shown++ % (frame==='daily'?2:frame==='weekly'?3:1) === 0)
+        ticks.push({x:X(i), t:fmtT(k.d)}); }
   });
 
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="شارت سعر ${s.symbol}">
-    <defs>
-      <linearGradient id="g${s.symbol}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="var(--brass)" stop-opacity=".26"/>
-        <stop offset="100%" stop-color="var(--brass)" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <path d="${area}" fill="url(#g${s.symbol})"/>
+  const lastK = raw[n-1];
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img"
+      aria-label="شارت شموع ${s.symbol}">
+    <line x1="${PL}" x2="${W-PR}" y1="${(VY-GAP/2).toFixed(1)}" y2="${(VY-GAP/2).toFixed(1)}"
+      stroke="var(--ridge)" stroke-width=".8"/>
     ${minor}
-    ${hline(s.resistance,'var(--rust)','مقاومة',true)}
-    ${hline(s.support,'var(--jade)','دعم',true)}
-    ${hline(s.stopLoss,'#8a4b3f','وقف',true)}
-    <path d="${line(ma200)}" fill="none" stroke="#a970d6" stroke-width="1.3" opacity=".85"/>
-    <path d="${line(ma50)}" fill="none" stroke="#5b8dd6" stroke-width="1.3" opacity=".85"/>
-    <path d="${line(c)}" fill="none" stroke="var(--brass)" stroke-width="1.9"
-      stroke-linejoin="round" stroke-linecap="round"/>
-    <circle cx="${X(c.length-1).toFixed(1)}" cy="${Y(c[c.length-1]).toFixed(1)}" r="3.2"
-      fill="var(--brass)" stroke="var(--pit)" stroke-width="1.5"/>
+    ${hline(s.resistance,'var(--rust)','مقاومة',1.1)}
+    ${hline(s.support,'var(--jade)','دعم',1.1)}
+    ${hline(s.stopLoss,'#8a4b3f','وقف')}
+    ${line(maSlow,'#a970d6')}
+    ${line(maFast,'#5b8dd6')}
+    ${body}
+    <text x="${W-PR+4}" y="${(Y(lastK.c)+3.3).toFixed(1)}" fill="var(--brass)"
+      font-family="var(--mono)" font-size="9.5" font-weight="700">${fmt(lastK.c)}</text>
     ${ticks.map(t=>`<text x="${t.x.toFixed(0)}" y="${H-6}" fill="var(--ink-faint)"
-       font-family="var(--mono)" font-size="9" text-anchor="middle">${t.y}</text>`).join('')}
-    <text x="${W-PR+5}" y="${(Y(c[c.length-1])+3.5).toFixed(1)}" fill="var(--brass)"
-      font-family="var(--mono)" font-size="10" font-weight="700">${fmt(c[c.length-1])}</text>
+       font-family="var(--mono)" font-size="8" text-anchor="middle">${t.t}</text>`).join('')}
+    <text x="${PL+2}" y="${(VY+9).toFixed(1)}" fill="var(--ink-faint)"
+      font-family="var(--mono)" font-size="7.5">حجم التداول</text>
   </svg>`;
 }
 
-/* جدول آخر الجلسات: كل جلسة والإغلاق والتغير عن اللي قبلها */
+/* جدول آخر الجلسات: كل جلسة والتغير بينها وبين اللي قبلها */
 function sessionsTable(s){
-  const rows=(s.recent||[]).slice().reverse();
-  if(!rows.length) return '<p style="color:var(--ink-faint);font-size:.82rem">مفيش داتا</p>';
-  return `<div class="sess-tbl">
-    <div class="sess-hd"><span>الجلسة</span><span>الإغلاق</span><span>التغير</span><span>%</span></div>
-    ${rows.map((r,i)=>{
-      const up=(r.pct??0)>=0;
-      return `<div class="sess-row${i===0?' now':''}">
-        <span class="sd">${niceShort(r.d)}${i===0?' <em>الأحدث</em>':''}</span>
-        <span class="sc">${fmt(r.c)}</span>
-        <span class="sg ${up?'pos':'neg'}">${up?'+':''}${fmt(r.chg,2)}</span>
-        <span class="sp ${up?'pos':'neg'}">${up?'▲':'▼'} ${fmt(Math.abs(r.pct??0),2)}%</span>
-      </div>`;}).join('')}
+  const rows = s.recent || [];
+  if(rows.length < 2) return '<p class="chart-empty">مفيش جلسات كفاية</p>';
+  return `<div class="sess">${[...rows].reverse().map((r,i)=>{
+    const up=(r.pct??0)>=0;
+    const d=new Date(r.d+'T00:00:00');
+    const day=d.toLocaleDateString('ar-EG',{weekday:'long'});
+    const dm=d.toLocaleDateString('ar-EG',{day:'numeric',month:'short'});
+    return `<div class="sess-r${i===0?' last':''}">
+      <span class="sess-d"><b>${day}</b><small>${dm}</small></span>
+      <span class="sess-c">${fmt(r.c)}</span>
+      <span class="sess-p ${up?'pos':'neg'}">${pct(r.pct)}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* صف اتجاه لإطار زمني واحد */
+function frameRow(label, key, s){
+  const f = (s.frames||{})[key];
+  if(!f) return `<div class="fr"><span class="fr-l">${label}</span>
+    <span class="fr-t">—</span><span class="fr-r">مفيش داتا كفاية</span></div>`;
+  const up=(f.trend||'').includes('صاعد'), dn=(f.trend||'').includes('هابط');
+  const rsiTone = f.rsi>70?'neg' : f.rsi<30?'pos' : '';
+  return `<div class="fr">
+    <span class="fr-l">${label}</span>
+    <span class="fr-t ${up?'pos':dn?'neg':''}">${f.trend||'—'}</span>
+    <span class="fr-r">RSI <b class="${rsiTone}">${fmt(f.rsi,0)}</b></span>
   </div>`;
+}
+
+/* حكم مختصر: هل الأطر متفقة ولا لأ؟
+   اتفاق الثلاثة إشارة أقوى بكتير من إطار واحد. */
+function framesVerdict(s){
+  const fr=s.frames||{};
+  const vals=['daily','weekly','monthly'].map(k=>fr[k]&&fr[k].trend).filter(Boolean);
+  if(vals.length<2) return 'مفيش داتا كفاية للحكم.';
+  const up=vals.filter(t=>t.includes('صاعد')).length;
+  const dn=vals.filter(t=>t.includes('هابط')).length;
+  if(up===vals.length) return '✅ الاتجاه صاعد على كل المدد — أقوى حالة اتساق.';
+  if(dn===vals.length) return '⛔ الاتجاه هابط على كل المدد — السهم في نزول مستمر.';
+  if(up>dn) return '⚠️ صاعد على أغلب المدد بس مش كلها — الاتجاه لسه مش مؤكد.';
+  if(dn>up) return '⚠️ هابط على أغلب المدد — الارتداد لسه ما اتأكدش.';
+  return '⚠️ المدد متضاربة — إشارة ضعيفة، الأفضل الانتظار.';
 }
 
 function keyBox(label,val,tone){
@@ -726,16 +861,36 @@ function openPanel(sym){
     </div>
 
     <div class="sec">
-      <h3>الشارت · 12 شهر</h3>
-      ${bigChart(s)}
+      <h3>الاتجاه على 3 مدد</h3>
+      <div class="frames">
+        ${frameRow('يومي','daily',s)}
+        ${frameRow('أسبوعي','weekly',s)}
+        ${frameRow('شهري','monthly',s)}
+      </div>
+      <p class="frames-note">${framesVerdict(s)}</p>
+    </div>
+
+    <div class="sec">
+      <h3>الشارت</h3>
+      <div class="tf" role="tablist">
+        <button class="tf-b" data-tf="daily" aria-pressed="true">يومي · 6 شهور</button>
+        <button class="tf-b" data-tf="weekly" aria-pressed="false">أسبوعي · سنتين</button>
+        <button class="tf-b" data-tf="monthly" aria-pressed="false">شهري · 5 سنين</button>
+      </div>
+      <div id="chartBox"><p class="chart-empty">جاري تحميل الشموع…</p></div>
       <div class="legend">
-        <span><i style="background:var(--brass)"></i>السعر</span>
-        <span><i style="background:#5b8dd6"></i>متوسط 50</span>
-        <span><i style="background:#a970d6"></i>متوسط 200</span>
+        <span><i style="background:var(--jade)"></i>جلسة صاعدة</span>
+        <span><i style="background:var(--rust)"></i>جلسة هابطة</span>
+        <span><i style="background:#5b8dd6"></i>متوسط سريع</span>
+        <span><i style="background:#a970d6"></i>متوسط بطيء</span>
         <span><i class="dash" style="--lc:var(--jade)"></i>دعم</span>
         <span><i class="dash" style="--lc:var(--rust)"></i>مقاومة</span>
-        <span><i class="dash" style="--lc:#8a4b3f"></i>وقف خسارة</span>
+        <span><i class="dash" style="--lc:#8a4b3f"></i>وقف</span>
       </div>
+      <p class="chart-note">العمود = مدى الجلسة (أدنى ← أعلى) · الشرطة اليمين = الإغلاق
+        · الشرطة الشمال = إغلاق الجلسة السابقة.
+        <b>مفيش أسعار افتتاح حقيقية</b> للبورصة المصرية عند المصدر، فمرسمناش
+        أجسام شموع عشان ما نوريكش شكل مش حقيقي.</p>
     </div>
 
     <div class="sec">
@@ -824,6 +979,27 @@ function openPanel(sym){
   $('#panel').classList.add('on'); $('#scrim').classList.add('on');
   $('#panel').scrollTop=0;
   $('.p-close').addEventListener('click',closePanel);
+
+  // الشموع بتتجاب دلوقتي بس — مش مع تحميل الصفحة
+  loadCandles(s.symbol).then(()=>{
+    // لو المستخدم قفل اللوحة أو فتح سهم تاني في الوقت ده، منرسمش
+    const box = $('#chartBox');
+    if(!box || $('.p-tick').textContent !== s.symbol) return;
+    const active = $('#panel').querySelector('.tf-b[aria-pressed="true"]');
+    box.innerHTML = CANDLES[s.symbol]
+      ? candleChart(s, active ? active.dataset.tf : 'daily')
+      : '<p class="chart-empty">تعذّر تحميل الشموع</p>';
+  });
+
+  // تبديل الإطار الزمني للشارت
+  $('#panel').querySelectorAll('.tf-b').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      $('#panel').querySelectorAll('.tf-b')
+        .forEach(b=>b.setAttribute('aria-pressed','false'));
+      btn.setAttribute('aria-pressed','true');
+      $('#chartBox').innerHTML = candleChart(s, btn.dataset.tf);
+    });
+  });
 }
 
 function closePanel(){ $('#panel').classList.remove('on'); $('#scrim').classList.remove('on'); }

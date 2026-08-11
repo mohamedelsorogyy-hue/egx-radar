@@ -82,6 +82,21 @@ def average(scores):
 
 # ---------------------------------------------------------------- filters
 
+# أقصى فرق مسموح بين آخر تداول للسهم وأحدث جلسة في السوق.
+# 6 أيام بتغطي عطلة الأسبوع + إجازة رسمية + تأخير المصدر في التحديث،
+# ولسه بتمسك الأسهم الموقوفة فعلاً (اللي بيبقى فرقها شهور).
+STALE_TOLERANCE_DAYS = 6
+
+
+def days_between(a, b):
+    """فرق الأيام بين تاريخين نصّيين. بيرجّع رقم كبير لو التاريخ باظ."""
+    from datetime import datetime as _dt
+    try:
+        return abs((_dt.strptime(b, "%Y-%m-%d") - _dt.strptime(a, "%Y-%m-%d")).days)
+    except (ValueError, TypeError):
+        return 9999
+
+
 # فوق كده النمو بيكون جاي من قاعدة قريبة من الصفر أو من إعادة هيكلة،
 # مش أداء حقيقي — ورقم زي 23,768% بيكسّر أي ترتيب نسبي لوحده.
 MAX_CREDIBLE_GROWTH = 500
@@ -145,8 +160,15 @@ def hard_filters(rows, min_volume, latest_date):
         reasons = []
 
         # سهم مش بيتداول = فخ. الأرقام بتاعته ميتة والخروج منه مستحيل.
-        if row.get("lastTradeDate") != latest_date:
-            reasons.append(f"آخر تداول {row.get('lastTradeDate') or 'غير معروف'}")
+        #
+        # بس بنسمح بفارق أيام قليلة: المصدر بيحدّث الأسهم على مراحل،
+        # فسهم اتحدّث متأخر شوية كان بيتشال ظلماً — COMI نفسه (أكبر
+        # سهم في البورصة) اتشال مرة عشان جلسة واحدة فرق.
+        traded = row.get("lastTradeDate")
+        if not traded:
+            reasons.append("مفيش تاريخ تداول")
+        elif days_between(traded, latest_date) > STALE_TOLERANCE_DAYS:
+            reasons.append(f"آخر تداول {traded}")
 
         dollar_volume = num(row, "dollarVolume")
         if dollar_volume is None:
