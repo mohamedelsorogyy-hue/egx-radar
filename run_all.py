@@ -67,21 +67,30 @@ def main():
     p.add_argument("--top", type=int, default=500,
                    help="عدد أسهم الداشبورد (الافتراضي: كل اللي عدّى الفلترة)")
     p.add_argument("--skip-fetch", action="store_true", help="من غير جلب داتا جديدة")
+    p.add_argument("--skip-news", action="store_true", help="من غير أخبار")
     args = p.parse_args()
 
     started = datetime.now()
 
     if not args.skip_fetch:
-        step("1/4  جلب بيانات الشركات", ["egx_fetch.py"])
+        step("1/5  جلب بيانات الشركات", ["egx_fetch.py"])
     else:
         print("⏭  تخطّي الجلب — بستخدم egx_data.csv الموجود")
 
     latest = check_freshness()
 
-    step("2/4  التقييم والفلترة", ["egx_score.py", "--top", "15"])
-    step("3/4  التحليل الفني", ["egx_technical.py", "--top", str(args.top)])
-    step("4/4  بناء داتا الداشبورد",
+    step("2/5  التقييم والفلترة", ["egx_score.py", "--top", "15"])
+    step("3/5  التحليل الفني", ["egx_technical.py", "--top", str(args.top)])
+    step("4/5  بناء داتا الداشبورد",
          ["egx_dashboard_data.py", "--top", str(args.top)])
+
+    # الأخبار آخر خطوة عن قصد: لو Google رفض الطلبات، الداشبورد
+    # يفضل يتحدّث بالأسعار والتحليل — الأخبار إضافة مش أساس.
+    if not args.skip_news:
+        try:
+            step("5/5  الأخبار", ["egx_news.py"])
+        except SystemExit:
+            print("⚠️  الأخبار فشلت — الداشبورد هيتحدّث من غيرها")
 
     elapsed = (datetime.now() - started).total_seconds()
     print(f"\n{'═'*58}")

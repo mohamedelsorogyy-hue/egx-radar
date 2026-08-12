@@ -119,6 +119,32 @@ h1{
 }
 .count{margin-inline-start:auto; font-family:var(--mono); font-size:.78rem; color:var(--ink-faint)}
 
+/* ── الأخبار ────────────────────────────────────────── */
+#marketNews{margin-top:3.4rem}
+.mn-head{display:flex; align-items:baseline; gap:1rem; flex-wrap:wrap; margin-bottom:1rem}
+.mn-head h2{font-family:var(--display); font-size:1.35rem; font-weight:500}
+.mn-pulse{font-family:var(--mono); font-size:.74rem; color:var(--ink-faint);
+  margin-inline-start:auto}
+.mn-pulse b{color:var(--ink)} .mn-pulse b.pos{color:var(--jade)} .mn-pulse b.neg{color:var(--rust)}
+.mn-tabs{display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1rem}
+.mn-b{font-family:var(--body); font-size:.78rem; color:var(--ink-dim); cursor:pointer;
+  padding:.4rem .85rem; border-radius:999px; background:var(--slab);
+  border:1px solid var(--edge); transition:all .2s}
+.mn-b:hover{color:var(--ink); border-color:var(--steel)}
+.mn-b[aria-pressed="true"]{background:linear-gradient(140deg,var(--brass),var(--brass-dim));
+  color:#12100a; border-color:transparent; font-weight:600}
+.mn-list{display:grid; gap:.55rem; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))}
+
+.nws{display:flex; flex-direction:column; gap:.5rem}
+.nw{display:block; padding:.8rem 1rem; border-radius:11px; text-decoration:none;
+  background:var(--slab); border:1px solid var(--edge);
+  border-inline-start:3px solid var(--steel); transition:all .22s}
+.nw:hover{border-color:var(--brass-dim); transform:translateX(-3px)}
+.nw.pos{border-inline-start-color:var(--jade)}
+.nw.neg{border-inline-start-color:var(--rust)}
+.nw-t{display:block; font-size:.87rem; color:var(--ink); line-height:1.55}
+.nw-m{display:block; font-size:.7rem; color:var(--ink-faint); margin-top:.4rem}
+
 /* خانة البحث */
 .search{
   width:100%; padding:.85rem 1.15rem; border-radius:12px; font-family:var(--body);
@@ -240,65 +266,10 @@ h1{
   cursor:pointer; font-size:1.15rem; line-height:1; transition:all .2s}
 .p-close:hover{color:var(--ink); border-color:var(--brass-dim)}
 .p-tick{font-family:var(--mono); font-size:2.5rem; font-weight:800; letter-spacing:-.04em}
-.p-name{color:var(--ink-dim); font-size:.92rem; margin-top:.35rem; line-height:1.55}
-.p-ind{font-family:var(--mono); font-size:.68rem; color:var(--brass); letter-spacing:.13em;
-  text-transform:uppercase; margin-top:.7rem}
-
-/* شريط الملخص أعلى اللوحة */
-.hero{margin-top:1.6rem; padding:1.3rem; border-radius:14px;
-  background:linear-gradient(150deg,rgba(212,162,76,.09),var(--slab) 55%);
-  border:1px solid var(--edge); box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-.hero-px{display:flex; align-items:baseline; gap:.5rem; flex-wrap:wrap;
-  padding-bottom:1.15rem; margin-bottom:1.15rem; border-bottom:1px solid var(--ridge)}
-.hpx{font-family:var(--mono); font-size:2.6rem; font-weight:800; letter-spacing:-.045em; line-height:1}
-.hcur{font-size:.8rem; color:var(--ink-faint)}
-.hchg{font-family:var(--mono); font-size:.9rem; font-weight:600; margin-inline-start:auto}
-.hchg small{color:var(--ink-faint); font-size:.68rem; margin-inline-start:.35rem}
-.keys{display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem}
-.kb{text-align:center; padding:.6rem .3rem; border-radius:9px; background:rgba(0,0,0,.26)}
-.kb-l{font-size:.66rem; color:var(--ink-faint); margin-bottom:.35rem; white-space:nowrap}
-.kb-v{font-family:var(--mono); font-size:.94rem; font-weight:700; letter-spacing:-.02em}
-.kb-v.pos{color:var(--jade)} .kb-v.neg{color:var(--rust)}
-@media (max-width:430px){ .keys{grid-template-columns:repeat(2,1fr)} .hpx{font-size:2.1rem} }
-
-.sec{margin-top:2.3rem}
-.sec > h3{font-family:var(--mono); font-size:.68rem; letter-spacing:.26em; color:var(--ink-faint);
-  text-transform:uppercase; padding-bottom:.7rem; border-bottom:1px solid var(--ridge); margin-bottom:1.05rem}
-
-/* جدول الجلسات */
-.sess-tbl{border:1px solid var(--edge); border-radius:11px; overflow:hidden}
-.sess-hd,.sess-row{display:grid; grid-template-columns:1.5fr 1fr .9fr .9fr;
-  gap:.5rem; padding:.62rem .85rem; align-items:center}
-.sess-hd{background:var(--ridge); font-size:.68rem; color:var(--ink-faint);
-  font-family:var(--mono); letter-spacing:.04em}
-.sess-row{border-top:1px solid var(--ridge); font-family:var(--mono); font-size:.85rem}
-.sess-row.now{background:linear-gradient(100deg,rgba(212,162,76,.1),transparent)}
-.sess-row .sd{font-family:var(--body); font-size:.8rem; color:var(--ink-dim)}
-.sess-row .sd em{font-style:normal; font-size:.62rem; color:var(--brass);
-  border:1px solid var(--brass-dim); border-radius:4px; padding:.05rem .3rem; margin-inline-start:.3rem}
-.sess-row .sc{font-weight:600}
-.sess-row .sg,.sess-row .sp{font-size:.78rem; font-weight:600}
-
-/* شرح المدد الزمنية */
-.spans-note{margin-top:1rem; padding:.9rem 1.05rem; border-radius:10px;
-  background:var(--slab); border:1px solid var(--edge)}
-.spans-note h4{font-size:.78rem; color:var(--ink); margin-bottom:.55rem; font-weight:600}
-.spans-note ul{list-style:none; display:grid; gap:.38rem}
-.spans-note li{font-size:.75rem; color:var(--ink-dim); display:flex; gap:.5rem; line-height:1.5}
-.spans-note li b{color:var(--brass); font-family:var(--mono); font-size:.72rem;
-  min-width:5.6rem; flex-shrink:0}
-
-/* جدول الجلسات */
-.sess{display:flex; flex-direction:column; gap:.35rem}
-.sess-r{display:flex; align-items:center; gap:.9rem; padding:.6rem .9rem;
-  border-radius:9px; background:var(--slab); border:1px solid var(--edge)}
-.sess-r.last{border-color:var(--brass-dim);
-  background:linear-gradient(100deg,var(--brass-glow),var(--slab))}
-.sess-d{flex:1; display:flex; flex-direction:column; gap:.1rem}
-.sess-d b{font-size:.82rem; font-weight:600; color:var(--ink)}
-.sess-d small{font-size:.68rem; color:var(--ink-faint)}
-.sess-c{font-family:var(--mono); font-size:.95rem; font-weight:600}
-.sess-p{font-family:var(--mono); font-size:.82rem; font-weight:600; min-width:4.2rem; text-align:end}
+.p-name-ar{font-size:1.05rem; font-weight:600; color:var(--ink); margin-top:.5rem;
+  line-height:1.5}
+.p-name-ar:empty{display:none}
+.p-name{color:var(--ink-dim); font-size:.85rem; margin-top:.25rem; line-height:1.55}
 
 /* صفوف الاتجاه على المدد */
 .frames{display:flex; flex-direction:column; gap:.45rem}
@@ -412,6 +383,8 @@ footer b{color:var(--ink-dim); font-weight:600}
     <div class="pulse" id="pulse"></div>
   </header>
 
+  <section id="marketNews"></section>
+
   <div class="controls">
     <input id="q" class="search" type="search" autocomplete="off"
            placeholder="دوّر على سهم… (الرمز أو الاسم أو القطاع)"
@@ -495,7 +468,7 @@ function card(s,i){
     <div class="c-top">
       <div style="min-width:0">
         <div class="tick">${s.symbol}</div>
-        <div class="co">${s.name}</div>
+        <div class="co">${NAMES_AR[s.symbol] || s.name}</div>
       </div>
       <div class="ring">
         <svg width="58" height="58" viewBox="0 0 58 58">
@@ -580,6 +553,7 @@ function render(){
     list=list.filter(s=>
       norm(s.symbol).includes(q) ||
       norm(s.name).includes(q) ||
+      norm(NAMES_AR[s.symbol]).includes(q) ||   // الاسم العربي الرسمي
       norm(s.industry).includes(q) ||
       arabicHints(s).some(h=>h.includes(q)));
   }
@@ -642,6 +616,37 @@ function smaSeries(values,period){
    بيرسم شموع يابانية حقيقية: الجسم بين الافتتاح والإغلاق،
    والفتيل بين الأعلى والأدنى. أخضر = إغلاق فوق الافتتاح.
    عليه المتوسطات وخطوط الدعم والمقاومة والوقف، وحجم التداول تحت. */
+/* ── الأخبار ──────────────────────────────────────────── */
+const NEWS = {};
+let MARKET_NEWS = null, NAMES_AR = {};
+
+const timeAgo = iso => {
+  if(!iso) return '';
+  const mins = (Date.now() - new Date(iso)) / 6e4;
+  if(mins < 60) return `من ${Math.max(1,Math.round(mins))} دقيقة`;
+  const hrs = mins/60;
+  if(hrs < 24) return `من ${Math.round(hrs)} ساعة`;
+  const days = Math.round(hrs/24);
+  return days === 1 ? 'إمبارح' : `من ${days} يوم`;
+};
+
+function newsItem(it){
+  const tone = it.tone==='إيجابي' ? 'pos' : it.tone==='سلبي' ? 'neg' : '';
+  return `<a class="nw ${tone}" href="${it.url}" target="_blank" rel="noopener">
+    <span class="nw-t">${it.title}</span>
+    <span class="nw-m">${it.source||''} · ${timeAgo(it.date)}</span>
+  </a>`;
+}
+
+async function loadStockNews(symbol){
+  if(NEWS[symbol] !== undefined) return NEWS[symbol];
+  try{
+    const r = await fetch(`news/${symbol}.json?v=${DATA.tradeDate||''}`);
+    NEWS[symbol] = r.ok ? await r.json() : null;
+  }catch(e){ NEWS[symbol] = null; }
+  return NEWS[symbol];
+}
+
 /* كاش الشموع — مرة واحدة لكل سهم في الجلسة */
 const CANDLES = {};
 
@@ -835,6 +840,7 @@ function openPanel(sym){
   $('#panel').innerHTML=`<div class="p-in">
     <button class="p-close" aria-label="إغلاق">✕</button>
     <div class="p-tick">${s.symbol}</div>
+    <div class="p-name-ar"></div>
     <div class="p-name">${s.name}</div>
     ${s.industry?`<div class="p-ind">${s.industry}</div>`:''}
 
@@ -853,6 +859,11 @@ function openPanel(sym){
         ${keyBox('المخاطرة', s.riskPct!=null?fmt(s.riskPct,1)+'%':'—', (s.riskPct??0)>15?'neg':'')}
         ${keyBox('مكرر الربح', fmt(s.pe,1), '')}
       </div>
+    </div>
+
+    <div class="sec">
+      <h3>أخبار السهم</h3>
+      <div id="newsBox"><p class="chart-empty">جاري تحميل الأخبار…</p></div>
     </div>
 
     <div class="sec">
@@ -980,6 +991,22 @@ function openPanel(sym){
   $('#panel').scrollTop=0;
   $('.p-close').addEventListener('click',closePanel);
 
+  // الأخبار بتتجاب عند الفتح زي الشموع
+  loadStockNews(s.symbol).then(data=>{
+    const box = $('#newsBox');
+    if(!box || $('.p-tick').textContent !== s.symbol) return;
+    const items = (data && data.items) || [];
+    box.innerHTML = items.length
+      ? `<div class="nws">${items.map(newsItem).join('')}</div>`
+      : `<p class="chart-empty">مفيش أخبار حديثة عن السهم ده
+         <br><small>(آخر 3 أسابيع)</small></p>`;
+    // الاسم العربي بيتحط في سطره المخصص فوق الاسم الإنجليزي
+    if(data && data.nameAr){
+      const el = $('#panel').querySelector('.p-name-ar');
+      if(el) el.textContent = data.nameAr;
+    }
+  });
+
   // الشموع بتتجاب دلوقتي بس — مش مع تحميل الصفحة
   loadCandles(s.symbol).then(()=>{
     // لو المستخدم قفل اللوحة أو فتح سهم تاني في الوقت ده، منرسمش
@@ -1035,6 +1062,42 @@ function sessionBadge(){
      </div>`;
 }
 
+/* شريط أخبار السوق: عناوين اليوم مصنّفة بالموضوع */
+function renderMarketNews(){
+  if(!MARKET_NEWS || !MARKET_NEWS.items.length) return;
+  const items = MARKET_NEWS.items;
+  const topics = [...new Set(items.map(i=>i.topic))];
+  const p = MARKET_NEWS.pulse || {};
+
+  $('#marketNews').innerHTML = `
+    <div class="mn-head">
+      <h2>أخبار السوق</h2>
+      <span class="mn-pulse">
+        <b class="pos">${p.positive||0}</b> إيجابي ·
+        <b class="neg">${p.negative||0}</b> سلبي ·
+        <b>${p.neutral||0}</b> محايد
+      </span>
+    </div>
+    <div class="mn-tabs">
+      <button class="mn-b" data-topic="" aria-pressed="true">الكل</button>
+      ${topics.map(t=>`<button class="mn-b" data-topic="${t}"
+         aria-pressed="false">${t}</button>`).join('')}
+    </div>
+    <div class="mn-list" id="mnList">${items.slice(0,8).map(newsItem).join('')}</div>`;
+
+  $('#marketNews').querySelectorAll('.mn-b').forEach(b=>{
+    b.addEventListener('click',()=>{
+      $('#marketNews').querySelectorAll('.mn-b')
+        .forEach(x=>x.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true');
+      const t = b.dataset.topic;
+      const list = t ? items.filter(i=>i.topic===t) : items;
+      $('#mnList').innerHTML = list.slice(0,8).map(newsItem).join('')
+        || '<p class="chart-empty">مفيش أخبار في القسم ده</p>';
+    });
+  });
+}
+
 function pulse(){
   const s=DATA.summary;
   const cells=[
@@ -1056,6 +1119,12 @@ fetch('data.json?v='+Date.now())
     DATA.stocks.forEach(s=>{ if(s.riskPct==null&&s.stopLoss&&s.price)
       s.riskPct=+(((s.price-s.stopLoss)/s.price)*100).toFixed(1); });
     pulse(); render(); sessionBadge();
+
+    // الأخبار والأسماء العربية بتتحمّل بعد الجدول عشان ما تأخرش العرض
+    fetch(`news.json?v=${Date.now()}`).then(r=>r.ok?r.json():null)
+      .then(n=>{ if(n){ MARKET_NEWS=n; renderMarketNews(); } }).catch(()=>{});
+    fetch(`names_ar.json?v=${d.tradeDate||''}`).then(r=>r.ok?r.json():null)
+      .then(n=>{ if(n){ NAMES_AR=n; render(); } }).catch(()=>{});
     const t=new Date(d.generatedAt);
     $('#meta').textContent=`جلسة ${d.tradeDate} · حُدّث ${t.toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})}`;
   })
