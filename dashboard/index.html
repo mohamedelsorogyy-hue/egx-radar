@@ -40,7 +40,14 @@ body::after{
 .wrap{position:relative; z-index:2; max-width:1440px; margin:0 auto; padding:0 clamp(1rem,3vw,2.75rem)}
 
 /* ── الترويسة ───────────────────────────────────────── */
-header{padding:clamp(2.5rem,6vw,5rem) 0 2rem; position:relative}
+header{padding:clamp(2rem,5vw,4rem) 0 2rem; position:relative}
+.nav{display:flex; gap:.5rem; margin-bottom:2rem; flex-wrap:wrap}
+.nav a{font-size:.83rem; color:var(--ink-dim); text-decoration:none;
+  padding:.5rem 1.1rem; border-radius:999px; background:var(--slab);
+  border:1px solid var(--edge); transition:all .2s}
+.nav a:hover{color:var(--ink); border-color:var(--brass-dim)}
+.nav a.on{background:linear-gradient(140deg,var(--brass),var(--brass-dim));
+  color:#12100a; border-color:transparent; font-weight:600}
 .eyebrow{
   font-family:var(--mono); font-size:.68rem; letter-spacing:.34em; color:var(--brass);
   text-transform:uppercase; margin-bottom:1.1rem; display:flex; align-items:center; gap:.7rem;
@@ -386,6 +393,10 @@ footer b{color:var(--ink-dim); font-weight:600}
 <body>
 <div class="wrap">
   <header>
+    <nav class="nav">
+      <a href="index.html" class="on">الأسعار والتحليل الفني</a>
+      <a href="research.html">التحليل الأساسي</a>
+    </nav>
     <div class="eyebrow">EGX · تحليل أساسي وفني</div>
     <h1>مرصد البورصة<br>المصرية</h1>
     <p class="sub">فرز كمّي لأسهم البورصة المصرية — تقييم أساسي بالأرقام المالية،

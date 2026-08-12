@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>التحليل الأساسي — مرصد البورصة المصرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;500;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08080b; --pit:#0d0e12; --slab:#14161c; --ridge:#1e2129; --edge:#2b2f3a;
+  --brass:#d4a24c; --brass-dim:#8a6c34; --brass-glow:rgba(212,162,76,.16);
+  --jade:#3ddc97; --rust:#f4674f; --steel:#7b8497;
+  --ink:#f2f0ea; --ink-dim:#9aa0ad; --ink-faint:#5d6472;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --body:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  --display:'Alexandria',var(--body);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--void); color:var(--ink); font-family:var(--body);
+  min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased}
+body::before{content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(70rem 40rem at 82% -8%, rgba(212,162,76,.10), transparent 62%),
+    radial-gradient(55rem 38rem at 8% 4%, rgba(61,220,151,.05), transparent 60%)}
+.wrap{position:relative; z-index:2; max-width:1440px; margin:0 auto;
+  padding:0 clamp(1rem,3vw,2.75rem)}
+
+/* ترويسة */
+header{padding:clamp(2rem,5vw,4rem) 0 1.5rem}
+.nav{display:flex; gap:.5rem; margin-bottom:2rem}
+.nav a{font-size:.83rem; color:var(--ink-dim); text-decoration:none;
+  padding:.5rem 1.1rem; border-radius:999px; background:var(--slab);
+  border:1px solid var(--edge); transition:all .2s}
+.nav a:hover{color:var(--ink); border-color:var(--brass-dim)}
+.nav a.on{background:linear-gradient(140deg,var(--brass),var(--brass-dim));
+  color:#12100a; border-color:transparent; font-weight:600}
+.eyebrow{font-family:var(--mono); font-size:.66rem; letter-spacing:.32em;
+  color:var(--brass); text-transform:uppercase; margin-bottom:.9rem}
+h1{font-family:var(--display); font-weight:700; line-height:1;
+  font-size:clamp(2.2rem,6vw,3.8rem); letter-spacing:-.02em;
+  background:linear-gradient(168deg,#fff 8%,var(--brass) 62%,var(--brass-dim) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent}
+.sub{color:var(--ink-dim); font-weight:300; margin-top:.9rem; max-width:58ch;
+  font-size:.98rem; line-height:1.7}
+.notice{margin-top:1.6rem; display:flex; gap:.9rem; padding:.9rem 1.1rem;
+  border-radius:12px; max-width:66ch; font-size:.85rem; color:var(--ink-dim);
+  line-height:1.65; background:linear-gradient(100deg,rgba(244,103,79,.09),transparent);
+  border:1px solid rgba(244,103,79,.22)}
+.notice b{color:var(--rust)}
+
+/* أدوات */
+.tools{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
+  margin:2.4rem 0 1.4rem; padding-bottom:1.2rem; border-bottom:1px solid var(--ridge)}
+.tools input{flex:1; min-width:220px; padding:.75rem 1.05rem; border-radius:11px;
+  font-family:var(--body); font-size:.9rem; color:var(--ink);
+  background:var(--slab); border:1px solid var(--edge); outline:none}
+.tools input:focus{border-color:var(--brass-dim); box-shadow:0 0 0 3px var(--brass-glow)}
+.tools select{padding:.75rem .9rem; border-radius:11px; font-family:var(--body);
+  font-size:.85rem; color:var(--ink); background:var(--slab);
+  border:1px solid var(--edge); outline:none; cursor:pointer}
+.cnt{font-family:var(--mono); font-size:.76rem; color:var(--ink-faint)}
+
+/* شبكة الأسهم */
+.grid{display:grid; gap:1rem; padding-bottom:4rem;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr))}
+.rc{position:relative; border-radius:15px; padding:1.25rem;
+  background:linear-gradient(158deg,var(--slab),var(--pit));
+  border:1px solid var(--edge); cursor:pointer; overflow:hidden;
+  transition:border-color .3s, transform .3s}
+.rc:hover{border-color:var(--brass-dim); transform:translateY(-3px)}
+.rc::before{content:''; position:absolute; inset:0 auto 0 0; width:3px}
+.rc.v-قوي::before{background:var(--jade)}
+.rc.v-جيد::before{background:#8fd6a8}
+.rc.v-متوسط::before{background:var(--steel)}
+.rc.v-ضعيف::before{background:#e0a04a}
+.rc.v-خطر::before{background:var(--rust)}
+
+.rc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.8rem}
+.rc-sym{font-family:var(--mono); font-size:1.3rem; font-weight:800; letter-spacing:-.03em}
+.rc-name{font-size:.74rem; color:var(--ink-faint); margin-top:.25rem; line-height:1.4;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.rc-sec{font-family:var(--mono); font-size:.6rem; letter-spacing:.08em;
+  color:var(--brass); margin-top:.5rem}
+.badge{font-size:.72rem; font-weight:600; padding:.3rem .7rem; border-radius:7px;
+  white-space:nowrap; flex-shrink:0}
+.badge.قوي{background:rgba(61,220,151,.15); color:var(--jade)}
+.badge.جيد{background:rgba(143,214,168,.13); color:#8fd6a8}
+.badge.متوسط{background:var(--ridge); color:var(--ink-dim)}
+.badge.ضعيف{background:rgba(224,160,74,.13); color:#e0a04a}
+.badge.خطر{background:rgba(244,103,79,.14); color:var(--rust)}
+
+.rc-price{display:flex; align-items:baseline; gap:.5rem; margin-top:1rem}
+.rc-px{font-family:var(--mono); font-size:1.5rem; font-weight:600; letter-spacing:-.03em}
+.rc-cur{font-size:.68rem; color:var(--ink-faint)}
+.rc-fv{margin-inline-start:auto; text-align:end}
+.rc-fv b{display:block; font-family:var(--mono); font-size:.95rem; font-weight:700}
+.rc-fv small{font-size:.62rem; color:var(--ink-faint)}
+.pos{color:var(--jade)} .neg{color:var(--rust)}
+
+.rc-notes{display:flex; flex-wrap:wrap; gap:.32rem; margin-top:.85rem}
+.note{font-size:.66rem; padding:.24rem .55rem; border-radius:5px;
+  background:var(--ridge); color:var(--ink-dim)}
+.note.g{background:rgba(61,220,151,.11); color:var(--jade)}
+.note.b{background:rgba(244,103,79,.1); color:var(--rust)}
+
+.rc-nums{display:grid; grid-template-columns:repeat(4,1fr); gap:.4rem;
+  margin-top:1rem; padding-top:.9rem; border-top:1px solid var(--ridge)}
+.rc-nums div{text-align:center}
+.rc-nums .v{font-family:var(--mono); font-size:.85rem; font-weight:600}
+.rc-nums .l{font-size:.58rem; color:var(--ink-faint); margin-top:.2rem}
+
+/* القطاعات */
+.sectors{display:grid; gap:.7rem; margin-bottom:3rem;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.sc{padding:1rem 1.15rem; border-radius:12px; background:var(--slab);
+  border:1px solid var(--edge); cursor:pointer; transition:all .25s}
+.sc:hover{border-color:var(--brass-dim)}
+.sc.on{border-color:var(--brass); background:linear-gradient(140deg,var(--brass-glow),var(--slab))}
+.sc-n{font-size:.9rem; font-weight:600; margin-bottom:.5rem}
+.sc-m{display:flex; gap:1rem; font-family:var(--mono); font-size:.7rem; color:var(--ink-faint)}
+.sc-m b{color:var(--ink-dim); font-weight:600}
+.sc-best{font-size:.68rem; color:var(--brass); margin-top:.5rem}
+
+h2{font-family:var(--display); font-size:1.3rem; font-weight:500;
+  margin:2.5rem 0 1.1rem; padding-bottom:.8rem; border-bottom:1px solid var(--ridge)}
+
+/* اللوحة */
+.scrim{position:fixed; inset:0; z-index:60; background:rgba(4,4,6,.85);
+  backdrop-filter:blur(9px); opacity:0; pointer-events:none; transition:opacity .3s}
+.scrim.on{opacity:1; pointer-events:auto}
+.panel{position:fixed; z-index:61; inset-block:0; inset-inline-start:0;
+  width:min(640px,100%); background:linear-gradient(178deg,var(--pit),var(--void));
+  border-inline-end:1px solid var(--edge); overflow-y:auto; visibility:hidden;
+  transform:translateX(100%);
+  transition:transform .42s cubic-bezier(.22,.85,.25,1), visibility 0s .42s;
+  box-shadow:26px 0 70px -30px #000}
+.panel.on{transform:translateX(0); visibility:visible; transition-delay:0s}
+.p-in{padding:clamp(1.4rem,4vw,2.3rem)}
+.p-close{position:sticky; top:0; float:left; z-index:2; width:36px; height:36px;
+  border-radius:10px; background:var(--slab); border:1px solid var(--edge);
+  color:var(--ink-dim); cursor:pointer; font-size:1.1rem}
+.p-close:hover{color:var(--ink); border-color:var(--brass-dim)}
+
+.sec{margin-top:2.2rem}
+.sec h3{font-family:var(--mono); font-size:.66rem; letter-spacing:.24em;
+  color:var(--ink-faint); text-transform:uppercase; padding-bottom:.65rem;
+  border-bottom:1px solid var(--ridge); margin-bottom:1rem}
+.rows{display:grid}
+.row{display:flex; justify-content:space-between; align-items:center; gap:1rem;
+  padding:.62rem .2rem; border-bottom:1px solid var(--ridge); font-size:.86rem}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--ink-dim)}
+.row .v{font-family:var(--mono); font-weight:600}
+.hint{font-size:.73rem; color:var(--ink-faint); margin-top:.7rem; line-height:1.65}
+
+/* نطاق السعر العادل */
+.fv-bar{position:relative; height:7px; border-radius:99px; margin:1.6rem 0 .5rem;
+  background:linear-gradient(90deg,var(--rust),var(--brass),var(--jade))}
+.fv-pin{position:absolute; top:50%; width:3px; height:20px; border-radius:2px;
+  background:var(--ink); transform:translate(-50%,-50%);
+  box-shadow:0 0 0 3px var(--void),0 0 12px rgba(255,255,255,.5)}
+.fv-lbl{display:flex; justify-content:space-between; font-family:var(--mono);
+  font-size:.66rem; color:var(--ink-faint); margin-top:.6rem}
+
+/* جدول المقارنة */
+.cmp{width:100%; border-collapse:collapse; font-size:.8rem}
+.cmp th{font-family:var(--mono); font-size:.62rem; color:var(--ink-faint);
+  font-weight:400; padding:.5rem .3rem; text-align:center; border-bottom:1px solid var(--edge)}
+.cmp th:first-child{text-align:start}
+.cmp td{padding:.55rem .3rem; text-align:center; border-bottom:1px solid var(--ridge);
+  font-family:var(--mono); font-size:.78rem}
+.cmp td:first-child{text-align:start; font-weight:600}
+.cmp tr.me td{background:rgba(212,162,76,.08); color:var(--brass)}
+
+/* المخاطر */
+.risk{display:flex; gap:.75rem; padding:.85rem 1rem; border-radius:10px;
+  background:var(--slab); border:1px solid var(--edge); margin-bottom:.55rem}
+.risk.عالية{border-inline-start:3px solid var(--rust)}
+.risk.متوسطة{border-inline-start:3px solid var(--brass)}
+.risk.منخفضة{border-inline-start:3px solid var(--jade)}
+.risk b{display:block; font-size:.85rem; margin-bottom:.28rem}
+.risk p{font-size:.78rem; color:var(--ink-dim); line-height:1.6}
+
+.spark{display:flex; gap:2px; align-items:flex-end; height:34px; margin-top:.5rem}
+.spark i{flex:1; background:var(--brass-dim); border-radius:1px; min-height:2px}
+
+footer{padding:2.5rem 0 4rem; border-top:1px solid var(--ridge); margin-top:2rem;
+  color:var(--ink-faint); font-size:.78rem; line-height:1.8}
+.loading{padding:5rem 0; text-align:center; color:var(--ink-faint);
+  font-family:var(--mono); font-size:.85rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <nav class="nav">
+      <a href="index.html">الأسعار والتحليل الفني</a>
+      <a href="research.html" class="on">التحليل الأساسي</a>
+    </nav>
+    <div class="eyebrow">EGX · Equity Research</div>
+    <h1>الأرقام<br>بتقول إيه</h1>
+    <p class="sub">تقرير أساسي لكل سهم: السعر عادل ولا مبالغ فيه، الشركة بتكسب
+      إزاي، تصمد قدام أزمة ولا لأ، وأكبر المخاطر — كل رقم مقارن بقطاعه
+      وبتاريخ الشركة نفسها.</p>
+    <div class="notice">
+      <span>⚠</span>
+      <p><b>ده تحليل مش توصية شراء.</b> تقدير السعر العادل مبني على مضاعفات
+        السوق الحالية والتاريخية — والمضاعفات بتتغير مع مزاج السوق وأسعار
+        الفائدة، ومابتتوقعش أحداث مفاجئة. القرار وحجم المركز قرارك.</p>
+    </div>
+  </header>
+
+  <h2>القطاعات</h2>
+  <div class="sectors" id="sectors"></div>
+
+  <h2 id="listTitle">الأسهم مرتبة بالأرقام</h2>
+  <div class="tools">
+    <input id="q" type="search" placeholder="دوّر على سهم أو قطاع…" autocomplete="off">
+    <select id="sortBy">
+      <option value="points">الترتيب العام</option>
+      <option value="upside">الفرق عن السعر العادل</option>
+      <option value="cheap">الأرخص مقابل قطاعه</option>
+      <option value="growth">الأسرع نمواً</option>
+      <option value="margin">أعلى هامش ربح</option>
+      <option value="safe">الأقل مديونية</option>
+    </select>
+    <select id="verdictBy">
+      <option value="">كل التقييمات</option>
+      <option value="قوي">قوي فقط</option>
+      <option value="جيد">جيد فما فوق</option>
+    </select>
+    <span class="cnt" id="cnt"></span>
+  </div>
+
+  <main class="grid" id="grid"><div class="loading">جاري التحميل…</div></main>
+
+  <footer>
+    <p>الأرقام من S&amp;P Global Market Intelligence عن طريق stockanalysis.com ·
+       <span id="meta"></span></p>
+    <p style="margin-top:.7rem">التقييم بيقارن السهم بـ<b>وسيط</b> قطاعه مش
+      بالمتوسط، عشان شركة بمضاعف شاذ ماتحرّفش المقارنة. والقطاعات مجمّعة من
+      85 تصنيف دقيق لـ25 قطاع عريض عشان المقارنة تبقى بين منافسين حقيقيين.</p>
+  </footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true"></aside>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const fmt=(v,d=2)=> v==null||Number.isNaN(v) ? '—'
+  : Math.abs(v)>=1e9 ? (v/1e9).toFixed(2)+' مليار'
+  : Math.abs(v)>=1e6 ? (v/1e6).toFixed(1)+' مليون'
+  : Number(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=(v,d=1)=> v==null ? '—' : (v>0?'+':'')+Number(v).toFixed(d)+'%';
+
+let DATA=null, REPORTS={}, sector='', query='', sortBy='points', verdictFilter='';
+
+const SORTS={
+  points: (a,b)=>(b.points??-99)-(a.points??-99),
+  upside: (a,b)=>(b.upside??-999)-(a.upside??-999),
+  cheap:  (a,b)=>(a.vsSector??999)-(b.vsSector??999),
+  growth: (a,b)=>(b.qRevenueYoY??-999)-(a.qRevenueYoY??-999),
+  margin: (a,b)=>(b.netMargin??-999)-(a.netMargin??-999),
+  safe:   (a,b)=>(a.debtToEquity??999)-(b.debtToEquity??999),
+};
+
+const norm=t=>(t||'').toString().toLowerCase()
+  .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')
+  .replace(/(^|\s)ال/g,'$1').trim();
+
+/* الملاحظة إيجابية ولا سلبية — بتحدد لونها */
+const BAD=['بتتقلص','متقلبة','عالية','أغلى','مش بتتحوّل','سالب'];
+const noteClass=n=> BAD.some(w=>n.includes(w)) ? 'b' : 'g';
+
+function card(s){
+  const notes=(s.notes||[]).slice(0,3).map(n=>
+    `<span class="note ${noteClass(n)}">${n}</span>`).join('');
+  const up=s.upside;
+  return `<article class="rc v-${s.verdict}" data-sym="${s.symbol}">
+    <div class="rc-top">
+      <div style="min-width:0">
+        <div class="rc-sym">${s.symbol}</div>
+        <div class="rc-name">${s.name||''}</div>
+        <div class="rc-sec">${s.sector||''}</div>
+      </div>
+      <span class="badge ${s.verdict}">${s.verdict}</span>
+    </div>
+    <div class="rc-price">
+      <span class="rc-px">${fmt(s.price)}</span><span class="rc-cur">ج.م</span>
+      ${s.fairValueMid?`<span class="rc-fv">
+        <b class="${(up??0)>=0?'pos':'neg'}">${fmt(s.fairValueMid)}</b>
+        <small>تقدير عادل ${pct(up,0)}</small></span>`:''}
+    </div>
+    <div class="rc-notes">${notes}</div>
+    <div class="rc-nums">
+      <div><div class="v">${fmt(s.pe,1)}</div><div class="l">مكرر</div></div>
+      <div><div class="v ${(s.vsSector??0)<0?'pos':'neg'}">${pct(s.vsSector,0)}</div>
+        <div class="l">مقابل القطاع</div></div>
+      <div><div class="v ${(s.qRevenueYoY??0)>=0?'pos':'neg'}">${pct(s.qRevenueYoY,0)}</div>
+        <div class="l">نمو الإيراد</div></div>
+      <div><div class="v">${fmt(s.debtToEquity,1)}</div><div class="l">الدين/الملكية</div></div>
+    </div>
+  </article>`;
+}
+
+function render(){
+  let list=[...DATA.stocks];
+  if(sector) list=list.filter(s=>s.sector===sector);
+  if(verdictFilter==='قوي') list=list.filter(s=>s.verdict==='قوي');
+  else if(verdictFilter==='جيد') list=list.filter(s=>['قوي','جيد'].includes(s.verdict));
+  if(query){
+    const q=norm(query);
+    list=list.filter(s=>norm(s.symbol).includes(q)||norm(s.name).includes(q)
+      ||norm(s.sector).includes(q));
+  }
+  list.sort(SORTS[sortBy]);
+  $('#grid').innerHTML=list.length?list.map(card).join('')
+    :'<div class="loading">مفيش نتائج</div>';
+  $('#cnt').textContent=`${list.length} سهم`;
+  $('#listTitle').textContent = sector ? `أسهم قطاع ${sector}` : 'الأسهم مرتبة بالأرقام';
+  document.querySelectorAll('.rc').forEach(el=>
+    el.addEventListener('click',()=>openPanel(el.dataset.sym)));
+}
+
+function renderSectors(){
+  $('#sectors').innerHTML=DATA.sectors.filter(s=>s.count>=3).map(s=>
+    `<div class="sc ${sector===s.name?'on':''}" data-sec="${s.name}">
+      <div class="sc-n">${s.name}</div>
+      <div class="sc-m">
+        <span><b>${s.count}</b> سهم</span>
+        <span>مكرر <b>${fmt(s.medianPE,1)}</b></span>
+        <span>نمو <b>${pct(s.medianGrowth,0)}</b></span>
+      </div>
+      <div class="sc-best">★ الأفضل بالأرقام: ${s.best}</div>
+    </div>`).join('');
+  document.querySelectorAll('.sc').forEach(el=>
+    el.addEventListener('click',()=>{
+      sector = sector===el.dataset.sec ? '' : el.dataset.sec;
+      renderSectors(); render();
+      window.scrollTo({top:$('#listTitle').offsetTop-20,behavior:'smooth'});
+    }));
+}
+
+const row=(k,v,cls='')=>`<div class="row"><span class="k">${k}</span>
+  <span class="v ${cls}">${v}</span></div>`;
+
+async function openPanel(sym){
+  const s=DATA.stocks.find(x=>x.symbol===sym); if(!s) return;
+  $('#panel').classList.add('on'); $('#scrim').classList.add('on');
+  $('#panel').innerHTML=`<div class="p-in">
+    <button class="p-close">✕</button>
+    <div class="rc-sym" style="font-size:2.2rem">${s.symbol}</div>
+    <div style="color:var(--ink-dim);font-size:.9rem;margin-top:.4rem">${s.name||''}</div>
+    <div class="rc-sec" style="margin-top:.6rem">${s.sector||''}</div>
+    <p class="loading">جاري تحميل التقرير…</p></div>`;
+  $('.p-close').addEventListener('click',closePanel);
+  $('#panel').scrollTop=0;
+
+  if(!REPORTS[sym]){
+    try{ const r=await fetch(`research/${sym}.json`);
+      REPORTS[sym]= r.ok ? await r.json() : null; }
+    catch(e){ REPORTS[sym]=null; }
+  }
+  const rep=REPORTS[sym];
+  if(!rep || $('#panel').querySelector('.rc-sym').textContent!==sym) return;
+  $('#panel').innerHTML=panelHTML(s,rep);
+  $('.p-close').addEventListener('click',closePanel);
+}
+
+function panelHTML(s,r){
+  const v=r.valuation, b=r.balance, q=r.quality, g=r.growth,
+        c=r.capital, fv=r.fairValue;
+
+  // موقع السعر داخل نطاق التقدير العادل
+  let pin=50;
+  if(fv && fv.high>fv.low)
+    pin=Math.max(2,Math.min(98,(s.price-fv.low)/(fv.high-fv.low)*100));
+
+  const marginBars=(q.grossMarginHistory||[]).slice().reverse();
+  const mx=Math.max(...marginBars,1);
+
+  return `<div class="p-in">
+    <button class="p-close">✕</button>
+    <div class="rc-sym" style="font-size:2.2rem">${s.symbol}</div>
+    <div style="color:var(--ink-dim);font-size:.9rem;margin-top:.4rem">${s.name||''}</div>
+    <div class="rc-sec" style="margin-top:.6rem">${s.sector||''}</div>
+    <div style="display:flex;align-items:baseline;gap:.6rem;margin-top:1.2rem">
+      <span style="font-family:var(--mono);font-size:2.1rem;font-weight:800">${fmt(s.price)}</span>
+      <span style="font-size:.75rem;color:var(--ink-faint)">ج.م</span>
+      <span class="badge ${s.verdict}" style="margin-inline-start:auto">${s.verdict}</span>
+    </div>
+
+    ${fv?`<div class="sec">
+      <h3>تقدير السعر العادل</h3>
+      <div class="fv-bar"><div class="fv-pin" style="inset-inline-start:${pin}%"></div></div>
+      <div class="fv-lbl"><span>${fmt(fv.low)}</span>
+        <span style="color:var(--brass)">السعر الحالي ${fmt(s.price)}</span>
+        <span>${fmt(fv.high)}</span></div>
+      <div class="rows" style="margin-top:1.1rem">
+        ${fv.methods.map(m=>row(m.name,fmt(m.value))).join('')}
+        ${row('الوسيط',fmt(fv.mid))}
+        ${row('الفرق عن السعر',pct(fv.upside,0),(fv.upside??0)>=0?'pos':'neg')}
+        ${row('ربحية السهم',fmt(fv.eps))}
+      </div>
+      <p class="hint">التقدير مبني على مضاعفات — يعني بيفترض إن السوق هيسعّر
+        الشركة زي ما سعّرها تاريخياً أو زي منافسينها. مش سعر مضمون.</p>
+    </div>`:''}
+
+    <div class="sec">
+      <h3>التقييم — غالي ولا رخيص</h3>
+      <div class="rows">
+        ${row('مكرر الربحية الحالي',fmt(v.pe,2))}
+        ${row('المكرر المستقبلي',fmt(v.peForward,2))}
+        ${row('وسيط الشركة (5 سنين)',fmt(v.peOwnHistory,2))}
+        ${row('مقابل تاريخ الشركة',pct(v.vsOwnHistory,0),(v.vsOwnHistory??0)<0?'pos':'neg')}
+        ${row(`وسيط القطاع (${v.sectorCount||0} شركة)`,fmt(v.sectorPE,2))}
+        ${row('مقابل القطاع',pct(v.vsSector,0),(v.vsSector??0)<0?'pos':'neg')}
+        ${row('السعر/القيمة الدفترية',fmt(v.pb,2))}
+      </div>
+    </div>
+
+    <div class="sec">
+      <h3>النمو — آخر ربع (${g.period||''})</h3>
+      <div class="rows">
+        ${row('الإيرادات',pct(g.qRevenueYoY),(g.qRevenueYoY??0)>=0?'pos':'neg')}
+        ${row('الربح الإجمالي',pct(g.qGrossProfitYoY),(g.qGrossProfitYoY??0)>=0?'pos':'neg')}
+        ${row('صافي الربح',pct(g.qNetIncomeYoY),(g.qNetIncomeYoY??0)>=0?'pos':'neg')}
+        ${row('إيرادات الربع',fmt(g.qRevenue))}
+      </div>
+      <p class="hint">المقارنة بنفس الربع من السنة اللي فاتت مش بالربع اللي قبله،
+        عشان الموسمية ماتديش رقم مضلل.</p>
+    </div>
+
+    <div class="sec">
+      <h3>جودة الأعمال — بتكسب إزاي</h3>
+      <div class="rows">
+        ${row('الهامش الإجمالي',fmt(q.grossMargin,1)+'%')}
+        ${row('هامش التشغيل',fmt(q.operatingMargin,1)+'%')}
+        ${row('هامش صافي الربح',fmt(q.netMargin,1)+'%')}
+        ${row('تذبذب الهامش',q.grossMarginStdev!=null?fmt(q.grossMarginStdev,1)+' نقطة':'—',
+              (q.grossMarginStdev??9)<4?'pos':(q.grossMarginStdev??0)>8?'neg':'')}
+      </div>
+      ${marginBars.length?`<div class="spark">${marginBars.map(m=>
+        `<i style="height:${Math.max(6,m/mx*34)}px" title="${m}%"></i>`).join('')}</div>
+        <p class="hint">الهامش الإجمالي على ${marginBars.length} سنين (الأقدم يمين).
+        هامش عالي وثابت = ميزة تنافسية. متقلب = حساس لأسعار المدخلات.</p>`:''}
+    </div>
+
+    <div class="sec">
+      <h3>الميزانية — تصمد قدام أزمة؟</h3>
+      <div class="rows">
+        ${row('النقد',fmt(b.cash))}
+        ${row('إجمالي الدين',fmt(b.totalDebt))}
+        ${row('صافي الدين',fmt(b.netDebt),(b.netDebt??0)<0?'pos':'')}
+        ${row('الدين / حقوق الملكية',fmt(b.debtToEquity,2),
+              (b.debtToEquity??0)>1.5?'neg':(b.debtToEquity??9)<0.5?'pos':'')}
+        ${row('النسبة الجارية',fmt(b.currentRatio,2),(b.currentRatio??0)<1?'neg':'pos')}
+        ${row('التدفق التشغيلي',fmt(b.operatingCashFlow))}
+        ${row('التدفق النقدي الحر',fmt(b.freeCashFlow),(b.freeCashFlow??0)<0?'neg':'pos')}
+        ${row('تحويل الأرباح لكاش',b.cashConversion!=null?fmt(b.cashConversion*100,0)+'%':'—',
+              (b.cashConversion??0)>1?'pos':(b.cashConversion??1)<0.6?'neg':'')}
+      </div>
+      <p class="hint">تحويل الأرباح لكاش = التدفق التشغيلي ÷ صافي الربح.
+        أقل من 60% معناها أرباح دفترية أكتر من نقدية — علامة تحذير.</p>
+    </div>
+
+    <div class="sec">
+      <h3>فلوسها بتروح فين</h3>
+      <div class="rows">
+        ${row('استثمار في التوسع',c.capexShare!=null?fmt(c.capexShare,0)+'% من التدفق':'—')}
+        ${row('توزيعات',c.dividendShare!=null?fmt(c.dividendShare,0)+'% من التدفق':'—')}
+        ${c.netDebtIssued!=null?row(
+          c.netDebtIssued>0?'اقتراض جديد':'سداد ديون',fmt(Math.abs(c.netDebtIssued))):''}
+      </div>
+    </div>
+
+    ${r.peers&&r.peers.length?`<div class="sec">
+      <h3>مقابل منافسينه</h3>
+      <div style="overflow-x:auto">
+      <table class="cmp">
+        <thead><tr><th>الرمز</th><th>مكرر</th><th>س/د</th><th>ROE</th>
+          <th>هامش</th><th>نمو</th></tr></thead>
+        <tbody>
+          <tr class="me"><td>★ ${s.symbol}</td><td>${fmt(v.pe,1)}</td>
+            <td>${fmt(v.pb,1)}</td><td>—</td><td>${fmt(q.netMargin,0)}</td>
+            <td>${pct(g.qRevenueYoY,0)}</td></tr>
+          ${r.peers.map(p=>`<tr><td>${p.symbol}</td>
+            <td>${p.pe?fmt(+p.pe,1):'—'}</td><td>${p.pb?fmt(+p.pb,1):'—'}</td>
+            <td>${p.roe?fmt(+p.roe,0):'—'}</td>
+            <td>${p.netMargin?fmt(+p.netMargin,0):'—'}</td>
+            <td>${p.revenueGrowth?pct(+p.revenueGrowth,0):'—'}</td></tr>`).join('')}
+        </tbody>
+      </table></div>
+    </div>`:''}
+
+    <div class="sec">
+      <h3>المخاطر</h3>
+      ${r.risks.map(k=>`<div class="risk ${k.level}">
+        <div><b>${k.title}</b><p>${k.detail}</p></div></div>`).join('')}
+      <p class="hint">المخاطر دي مستخرجة من الأرقام نفسها. مابتغطّيش
+        مخاطر السوق العامة، ولا المنافسة، ولا التغيّرات التنظيمية،
+        ولا أي حاجة مش ظاهرة في القوائم المالية.</p>
+    </div>
+
+    <p class="hint" style="margin-top:2.2rem;padding-top:1.2rem;
+       border-top:1px solid var(--ridge)">
+      تقرير تحليلي مبني على آخر قوائم مالية منشورة. مش توصية شراء أو بيع.</p>
+  </div>`;
+}
+
+function closePanel(){ $('#panel').classList.remove('on'); $('#scrim').classList.remove('on'); }
+$('#scrim').addEventListener('click',closePanel);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel()});
+$('#q').addEventListener('input',e=>{query=e.target.value; render()});
+$('#sortBy').addEventListener('change',e=>{sortBy=e.target.value; render()});
+$('#verdictBy').addEventListener('change',e=>{verdictFilter=e.target.value; render()});
+
+fetch('research.json?v='+Date.now())
+  .then(r=>{if(!r.ok)throw new Error(r.status); return r.json()})
+  .then(d=>{
+    DATA=d; renderSectors(); render();
+    const t=new Date(d.generatedAt);
+    $('#meta').textContent=`${d.count} سهم · حُدّث ${t.toLocaleString('ar-EG',
+      {dateStyle:'medium',timeStyle:'short'})}`;
+  })
+  .catch(e=>{$('#grid').innerHTML=
+    `<div class="loading">تعذّر التحميل (${e.message})<br><br>
+     شغّل: <code style="color:var(--brass)">python3 egx_research_all.py</code></div>`});
+</script>
+</body>
+</html>
