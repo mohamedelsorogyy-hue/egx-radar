@@ -52,11 +52,23 @@ PER_MARKET = 25
 MARKET_QUERIES = [
     ("السوق", "البورصة المصرية"),
     ("السوق", "مؤشر EGX30"),
-    ("الاقتصاد", "البنك المركزي المصري سعر الفائدة"),
-    ("الاقتصاد", "التضخم في مصر"),
-    ("العملة", "سعر الدولار في مصر"),
-    ("تنظيمي", "الرقابة المالية البورصة"),
+    ("الفائدة", "البنك المركزي المصري سعر الفائدة"),
+    ("الفائدة", "لجنة السياسة النقدية قرار الفائدة مصر"),
+    ("التضخم", "معدل التضخم في مصر"),
+    ("الدولار", "سعر الدولار في مصر"),
+    ("تنظيمي", "الرقابة المالية البورصة المصرية"),
+    # الأحداث الكبيرة اللي بتحرّك السوق كله — مش أخبار شركات
+    ("جيوسياسي", "التوترات في المنطقة تأثير الاقتصاد المصري"),
+    ("جيوسياسي", "قناة السويس إيرادات"),
+    ("عالمي", "الفيدرالي الأمريكي سعر الفائدة"),
+    ("عالمي", "أسعار النفط العالمية"),
+    ("عالمي", "الذهب عالمياً"),
+    ("مصر", "صندوق النقد الدولي مصر"),
+    ("مصر", "الاستثمار الأجنبي في مصر"),
 ]
+
+# أخبار الاقتصاد الكلي بتفضل مؤثرة أطول من أخبار الجلسة اليومية
+MACRO_TOPICS = {"الفائدة", "التضخم", "الدولار", "جيوسياسي", "عالمي", "مصر"}
 
 
 def http_get(url):
@@ -220,13 +232,44 @@ def load_names():
         return {}
 
 
+MUBASHER_LIST = (
+    "https://www.mubasher.info/api/1/listed-companies?country=eg&size=500"
+)
+
+
+def fetch_mubasher_directory():
+    """
+    دليل كل الشركات المصرية بالاسم والقطاع بالعربي — طلب واحد.
+
+    ده أدق وأسرع بكتير من استخراج الأسماء من عناوين الأخبار:
+    الطريقة القديمة كانت بتغطي 66 سهم من 138 لأنها معتمدة على
+    صيغة عنوان معيّنة، ودي بتغطي 130.
+    """
+    try:
+        raw = http_get(MUBASHER_LIST)
+        rows = json.loads(raw).get("rows") or []
+    except (RuntimeError, ValueError):
+        return {}, {}
+
+    names, sectors = {}, {}
+    for row in rows:
+        symbol = (row.get("symbol") or "").strip().upper()
+        if not symbol:
+            continue
+        name = tidy_name(row.get("name"))
+        if name:
+            names[symbol] = name
+        sector = (row.get("sector") or "").strip()
+        if sector:
+            sectors[symbol] = sector
+    return names, sectors
+
+
 def discover_name(symbol):
     """
-    بيطلّع الاسم العربي للشركة.
-
-    البحث بالرمز بيرجّع صفحات تعريفية من "معلومات مباشر" عنوانها
-    "اسم الشركة (RMZ)" — قديمة كأخبار، بس مثالية كمصدر للاسم.
-    عشان كده بنسمح بأي عمر هنا، بعكس البحث عن الأخبار نفسها.
+    احتياطي للأسهم اللي مش في دليل مباشر: بنستخرج الاسم من عناوين
+    الأخبار. البحث بالرمز بيرجّع صفحات تعريفية قديمة — وحشة كأخبار
+    بس فيها الاسم، عشان كده بنسمح بأي عمر هنا.
     """
     items = fetch_feed(f'"{symbol}" بورصة', 10, max_age=3650)
     return tidy_name(arabic_name(items, symbol))
@@ -271,8 +314,14 @@ def main():
     market = []
     seen = set()
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        # أخبار الجلسة بتقدم بسرعة (7 أيام)، لكن قرار فايدة أو
+        # تصعيد جيوسياسي بيفضل مؤثر أسابيع — فبندي الاتنين مهلة مختلفة
         results = pool.map(
-            lambda qq: (qq[0], fetch_feed(qq[1], PER_MARKET, max_age=7)),
+            lambda qq: (
+                qq[0],
+                fetch_feed(qq[1], PER_MARKET,
+                           max_age=21 if qq[0] in MACRO_TOPICS else 7),
+            ),
             MARKET_QUERIES,
         )
         for topic, items in results:
@@ -286,8 +335,10 @@ def main():
                 market.append(it)
 
     enrich(market)
+    for it in market:
+        it["macro"] = it["topic"] in MACRO_TOPICS
     market.sort(key=lambda x: x["date"] or "", reverse=True)
-    market = market[:40]
+    market = market[:70]
 
     tones = [m["tone"] for m in market]
     payload = {
@@ -319,16 +370,28 @@ def main():
     # الأسماء العربية بتتخزّن على القرص: بتتكتشف مرة واحدة بس
     # وبعدها بنستخدمها في كل تشغيل من غير طلبات زيادة.
     names = load_names()
+
+    # دليل مباشر أولاً — بيغطي الأغلبية في طلب واحد
+    print("⏳ بجيب دليل الشركات من مباشر...")
+    directory, sectors = fetch_mubasher_directory()
+    names.update(directory)
+    if directory:
+        print(f"   {len(directory)} شركة في الدليل")
+
+    # اللي فضل بنحاول نستخرجه من عناوين الأخبار
     missing = [s for s in symbols if s not in names]
     if missing:
-        print(f"⏳ بكتشف الأسماء العربية لـ {len(missing)} سهم...")
+        print(f"⏳ بكتشف {len(missing)} اسم من عناوين الأخبار...")
         with ThreadPoolExecutor(max_workers=WORKERS) as pool:
             for symbol, name in zip(missing, pool.map(discover_name, missing)):
                 if name:
                     names[symbol] = name
-        with open(NAMES_FILE, "w", encoding="utf-8") as fh:
-            json.dump(names, fh, ensure_ascii=False, indent=1, sort_keys=True)
-        print(f"✅ {len(names)} اسم عربي محفوظ في {NAMES_FILE}")
+
+    with open(NAMES_FILE, "w", encoding="utf-8") as fh:
+        json.dump(names, fh, ensure_ascii=False, indent=1, sort_keys=True)
+    with open("dashboard/sectors_ar.json", "w", encoding="utf-8") as fh:
+        json.dump(sectors, fh, ensure_ascii=False, separators=(",", ":"))
+    print(f"✅ {len(names)} اسم · {len(sectors)} قطاع بالعربي")
 
     print(f"⏳ بجيب أخبار {len(symbols)} سهم...")
     done = 0
