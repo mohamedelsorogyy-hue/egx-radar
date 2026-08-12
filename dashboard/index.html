@@ -137,6 +137,9 @@ h1{
 .macro{margin-bottom:1.4rem; padding:1.1rem 1.2rem; border-radius:14px;
   background:linear-gradient(140deg,rgba(212,162,76,.09),rgba(20,22,28,.6));
   border:1px solid var(--brass-dim)}
+.mn-pulse b.hi{color:var(--brass)}
+.macro-lbl small{display:block; font-weight:400; color:var(--ink-faint);
+  font-size:.7rem; line-height:1.6; margin-top:.35rem; max-width:60ch}
 .macro-lbl{font-size:.78rem; color:var(--brass); font-weight:600; margin-bottom:.85rem;
   letter-spacing:.01em}
 .macro-list{display:grid; gap:.55rem;
@@ -315,6 +318,26 @@ h1{
 .tf-b[aria-pressed="true"]{background:linear-gradient(140deg,var(--brass),var(--brass-dim));
   color:#12100a; border-color:transparent; font-weight:600}
 .chart-empty{color:var(--ink-faint); font-size:.82rem; padding:2rem 0; text-align:center}
+.tf-x{flex:0 0 auto; min-width:42px; font-size:1rem; padding:.5rem; border-radius:9px;
+  cursor:pointer; color:var(--ink-dim); background:var(--slab);
+  border:1px solid var(--edge); transition:all .2s}
+.tf-x:hover{color:var(--brass); border-color:var(--brass-dim)}
+
+/* الشارت على الشاشة كلها */
+/* خلفية معتمة تماماً: 97% كانت بتسيب نص اللوحة يبان من وراها */
+.zoom{position:fixed; inset:0; z-index:90; display:none;
+  background:var(--void); backdrop-filter:blur(20px);
+  padding:clamp(.8rem,3vw,2.2rem); flex-direction:column; gap:1rem}
+.zoom.on{display:flex}
+.zoom-head{display:flex; align-items:center; gap:1rem; flex-wrap:wrap}
+.zoom-head h4{font-family:var(--mono); font-size:1.35rem; font-weight:800}
+.zoom-head .nm{color:var(--ink-dim); font-size:.85rem}
+.zoom-close{margin-inline-start:auto; width:38px; height:38px; border-radius:10px;
+  background:var(--slab); border:1px solid var(--edge); color:var(--ink-dim);
+  cursor:pointer; font-size:1.1rem}
+.zoom-close:hover{color:var(--ink); border-color:var(--brass-dim)}
+.zoom-body{flex:1; min-height:0; display:flex; align-items:center; justify-content:center}
+.zoom-body svg{width:100%; height:100%; max-height:100%}
 .chart-note{margin-top:.7rem; font-size:.73rem; color:var(--ink-faint); line-height:1.65}
 .chart-note b{color:var(--ink-dim)}
 
@@ -439,6 +462,16 @@ footer b{color:var(--ink-dim); font-weight:600}
     <p style="margin-top:.7rem">وقف الخسارة المقترح = الأبعد بين (الدعم −2%) و(السعر −2×ATR).
        البورصة المصرية فيها حدود سعرية يومية، فالوقف ممكن مايتنفذش بالسعر المحدد.</p>
   </footer>
+</div>
+
+<div class="zoom" id="zoom">
+  <div class="zoom-head">
+    <h4 id="zoomSym"></h4>
+    <span class="nm" id="zoomName"></span>
+    <span class="nm" id="zoomFrame"></span>
+    <button class="zoom-close" id="zoomClose" aria-label="إغلاق">✕</button>
+  </div>
+  <div class="zoom-body" id="zoomBody"></div>
 </div>
 
 <div class="scrim" id="scrim"></div>
@@ -689,14 +722,15 @@ async function loadCandles(symbol){
   return CANDLES[symbol];
 }
 
-function candleChart(s, frame){
+function candleChart(s, frame, size){
   const store = CANDLES[s.symbol];
   const raw = (store && store[frame]) || [];
   if(raw.length < 5) return '<p class="chart-empty">مفيش شموع كفاية للرسم</p>';
 
   // مساحة أكبر: الشارت هو الحاجة الأساسية في اللوحة، والصغير
   // مابيوريش تفاصيل الشموع ولا المستويات بوضوح
-  const W=760, H=420, VH=62, PL=8, PR=64, PT=14, GAP=12;
+  const W = size ? size.W : 760, H = size ? size.H : 420;
+  const VH = Math.round(H*0.15), PL=8, PR=64, PT=14, GAP=12;
   const PB=22, priceH = H-PT-PB-VH-GAP;
 
   const closes = raw.map(k=>k.c);
@@ -937,6 +971,7 @@ function openPanel(sym){
         <button class="tf-b" data-tf="daily" aria-pressed="true">يومي · 6 شهور</button>
         <button class="tf-b" data-tf="weekly" aria-pressed="false">أسبوعي · سنتين</button>
         <button class="tf-b" data-tf="monthly" aria-pressed="false">شهري · 5 سنين</button>
+        <button class="tf-x" id="chartExpand" title="تكبير على الشاشة كلها">⛶</button>
       </div>
       <div id="chartBox"><p class="chart-empty">جاري تحميل الشموع…</p></div>
       <div class="legend">
@@ -1077,7 +1112,29 @@ function openPanel(sym){
       $('#chartBox').innerHTML = candleChart(s, btn.dataset.tf);
     });
   });
+
+  // تكبير الشارت على الشاشة كلها — بيرسم بنسبة عرض أوسع
+  // عشان المساحة الأفقية الزيادة تتملي شموع مش فراغ
+  const expand = $('#chartExpand');
+  if(expand) expand.addEventListener('click',()=>openZoom(s));
 }
+
+const FRAME_LABEL = {daily:'يومي · 6 شهور', weekly:'أسبوعي · سنتين',
+                     monthly:'شهري · 5 سنين'};
+
+function openZoom(s){
+  const btn = $('#panel').querySelector('.tf-b[aria-pressed="true"]');
+  const frame = btn ? btn.dataset.tf : 'daily';
+  $('#zoomSym').textContent = s.symbol;
+  $('#zoomName').textContent = NAMES_AR[s.symbol] || s.name || '';
+  $('#zoomFrame').textContent = FRAME_LABEL[frame] || '';
+  $('#zoomBody').innerHTML = candleChart(s, frame, {W:1500, H:760});
+  $('#zoom').classList.add('on');
+}
+
+function closeZoom(){ $('#zoom').classList.remove('on'); }
+$('#zoomClose').addEventListener('click',closeZoom);
+$('#zoom').addEventListener('click',e=>{ if(e.target===$('#zoom')) closeZoom(); });
 
 function closePanel(){ $('#panel').classList.remove('on'); $('#scrim').classList.remove('on'); }
 $('#scrim').addEventListener('click',closePanel);
@@ -1118,8 +1175,13 @@ function sessionBadge(){
 function renderMarketNews(){
   if(!MARKET_NEWS || !MARKET_NEWS.items.length) return;
   const items = MARKET_NEWS.items;
-  const macro = items.filter(i=>i.macro);
-  const topics = [...new Set(items.map(i=>i.topic))];
+  // الأخبار اللي بتحرّك السوق كله — الخادم بيحسب وزنها
+  const macro = (MARKET_NEWS.critical && MARKET_NEWS.critical.length)
+    ? MARKET_NEWS.critical : items.filter(i=>i.impact===3);
+  // التبويبات مرتبة بالتأثير: الفايدة والتضخم قبل السلع والسوق
+  const order={};
+  items.forEach(i=>{ order[i.topic]=Math.max(order[i.topic]||0, i.impact||1); });
+  const topics = Object.keys(order).sort((a,b)=>order[b]-order[a]);
   const p = MARKET_NEWS.pulse || {};
 
   $('#marketNews').innerHTML = `
@@ -1129,12 +1191,15 @@ function renderMarketNews(){
         <b class="pos">${p.positive||0}</b> إيجابي ·
         <b class="neg">${p.negative||0}</b> سلبي ·
         <b>${p.neutral||0}</b> محايد
+        ${p.highImpact?` · <b class="hi">${p.highImpact}</b> عالي التأثير`:''}
       </span>
     </div>
 
     ${macro.length ? `<div class="macro">
-      <div class="macro-lbl">🌍 اللي بيحرّك السوق كله</div>
-      <div class="macro-list">${macro.slice(0,4).map(it=>
+      <div class="macro-lbl">🌍 اللي بيحرّك السوق كله
+        <small>فايدة · تضخم · عملة · جيوسياسي — دي بتأثر على كل الأسهم
+        مع بعض، ومفيش تنويع بيحميك منها</small></div>
+      <div class="macro-list">${macro.slice(0,6).map(it=>
         `<a class="mc" href="${it.url}" target="_blank" rel="noopener">
            <span class="mc-tag">${it.topic}</span>
            <span class="mc-t">${it.title}</span>
