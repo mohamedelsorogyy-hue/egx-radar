@@ -589,6 +589,11 @@ def build(symbol, stocks, research_map, candles_dir):
     # سعر الدخول المرجعي: منتصف أول خطة جاهزة، وإلا السعر الحالي
     ready = next((p for p in plans if p["ready"] and not p.get("warning")), None)
     entry_price = (sum(ready["zone"]) / 2) if (ready and ready["zone"]) else s.get("price")
+    # التقريب هنا مش في العرض بس — عشان لما المستخدم يحسب
+    # (الهدف − الدخول) ÷ (الدخول − الوقف) بإيده، يطلع نفس الرقم
+    # اللي إحنا معروضينه بالظبط. الفرق كان بيوصل 7%.
+    if entry_price is not None:
+        entry_price = round(entry_price, 2)
 
     targets = targets_block(s, levels, entry_price)
     rr = risk_reward(entry_price, s.get("stopLoss"), targets)
