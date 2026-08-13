@@ -397,6 +397,19 @@ def main():
 
     print_table(results, args.top)
 
+    # المستبعدين بيتكتبوا في ملف عشان الداشبورد يعرضهم بسبب الاستبعاد.
+    # من غير ده السهم بيختفي في صمت والمستخدم مايعرفش ليه —
+    # وده حصل مع ORAS واضطر يسأل.
+    import json as _json
+    with open("dashboard/excluded.json", "w", encoding="utf-8") as fh:
+        _json.dump({
+            "generatedAt": latest,
+            "items": [
+                {"symbol": sym, "name": name, "reasons": reasons}
+                for sym, name, reasons in rejected
+            ],
+        }, fh, ensure_ascii=False, separators=(",", ":"))
+
     with open(args.out, "w", newline="", encoding="utf-8-sig") as fh:
         writer = csv.DictWriter(fh, fieldnames=SHORTLIST_COLUMNS, extrasaction="ignore")
         writer.writeheader()

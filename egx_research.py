@@ -31,7 +31,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from egx_fetch import http_get, load_node  # noqa: E402
+from egx_fetch import DUAL_LISTED, http_get, load_node  # noqa: E402
 
 BASE = "https://stockanalysis.com"
 CACHE_DIR = ".cache/financials"
@@ -44,7 +44,10 @@ def statement(symbol, path="", quarterly=False):
     بيجيب قائمة مالية. بيرجّع dict من {بند: [قيم بترتيب زمني تنازلي]}
     مع مفتاح datekey للفترات.
     """
-    url = f"{BASE}/quote/EGX/{symbol}/financials/{path}__data.json"
+    # الأسهم المزدوجة الإدراج قوائمها تحت بورصة تانية — التفاصيل
+    # في DUAL_LISTED داخل egx_fetch.py
+    exchange = DUAL_LISTED.get(symbol, "EGX")
+    url = f"{BASE}/quote/{exchange}/{symbol}/financials/{path}__data.json"
     if quarterly:
         url += "?p=quarterly"
     try:

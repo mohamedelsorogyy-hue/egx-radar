@@ -153,13 +153,30 @@ def get_symbols(limit=None):
     return symbols[:limit] if limit else symbols
 
 
+# شركات مدرجة في البورصة المصرية وبورصة تانية، والمصدر بيحط
+# قوائمها المالية تحت البورصة التانية بس.
+#
+# أوراسكوم للإنشاءات (ORAS) مثال: صفحة financials تحت egx بترجع 404،
+# والأرقام كلها موجودة تحت adx. من غير التحويل ده، الشركة كانت
+# بتختفي من الداشبورد خالص رغم إنها من أكبر الشركات وأنشطها تداولاً.
+DUAL_LISTED = {
+    "ORAS": "adx",
+}
+
+
+def financials_url(symbol, path):
+    """مسار القوائم المالية، مع مراعاة الإدراج المزدوج."""
+    exchange = DUAL_LISTED.get(symbol, "EGX")
+    return f"{BASE}/quote/{exchange}/{symbol}/financials/{path}__data.json"
+
+
 def fetch_ratios(symbol):
     """
     نسب التقييم والربحية (P/B, ROE, ROA, الدين/حقوق الملكية, PEG).
     القيم بتيجي كمصفوفات: العنصر [0] هو TTM وبعده السنين بالترتيب التنازلي.
     """
     try:
-        payload = http_get(f"{BASE}/quote/EGX/{symbol}/financials/ratios/__data.json")
+        payload = http_get(financials_url(symbol, "ratios/"))
     except RuntimeError:
         return {}
     fd = (load_node(payload, 2) or {}).get("financialData") or {}

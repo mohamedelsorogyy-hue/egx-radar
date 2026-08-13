@@ -172,6 +172,24 @@ h1{
 .nw-t{display:block; font-size:.87rem; color:var(--ink); line-height:1.55}
 .nw-m{display:block; font-size:.7rem; color:var(--ink-faint); margin-top:.4rem}
 
+/* الأسهم المستبعدة */
+.excl{margin:2rem 0 3rem}
+.excl-h{display:flex; align-items:center; gap:.8rem; cursor:pointer;
+  padding:.85rem 1.1rem; border-radius:11px; background:var(--slab);
+  border:1px solid var(--edge); transition:border-color .2s}
+.excl-h:hover{border-color:var(--brass-dim)}
+.excl-h b{font-size:.88rem; font-weight:600}
+.excl-h small{color:var(--ink-faint); font-size:.76rem}
+.excl-h .ar{margin-inline-start:auto; color:var(--ink-faint); transition:transform .25s}
+.excl.open .ar{transform:rotate(180deg)}
+.excl-body{display:none; margin-top:.7rem; gap:.4rem;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.excl.open .excl-body{display:grid}
+.ex{padding:.6rem .85rem; border-radius:9px; background:var(--pit);
+  border:1px solid var(--ridge); font-size:.78rem}
+.ex b{font-family:var(--mono); font-size:.82rem; margin-inline-end:.5rem}
+.ex span{color:var(--ink-faint); font-size:.72rem}
+
 /* خانة البحث */
 .search{
   width:100%; padding:.85rem 1.15rem; border-radius:12px; font-family:var(--body);
@@ -451,6 +469,15 @@ footer b{color:var(--ink-dim); font-weight:600}
     <button class="chip" data-sort="volume">السيولة</button>
     <span class="count" id="count"></span>
   </div>
+
+  <section class="excl" id="excl" hidden>
+    <div class="excl-h" id="exclToggle">
+      <b>الأسهم المستبعدة</b>
+      <small id="exclCount"></small>
+      <span class="ar">▾</span>
+    </div>
+    <div class="excl-body" id="exclBody"></div>
+  </section>
 
   <main class="grid" id="grid"><div class="loading">جاري تحميل البيانات…</div></main>
 
@@ -1240,6 +1267,23 @@ function pulse(){
     `<div class="stat ${c.c}" style="animation-delay:${i*80}ms">
        <div class="k">${c.k}</div><div class="l">${c.l}</div></div>`).join('');
 }
+
+/* الأسهم المستبعدة وأسبابها — عشان السهم مايختفيش في صمت */
+fetch('excluded.json?v='+Date.now())
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(d=>{
+    const items=d.items||[];
+    if(!items.length) return;
+    $('#exclCount').textContent =
+      `${items.length} سهم — دوس تشوف السبب`;
+    $('#exclBody').innerHTML = items
+      .sort((a,b)=>a.symbol.localeCompare(b.symbol))
+      .map(it=>`<div class="ex"><b>${it.symbol}</b>
+        <span>${it.reasons.join(' · ')}</span></div>`).join('');
+    $('#excl').hidden=false;
+    $('#exclToggle').addEventListener('click',()=>$('#excl').classList.toggle('open'));
+  })
+  .catch(()=>{});
 
 fetch('data.json?v='+Date.now())
   .then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
