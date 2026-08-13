@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>قرارات التداول — مرصد البورصة المصرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;500;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#08080b; --pit:#0d0e12; --slab:#14161c; --ridge:#1e2129; --edge:#2b2f3a;
+  --brass:#d4a24c; --brass-dim:#8a6c34; --brass-glow:rgba(212,162,76,.16);
+  --jade:#3ddc97; --rust:#f4674f; --amber:#e0a04a; --steel:#7b8497;
+  --ink:#f2f0ea; --ink-dim:#9aa0ad; --ink-faint:#5d6472;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --body:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  --display:'Alexandria',var(--body);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--void); color:var(--ink); font-family:var(--body);
+  min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased}
+body::before{content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(70rem 40rem at 82% -8%,rgba(212,162,76,.09),transparent 62%),
+             radial-gradient(55rem 38rem at 8% 4%,rgba(61,220,151,.05),transparent 60%)}
+.wrap{position:relative; z-index:2; max-width:1440px; margin:0 auto;
+  padding:0 clamp(1rem,3vw,2.75rem)}
+html[dir=ltr] body{direction:ltr}
+
+header{padding:clamp(1.6rem,4vw,3rem) 0 1.2rem}
+.topbar{display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin-bottom:1.8rem}
+.nav{display:flex; gap:.5rem; flex-wrap:wrap}
+.nav a{font-size:.82rem; color:var(--ink-dim); text-decoration:none;
+  padding:.5rem 1rem; border-radius:999px; background:var(--slab);
+  border:1px solid var(--edge); transition:all .2s}
+.nav a:hover{color:var(--ink); border-color:var(--brass-dim)}
+.nav a.on{background:linear-gradient(140deg,var(--brass),var(--brass-dim));
+  color:#12100a; border-color:transparent; font-weight:600}
+.lang{margin-inline-start:auto; display:flex; gap:.3rem}
+.lang button{font-family:var(--mono); font-size:.72rem; padding:.45rem .8rem;
+  border-radius:8px; cursor:pointer; color:var(--ink-dim);
+  background:var(--slab); border:1px solid var(--edge)}
+.lang button.on{background:var(--brass); color:#12100a; border-color:transparent;
+  font-weight:700}
+
+h1{font-family:var(--display); font-weight:700; line-height:1;
+  font-size:clamp(2rem,5.5vw,3.4rem); letter-spacing:-.02em;
+  background:linear-gradient(168deg,#fff 8%,var(--brass) 62%,var(--brass-dim) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent}
+.sub{color:var(--ink-dim); font-weight:300; margin-top:.85rem; max-width:60ch;
+  font-size:.96rem; line-height:1.7}
+
+/* شارة حداثة الداتا */
+.fresh{display:inline-flex; align-items:center; gap:.6rem; margin-top:1.4rem;
+  padding:.6rem 1rem; border-radius:999px; font-size:.82rem;
+  background:var(--slab); border:1px solid var(--edge); color:var(--ink-dim)}
+.fresh .dot{width:8px; height:8px; border-radius:50%; background:var(--amber);
+  box-shadow:0 0 0 4px rgba(224,160,74,.15)}
+.fresh b{color:var(--ink)}
+
+.notice{margin-top:1.3rem; display:flex; gap:.85rem; padding:.9rem 1.1rem;
+  border-radius:12px; max-width:68ch; font-size:.84rem; color:var(--ink-dim);
+  line-height:1.65; background:linear-gradient(100deg,rgba(244,103,79,.08),transparent);
+  border:1px solid rgba(244,103,79,.2)}
+.notice b{color:var(--rust)}
+
+/* عدادات */
+.tally{display:grid; gap:.8rem; margin-top:2rem;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.ty{padding:1.1rem 1.2rem; border-radius:13px; background:var(--slab);
+  border:1px solid var(--edge); cursor:pointer; transition:all .22s}
+.ty:hover{border-color:var(--brass-dim)}
+.ty.on{border-color:var(--brass); background:linear-gradient(140deg,var(--brass-glow),var(--slab))}
+.ty .n{font-family:var(--mono); font-size:1.9rem; font-weight:800; line-height:1}
+.ty .l{font-size:.76rem; color:var(--ink-faint); margin-top:.45rem}
+.ty.buy .n{color:var(--jade)} .ty.wait .n{color:var(--amber)}
+.ty.avoid .n{color:var(--rust)} .ty.all .n{color:var(--brass)}
+
+.tools{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
+  margin:2rem 0 1.3rem; padding-bottom:1.1rem; border-bottom:1px solid var(--ridge)}
+.tools input,.tools select{padding:.7rem 1rem; border-radius:11px;
+  font-family:var(--body); font-size:.86rem; color:var(--ink);
+  background:var(--slab); border:1px solid var(--edge); outline:none}
+.tools input{flex:1; min-width:200px}
+.tools input:focus{border-color:var(--brass-dim); box-shadow:0 0 0 3px var(--brass-glow)}
+.cnt{font-family:var(--mono); font-size:.76rem; color:var(--ink-faint)}
+
+/* كروت القرار */
+.grid{display:grid; gap:.95rem; padding-bottom:4rem;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,350px),1fr))}
+.dc{position:relative; border-radius:15px; padding:1.2rem; cursor:pointer;
+  background:linear-gradient(158deg,var(--slab),var(--pit));
+  border:1px solid var(--edge); overflow:hidden;
+  transition:border-color .28s, transform .28s}
+.dc:hover{border-color:var(--brass-dim); transform:translateY(-3px)}
+.dc::before{content:''; position:absolute; inset:0 auto 0 0; width:3px}
+.dc.good::before{background:var(--jade)}
+.dc.warn::before{background:var(--amber)}
+.dc.bad::before{background:var(--rust)}
+
+.dc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.7rem}
+.dc-sym{font-family:var(--mono); font-size:1.25rem; font-weight:800; letter-spacing:-.03em}
+.dc-name{font-size:.73rem; color:var(--ink-faint); margin-top:.22rem; line-height:1.4;
+  display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden}
+.act{font-size:.76rem; font-weight:700; padding:.32rem .75rem; border-radius:7px;
+  white-space:nowrap; font-family:var(--mono)}
+.act.good{background:rgba(61,220,151,.15); color:var(--jade)}
+.act.warn{background:rgba(224,160,74,.14); color:var(--amber)}
+.act.bad{background:rgba(244,103,79,.14); color:var(--rust)}
+
+.dc-price{display:flex; align-items:baseline; gap:.45rem; margin-top:.9rem}
+.dc-px{font-family:var(--mono); font-size:1.45rem; font-weight:600; letter-spacing:-.03em}
+.dc-cur{font-size:.66rem; color:var(--ink-faint)}
+.dc-score{margin-inline-start:auto; font-family:var(--mono); font-size:1.1rem;
+  font-weight:800; color:var(--brass)}
+.dc-score small{font-size:.6rem; color:var(--ink-faint); font-weight:400}
+
+.dc-reason{font-size:.79rem; color:var(--ink-dim); line-height:1.6; margin-top:.75rem;
+  min-height:2.5em}
+.dc-bars{display:grid; grid-template-columns:repeat(5,1fr); gap:.35rem;
+  margin-top:.9rem; padding-top:.85rem; border-top:1px solid var(--ridge)}
+.bx{text-align:center}
+.bx .t{height:3px; border-radius:2px; background:var(--ridge); overflow:hidden;
+  margin-bottom:.3rem}
+.bx .t i{display:block; height:100%; border-radius:2px}
+.bx .v{font-family:var(--mono); font-size:.72rem; font-weight:600}
+.bx .l{font-size:.55rem; color:var(--ink-faint); margin-top:.1rem}
+
+h2{font-family:var(--display); font-size:1.2rem; font-weight:500;
+  margin:2rem 0 1rem; padding-bottom:.7rem; border-bottom:1px solid var(--ridge)}
+
+/* اللوحة */
+.scrim{position:fixed; inset:0; z-index:60; background:rgba(4,4,6,.86);
+  backdrop-filter:blur(9px); opacity:0; pointer-events:none; transition:opacity .3s}
+.scrim.on{opacity:1; pointer-events:auto}
+.panel{position:fixed; z-index:61; inset-block:0; inset-inline-start:0;
+  width:min(680px,100%); background:linear-gradient(178deg,var(--pit),var(--void));
+  border-inline-end:1px solid var(--edge); overflow-y:auto; visibility:hidden;
+  transform:translateX(100%);
+  transition:transform .42s cubic-bezier(.22,.85,.25,1), visibility 0s .42s;
+  box-shadow:26px 0 70px -30px #000}
+/* في الوضع الإنجليزي (ltr) اللوحة بتتثبّت على الشمال، فبتختفي
+   بالتحرك لليسار. لازم القاعدتين يبقى ليهم نفس الأولوية وإلا
+   اللوحة بتفتح برّه الشاشة عند تبديل اللغة. */
+html[dir=ltr] .panel{transform:translateX(-100%)}
+html[dir=rtl] .panel.on,
+html[dir=ltr] .panel.on,
+.panel.on{transform:translateX(0); visibility:visible; transition-delay:0s}
+.p-in{padding:clamp(1.3rem,4vw,2.2rem)}
+.p-close{position:sticky; top:0; float:left; z-index:2; width:36px; height:36px;
+  border-radius:10px; background:var(--slab); border:1px solid var(--edge);
+  color:var(--ink-dim); cursor:pointer; font-size:1.1rem}
+html[dir=ltr] .p-close{float:right}
+
+/* لافتة القرار */
+.verdict{margin-top:1.4rem; padding:1.3rem; border-radius:14px;
+  border:1px solid var(--edge)}
+.verdict.good{background:linear-gradient(140deg,rgba(61,220,151,.12),var(--slab));
+  border-color:rgba(61,220,151,.3)}
+.verdict.warn{background:linear-gradient(140deg,rgba(224,160,74,.11),var(--slab));
+  border-color:rgba(224,160,74,.3)}
+.verdict.bad{background:linear-gradient(140deg,rgba(244,103,79,.11),var(--slab));
+  border-color:rgba(244,103,79,.3)}
+.verdict .big{font-family:var(--mono); font-size:1.6rem; font-weight:800;
+  letter-spacing:-.02em}
+.verdict.good .big{color:var(--jade)}
+.verdict.warn .big{color:var(--amber)}
+.verdict.bad .big{color:var(--rust)}
+.verdict .sm{font-size:.9rem; color:var(--ink-dim); margin-top:.3rem}
+.verdict ul{margin-top:.95rem; padding-inline-start:1.1rem}
+.verdict li{font-size:.84rem; color:var(--ink-dim); line-height:1.75}
+
+.sec{margin-top:2rem}
+.sec h3{font-family:var(--mono); font-size:.65rem; letter-spacing:.22em;
+  color:var(--ink-faint); text-transform:uppercase; padding-bottom:.6rem;
+  border-bottom:1px solid var(--ridge); margin-bottom:.95rem}
+
+/* شرائط الدرجات */
+.sbar{display:flex; align-items:center; gap:.8rem; margin-bottom:.6rem}
+.sbar .k{font-size:.82rem; color:var(--ink-dim); min-width:7.5rem}
+.sbar .t{flex:1; height:7px; border-radius:99px; background:var(--ridge); overflow:hidden}
+.sbar .t i{display:block; height:100%; border-radius:99px;
+  transition:width .8s cubic-bezier(.2,.9,.25,1)}
+.sbar .v{font-family:var(--mono); font-size:.82rem; font-weight:700; min-width:2.6rem;
+  text-align:end}
+
+/* شروط */
+.chk{display:flex; align-items:flex-start; gap:.6rem; padding:.45rem 0;
+  font-size:.83rem; line-height:1.55}
+.chk .i{flex-shrink:0; width:16px; font-family:var(--mono)}
+.chk.yes .i{color:var(--jade)} .chk.no .i{color:var(--ink-faint)}
+.chk.no{color:var(--ink-faint)}
+
+/* مؤشرات */
+.ind{padding:.85rem 1rem; border-radius:11px; background:var(--slab);
+  border:1px solid var(--edge); margin-bottom:.55rem}
+.ind-h{display:flex; align-items:baseline; gap:.7rem}
+.ind-h b{font-family:var(--mono); font-size:.88rem}
+.ind-h .v{font-family:var(--mono); font-size:1.15rem; font-weight:800}
+.ind-h .z{margin-inline-start:auto; font-size:.74rem; padding:.2rem .6rem;
+  border-radius:6px}
+.z.good{background:rgba(61,220,151,.14); color:var(--jade)}
+.z.warn{background:rgba(224,160,74,.14); color:var(--amber)}
+.z.bad{background:rgba(244,103,79,.14); color:var(--rust)}
+.z.flat{background:var(--ridge); color:var(--ink-dim)}
+.ind p{font-size:.78rem; color:var(--ink-dim); margin-top:.5rem; line-height:1.6}
+
+/* سلم المستويات */
+.lad{display:flex; flex-direction:column; gap:.45rem}
+.rung{display:flex; align-items:center; gap:.9rem; padding:.7rem .95rem;
+  border-radius:10px; background:var(--slab); border:1px solid var(--edge)}
+.rung.here{border-color:var(--brass);
+  background:linear-gradient(100deg,var(--brass-glow),var(--slab))}
+.rung.res{border-inline-start:3px solid var(--rust)}
+.rung.sup{border-inline-start:3px solid var(--jade)}
+.rung.stop{border-inline-start:3px solid #8a4b3f}
+.rung .k{flex:1; font-size:.83rem; color:var(--ink-dim)}
+.rung .v{font-family:var(--mono); font-size:1rem; font-weight:600}
+.rung .d{font-family:var(--mono); font-size:.75rem; min-width:4rem; text-align:end}
+
+/* خطط الدخول */
+.plan{padding:1rem; border-radius:12px; background:var(--slab);
+  border:1px solid var(--edge); margin-bottom:.7rem}
+.plan.ready{border-color:rgba(61,220,151,.4)}
+.plan.warn{border-color:rgba(244,103,79,.3)}
+.plan-h{display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;
+  margin-bottom:.6rem}
+.plan-h b{font-size:.9rem}
+.plan-h .zone{font-family:var(--mono); font-size:.8rem; color:var(--brass)}
+.plan-h .st{margin-inline-start:auto; font-size:.72rem; padding:.2rem .6rem;
+  border-radius:6px}
+
+/* أهداف */
+.tps{display:grid; gap:.5rem; grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+.tp{text-align:center; padding:.8rem .5rem; border-radius:11px;
+  background:var(--slab); border:1px solid var(--edge)}
+.tp .n{font-family:var(--mono); font-size:.66rem; color:var(--brass); letter-spacing:.1em}
+.tp .p{font-family:var(--mono); font-size:1.15rem; font-weight:700; margin:.3rem 0}
+.tp .g{font-family:var(--mono); font-size:.76rem; color:var(--jade)}
+
+/* حاسبة المركز */
+.calc{padding:1.1rem; border-radius:12px; background:var(--slab);
+  border:1px solid var(--edge)}
+.calc-row{display:flex; gap:.7rem; flex-wrap:wrap; margin-bottom:.9rem}
+.calc-row label{flex:1; min-width:130px; font-size:.76rem; color:var(--ink-faint)}
+.calc-row input{width:100%; margin-top:.35rem; padding:.6rem .8rem;
+  border-radius:9px; font-family:var(--mono); font-size:.9rem; color:var(--ink);
+  background:var(--pit); border:1px solid var(--edge); outline:none}
+.calc-row input:focus{border-color:var(--brass-dim)}
+.calc-out{display:grid; gap:.5rem; grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  padding-top:.9rem; border-top:1px solid var(--ridge)}
+.calc-out div{text-align:center}
+.calc-out .v{font-family:var(--mono); font-size:1.15rem; font-weight:800; color:var(--brass)}
+.calc-out .l{font-size:.64rem; color:var(--ink-faint); margin-top:.2rem}
+
+.rows{display:grid}
+.row{display:flex; justify-content:space-between; align-items:center; gap:1rem;
+  padding:.6rem .2rem; border-bottom:1px solid var(--ridge); font-size:.85rem}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--ink-dim)}
+.row .v{font-family:var(--mono); font-weight:600}
+.pos{color:var(--jade)} .neg{color:var(--rust)}
+.hint{font-size:.74rem; color:var(--ink-faint); margin-top:.7rem; line-height:1.7}
+.summary{padding:1.1rem; border-radius:12px; background:var(--slab);
+  border:1px solid var(--edge); font-size:.87rem; line-height:1.85; color:var(--ink-dim)}
+
+footer{padding:2.5rem 0 4rem; border-top:1px solid var(--ridge); margin-top:2rem;
+  color:var(--ink-faint); font-size:.78rem; line-height:1.8}
+.loading{padding:5rem 0; text-align:center; color:var(--ink-faint);
+  font-family:var(--mono); font-size:.85rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="topbar">
+      <nav class="nav">
+        <a href="index.html" data-t="navTech"></a>
+        <a href="research.html" data-t="navFund"></a>
+        <a href="decisions.html" class="on" data-t="navDec"></a>
+      </nav>
+      <div class="lang">
+        <button id="btnAr" class="on">عربي</button>
+        <button id="btnEn">EN</button>
+      </div>
+    </div>
+    <h1 data-t="title"></h1>
+    <p class="sub" data-t="sub"></p>
+    <div class="fresh" id="fresh"></div>
+    <div class="notice">
+      <span>⚠</span><p data-t="disclaimer"></p>
+    </div>
+    <div class="tally" id="tally"></div>
+  </header>
+
+  <h2 data-t="listTitle"></h2>
+  <div class="tools">
+    <input id="q" type="search" autocomplete="off">
+    <select id="sortBy"></select>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <main class="grid" id="grid"><div class="loading">…</div></main>
+
+  <footer><p data-t="footer"></p></footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true"></aside>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+let LANG='ar';
+
+/* كل نصوص الواجهة بلغتين — الداتا نفسها جاية من الخادم بلغتين */
+const T={
+  navTech:{ar:'الأسعار والتحليل الفني',en:'Prices & Technicals'},
+  navFund:{ar:'التحليل الأساسي',en:'Fundamentals'},
+  navDec:{ar:'قرارات التداول',en:'Trading Decisions'},
+  title:{ar:'ادخل ولا استنى',en:'Enter or Wait'},
+  sub:{ar:'كل سهم بقرار واضح وسببه — مبني على الاتجاه والمستويات والمخاطرة، مع خطة دخول وأهداف ووقف خسارة وحجم مركز محسوب.',
+       en:'A clear call for every stock with its reason — based on trend, levels and risk, with an entry plan, targets, stop loss and position size.'},
+  disclaimer:{ar:'<b>ده نظام انضباط مش نظام تنبؤ.</b> مابيقولش السهم هيطلع — بيقول لو دي فرصة بمخاطرة محسوبة ولا لأ. الباكتيست بتاعنا على 215 سهم أثبت إن توقيت السوق بيخسر مقابل الشراء والاحتفاظ، فالقيمة هنا في إدارة المخاطر مش في التوقع.',
+              en:'<b>This is a discipline system, not a prediction system.</b> It does not say a stock will rise — it says whether this is a calculated-risk opportunity. Our backtest on 215 stocks showed market timing underperformed buy-and-hold, so the value here is risk management, not forecasting.'},
+  listTitle:{ar:'كل الأسهم',en:'All Stocks'},
+  search:{ar:'دوّر على سهم…',en:'Search a stock…'},
+  footer:{ar:'الأرقام من S&P Global عن طريق stockanalysis.com · الأسعار إغلاق آخر جلسة مش لحظية — نفّذ بسعر شركة السمسرة.',
+          en:'Data from S&P Global via stockanalysis.com · Prices are last close, not live — execute at your broker&rsquo;s live price.'},
+  BUY:{ar:'دخول',en:'ENTER'}, WAIT:{ar:'انتظار',en:'WAIT'}, AVOID:{ar:'تجنّب',en:'AVOID'},
+  all:{ar:'كل الأسهم',en:'All stocks'},
+  overall:{ar:'الإجمالي',en:'Overall'}, technical:{ar:'فني',en:'Technical'},
+  fundamental:{ar:'أساسي',en:'Fundamental'}, valuation:{ar:'تقييم',en:'Valuation'},
+  risk:{ar:'مخاطرة',en:'Risk'}, timing:{ar:'توقيت الدخول',en:'Entry Timing'},
+  sScores:{ar:'الدرجات',en:'Scores'}, sTrend:{ar:'الاتجاه',en:'Trend'},
+  sInd:{ar:'المؤشرات',en:'Indicators'}, sLevels:{ar:'المستويات',en:'Levels'},
+  sVol:{ar:'حجم التداول',en:'Volume'}, sPlans:{ar:'خطط الدخول',en:'Entry Plans'},
+  sTargets:{ar:'الأهداف',en:'Targets'}, sRR:{ar:'العائد مقابل المخاطرة',en:'Risk / Reward'},
+  sCalc:{ar:'حجم المركز',en:'Position Size'}, sFund:{ar:'الأرقام الأساسية',en:'Fundamentals'},
+  sSum:{ar:'الخلاصة',en:'Summary'},
+  resistance:{ar:'مقاومة',en:'Resistance'}, price:{ar:'السعر الحالي',en:'Current Price'},
+  support:{ar:'دعم',en:'Support'}, stop:{ar:'وقف الخسارة',en:'Stop Loss'},
+  high52:{ar:'أعلى 52 أسبوع',en:'52-week High'}, low52:{ar:'أدنى 52 أسبوع',en:'52-week Low'},
+  ready:{ar:'شروطها متحققة',en:'Conditions met'},
+  notReady:{ar:'مش مكتملة',en:'Not yet'},
+  capital:{ar:'رأس المال (ج.م)',en:'Capital (EGP)'},
+  riskPct:{ar:'المخاطرة المسموحة %',en:'Risk per trade %'},
+  shares:{ar:'عدد الأسهم',en:'Shares'}, cost:{ar:'قيمة الصفقة',en:'Position value'},
+  maxLoss:{ar:'أقصى خسارة',en:'Max loss'},
+  perShare:{ar:'مخاطرة السهم',en:'Risk / share'},
+  pe:{ar:'مكرر الربحية',en:'P/E'}, peF:{ar:'المكرر المستقبلي',en:'Forward P/E'},
+  roe:{ar:'العائد على الملكية',en:'ROE'}, margin:{ar:'هامش صافي الربح',en:'Net Margin'},
+  revG:{ar:'نمو الإيرادات',en:'Revenue Growth'}, niG:{ar:'نمو صافي الربح',en:'Profit Growth'},
+  de:{ar:'الدين/الملكية',en:'Debt/Equity'}, fair:{ar:'السعر العادل',en:'Fair Value'},
+  upside:{ar:'الفرق عن السعر',en:'Upside'},
+  vsSector:{ar:'مقابل القطاع',en:'vs Sector'},
+  sortDefault:{ar:'الترتيب الافتراضي',en:'Default order'},
+  sortScore:{ar:'أعلى درجة',en:'Highest score'},
+  sortTiming:{ar:'أفضل توقيت دخول',en:'Best entry timing'},
+  sortRR:{ar:'أفضل عائد/مخاطرة',en:'Best risk/reward'},
+  sortSupport:{ar:'الأقرب للدعم',en:'Closest to support'},
+  delayed:{ar:'الأسعار إغلاق آخر جلسة — مش لحظية',en:'Last close — not live'},
+};
+const t=k=>T[k]?T[k][LANG]:k;
+const tx=o=>!o?'':(typeof o==='string'?o:(o[LANG]??o.ar??''));
+
+const fmt=(v,d=2)=> v==null||Number.isNaN(v)?'—'
+  : Number(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=(v,d=1)=> v==null?'—':(v>0?'+':'')+Number(v).toFixed(d)+'%';
+const toneColor=t=>({good:'var(--jade)',warn:'var(--amber)',bad:'var(--rust)'}[t]||'var(--steel)');
+const scoreColor=v=>v>=70?'var(--jade)':v>=45?'var(--amber)':'var(--rust)';
+
+let DATA=null, REPORTS={}, filter='', query='', sortBy='default';
+
+const SORTS={
+  default:(a,b)=>0,
+  score:(a,b)=>(b.scores.overall??0)-(a.scores.overall??0),
+  timing:(a,b)=>(b.scores.timing??0)-(a.scores.timing??0),
+  rr:(a,b)=>(b.riskReward??-9)-(a.riskReward??-9),
+  support:(a,b)=>Math.abs(a.toSupport??999)-Math.abs(b.toSupport??999),
+};
+
+const norm=s=>(s||'').toString().toLowerCase()
+  .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')
+  .replace(/(^|\s)ال/g,'$1').trim();
+
+function card(s){
+  const sc=s.scores;
+  const bars=['technical','fundamental','valuation','risk','timing'].map(k=>{
+    const v=sc[k];
+    return `<div class="bx">
+      <div class="t"><i style="width:${v??0}%;background:${scoreColor(v??0)}"></i></div>
+      <div class="v">${v??'—'}</div><div class="l">${t(k)}</div></div>`;
+  }).join('');
+  return `<article class="dc ${s.tone}" data-sym="${s.symbol}">
+    <div class="dc-top">
+      <div style="min-width:0">
+        <div class="dc-sym">${s.symbol}</div>
+        <div class="dc-name">${s.name||''}</div>
+      </div>
+      <span class="act ${s.tone}">${t(s.action)}</span>
+    </div>
+    <div class="dc-price">
+      <span class="dc-px">${fmt(s.price)}</span><span class="dc-cur">EGP</span>
+      <span class="dc-score">${sc.overall??'—'}<small>/100</small></span>
+    </div>
+    <div class="dc-reason">${tx(s.reason)}</div>
+    <div class="dc-bars">${bars}</div>
+  </article>`;
+}
+
+function render(){
+  let list=[...DATA.stocks];
+  if(filter) list=list.filter(s=>s.action===filter);
+  if(query){
+    const q=norm(query);
+    list=list.filter(s=>norm(s.symbol).includes(q)||norm(s.name).includes(q)
+      ||norm(s.sector).includes(q));
+  }
+  if(sortBy!=='default') list.sort(SORTS[sortBy]);
+  $('#grid').innerHTML=list.length?list.map(card).join(''):`<div class="loading">—</div>`;
+  $('#cnt').textContent=`${list.length}`;
+  document.querySelectorAll('.dc').forEach(el=>
+    el.addEventListener('click',()=>openPanel(el.dataset.sym)));
+}
+
+function renderTally(){
+  const c={BUY:0,WAIT:0,AVOID:0};
+  DATA.stocks.forEach(s=>c[s.action]++);
+  const cells=[
+    {k:'',n:DATA.stocks.length,l:t('all'),cls:'all'},
+    {k:'BUY',n:c.BUY,l:t('BUY'),cls:'buy'},
+    {k:'WAIT',n:c.WAIT,l:t('WAIT'),cls:'wait'},
+    {k:'AVOID',n:c.AVOID,l:t('AVOID'),cls:'avoid'},
+  ];
+  $('#tally').innerHTML=cells.map(c=>
+    `<div class="ty ${c.cls} ${filter===c.k?'on':''}" data-f="${c.k}">
+      <div class="n">${c.n}</div><div class="l">${c.l}</div></div>`).join('');
+  document.querySelectorAll('.ty').forEach(el=>
+    el.addEventListener('click',()=>{ filter=el.dataset.f; renderTally(); render(); }));
+}
+
+/* ── اللوحة ─────────────────────────────────────────── */
+const row=(k,v,cls='')=>`<div class="row"><span class="k">${k}</span>
+  <span class="v ${cls}">${v}</span></div>`;
+
+async function openPanel(sym){
+  $('#panel').classList.add('on'); $('#scrim').classList.add('on');
+  $('#panel').innerHTML=`<div class="p-in"><button class="p-close">✕</button>
+    <div class="dc-sym" style="font-size:2rem">${sym}</div>
+    <p class="loading">…</p></div>`;
+  $('.p-close').addEventListener('click',closePanel);
+  $('#panel').scrollTop=0;
+
+  if(!REPORTS[sym]){
+    try{ const r=await fetch(`decision/${sym}.json`);
+      REPORTS[sym]=r.ok?await r.json():null; }catch(e){ REPORTS[sym]=null; }
+  }
+  const r=REPORTS[sym];
+  if(!r||$('#panel').querySelector('.dc-sym').textContent!==sym) return;
+  $('#panel').innerHTML=panelHTML(r);
+  $('.p-close').addEventListener('click',closePanel);
+  bindCalc(r);
+}
+
+function panelHTML(r){
+  const d=r.decision, sc=r.scores, tr=r.trend, lv=r.levels, f=r.fundamental;
+
+  const scoreBars=['overall','technical','fundamental','valuation','risk','timing']
+    .filter(k=>sc[k]!=null).map(k=>
+    `<div class="sbar"><span class="k">${t(k)}</span>
+      <span class="t"><i style="width:${sc[k]}%;background:${scoreColor(sc[k])}"></i></span>
+      <span class="v" style="color:${scoreColor(sc[k])}">${sc[k]}</span></div>`).join('');
+
+  const checks=tr.checks.map(c=>
+    `<div class="chk ${c.ok?'yes':'no'}"><span class="i">${c.ok?'☑':'☐'}</span>
+      <span>${tx(c.label)}</span></div>`).join('');
+
+  const inds=r.indicators.map(i=>
+    `<div class="ind"><div class="ind-h">
+      <b>${tx(i.key)}</b><span class="v">${fmt(i.value,i.key==='RSI'?0:2)}</span>
+      <span class="z ${i.tone}">${tx(i.zone)}</span></div>
+      <p>${tx(i.note)}</p></div>`).join('');
+
+  const rung=(cls,label,val,dist)=> val==null?'':
+    `<div class="rung ${cls}"><span class="k">${label}</span>
+      <span class="v">${fmt(val)}</span>
+      <span class="d ${dist!=null?(dist>0?'pos':'neg'):''}">${dist!=null?pct(dist):''}</span></div>`;
+
+  const plans=r.plans.map(p=>{
+    const st=p.ready?`<span class="z good">${t('ready')}</span>`
+                    :`<span class="z flat">${t('notReady')}</span>`;
+    const conds=p.conditions.map(c=>
+      `<div class="chk ${c.ok?'yes':'no'}"><span class="i">${c.ok?'☑':'☐'}</span>
+        <span>${tx(c.label)}</span></div>`).join('');
+    return `<div class="plan ${p.ready?'ready':''} ${p.warning?'warn':''}">
+      <div class="plan-h"><b>${tx(p.name)}</b>
+        ${p.zone?`<span class="zone">${p.zone[0]} – ${p.zone[1]}</span>`:''}
+        ${st}</div>${conds}</div>`;
+  }).join('');
+
+  const tps=r.targets.length?`<div class="tps">${r.targets.map(x=>
+    `<div class="tp"><div class="n">${x.name}</div>
+      <div class="p">${fmt(x.price)}</div>
+      <div class="g">${pct(x.gain,1)}</div></div>`).join('')}</div>`:'';
+
+  const rr=r.riskReward;
+  const vol=r.volume;
+
+  return `<div class="p-in">
+    <button class="p-close">✕</button>
+    <div class="dc-sym" style="font-size:2rem">${r.symbol}</div>
+    <div style="color:var(--ink-dim);font-size:.88rem;margin-top:.35rem">${r.name||''}</div>
+    ${r.sector?`<div style="font-family:var(--mono);font-size:.65rem;color:var(--brass);
+      letter-spacing:.1em;margin-top:.5rem">${r.sector}</div>`:''}
+    <div style="display:flex;align-items:baseline;gap:.5rem;margin-top:1rem">
+      <span style="font-family:var(--mono);font-size:2rem;font-weight:800">${fmt(r.price)}</span>
+      <span style="font-size:.7rem;color:var(--ink-faint)">EGP</span>
+    </div>
+
+    <div class="verdict ${d.tone}">
+      <div class="big">${t(d.action)}</div>
+      <div class="sm">${tx(d.label)}</div>
+      <ul>${(d.reasons[LANG]||d.reasons.ar||[]).map(x=>`<li>${x}</li>`).join('')}</ul>
+    </div>
+
+    <div class="sec"><h3>${t('sScores')}</h3>${scoreBars}</div>
+
+    <div class="sec"><h3>${t('sTrend')} — ${tx(tr.label)} · ${tr.score10}/10</h3>
+      ${checks}</div>
+
+    <div class="sec"><h3>${t('sInd')}</h3>${inds}</div>
+
+    <div class="sec"><h3>${t('sLevels')}</h3>
+      <div class="lad">
+        ${rung('','',lv.high52,null).replace('<span class="k"></span>',
+          `<span class="k">${t('high52')}</span>`)}
+        ${rung('res',t('resistance'),lv.resistance,lv.toResistance)}
+        ${rung('here',t('price'),lv.price,0)}
+        ${rung('sup',t('support'),lv.support,lv.toSupport)}
+        ${rung('stop',t('stop'),lv.stopLoss,
+          lv.stopLoss&&lv.price?(lv.stopLoss-lv.price)/lv.price*100:null)}
+        ${rung('',t('low52'),lv.low52,null)}
+      </div>
+    </div>
+
+    ${vol?`<div class="sec"><h3>${t('sVol')}</h3>
+      <div class="ind"><div class="ind-h">
+        <span class="v">${fmt(vol.ratio,2)}×</span>
+        <span class="z ${vol.tone}">${tx(vol.zone)}</span></div>
+        ${vol.breakout?`<p><b style="color:${toneColor(vol.breakout.tone)}">
+          ${tx(vol.breakout.label)}</b> — ${tx(vol.breakout.note)}</p>`:''}
+      </div></div>`:''}
+
+    <div class="sec"><h3>${t('sPlans')}</h3>${plans}</div>
+
+    ${tps?`<div class="sec"><h3>${t('sTargets')}</h3>${tps}</div>`:''}
+
+    ${rr?`<div class="sec"><h3>${t('sRR')}</h3>
+      <div class="rows">
+        ${row(t('perShare'),fmt(rr.risk),'neg')}
+        ${row(LANG==='ar'?'العائد المحتمل':'Potential reward',fmt(rr.reward),'pos')}
+        ${row(LANG==='ar'?'النسبة':'Ratio',
+          `1 : ${rr.ratio}`,rr.tone==='good'?'pos':rr.tone==='bad'?'neg':'')}
+        ${row(LANG==='ar'?'الحكم':'Verdict',tx(rr.verdict))}
+      </div>
+      <p class="hint">${LANG==='ar'
+        ?'أي صفقة عائدها أقل من ضعف مخاطرتها محتاجة نسبة نجاح عالية جداً عشان تكسب على المدى الطويل.'
+        :'Any trade with reward below 2× its risk needs a very high win rate to profit long term.'}</p>
+    </div>`:''}
+
+    <div class="sec"><h3>${t('sCalc')}</h3>
+      <div class="calc">
+        <div class="calc-row">
+          <label>${t('capital')}
+            <input id="cap" type="number" value="100000" min="1000" step="1000"></label>
+          <label>${t('riskPct')}
+            <input id="rk" type="number" value="1" min="0.1" max="5" step="0.1"></label>
+        </div>
+        <div class="calc-out" id="calcOut"></div>
+        <p class="hint">${LANG==='ar'
+          ?'المخاطرة 1% معناها إنك تقدر تغلط 20 مرة ورا بعض وتفضل شايل 80% من فلوسك. ده اللي بيخليك تكمل في السوق.'
+          :'Risking 1% means you could be wrong 20 times in a row and still keep 80% of your capital. That is what keeps you in the game.'}</p>
+      </div>
+    </div>
+
+    <div class="sec"><h3>${t('sFund')}</h3>
+      <div class="rows">
+        ${row(t('pe'),fmt(f.pe,2))}
+        ${row(t('peF'),fmt(f.peForward,2))}
+        ${row(t('roe'),f.roe!=null?fmt(f.roe,1)+'%':'—')}
+        ${row(t('margin'),f.netMargin!=null?fmt(f.netMargin,1)+'%':'—')}
+        ${row(t('revG'),pct(f.revenueGrowth),(f.revenueGrowth??0)>=0?'pos':'neg')}
+        ${row(t('niG'),pct(f.netIncomeGrowth),(f.netIncomeGrowth??0)>=0?'pos':'neg')}
+        ${row(t('de'),fmt(f.debtToEquity,2),(f.debtToEquity??0)>1.5?'neg':'')}
+        ${row(t('fair'),fmt(f.fairValue))}
+        ${row(t('upside'),pct(f.upside),(f.upside??0)>=0?'pos':'neg')}
+        ${f.sectorVerdict?row(t('vsSector'),
+          `<span style="color:${toneColor(f.sectorVerdict.tone)}">${tx(f.sectorVerdict)}</span>
+           ${f.vsSector!=null?`<small style="color:var(--ink-faint)"> (${pct(f.vsSector,0)})</small>`:''}`):''}
+      </div>
+    </div>
+
+    <div class="sec"><h3>${t('sSum')}</h3>
+      <div class="summary">${tx(r.summary)}</div>
+      <p class="hint">${LANG==='ar'
+        ?'⚠️ ده تحليل مبني على أرقام آخر جلسة. مش توصية شراء أو بيع، ومابيتوقعش السعر. نفّذ دايماً بسعر لحظي من شركة السمسرة.'
+        :'⚠️ Analysis based on last session data. Not a buy or sell recommendation and not a price forecast. Always execute at your broker&rsquo;s live price.'}</p>
+    </div>
+  </div>`;
+}
+
+/* حاسبة حجم المركز — بتتحدّث مع كل تغيير */
+function bindCalc(r){
+  const entry=r.entryPrice||r.price;
+  const stop=r.levels.stopLoss;
+  const out=$('#calcOut');
+  if(!out) return;
+
+  function calc(){
+    const cap=+($('#cap').value||0), rk=+($('#rk').value||0);
+    if(!entry||!stop||entry<=stop||!cap||!rk){
+      out.innerHTML=`<div style="grid-column:1/-1;color:var(--ink-faint);
+        font-size:.8rem;text-align:center">—</div>`;
+      return;
+    }
+    const perShare=entry-stop;
+    const maxLoss=cap*rk/100;
+    const shares=Math.floor(maxLoss/perShare);
+    const cost=shares*entry;
+    out.innerHTML=`
+      <div><div class="v">${shares.toLocaleString('en-US')}</div><div class="l">${t('shares')}</div></div>
+      <div><div class="v">${fmt(cost,0)}</div><div class="l">${t('cost')}</div></div>
+      <div><div class="v" style="color:var(--rust)">${fmt(maxLoss,0)}</div><div class="l">${t('maxLoss')}</div></div>
+      <div><div class="v">${fmt(perShare)}</div><div class="l">${t('perShare')}</div></div>`;
+  }
+  $('#cap').addEventListener('input',calc);
+  $('#rk').addEventListener('input',calc);
+  calc();
+}
+
+function closePanel(){ $('#panel').classList.remove('on'); $('#scrim').classList.remove('on'); }
+$('#scrim').addEventListener('click',closePanel);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel()});
+$('#q').addEventListener('input',e=>{query=e.target.value; render()});
+$('#sortBy').addEventListener('change',e=>{sortBy=e.target.value; render()});
+
+function applyLang(){
+  document.documentElement.lang=LANG;
+  document.documentElement.dir=LANG==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-t]').forEach(el=>el.innerHTML=t(el.dataset.t));
+  $('#q').placeholder=t('search');
+  $('#sortBy').innerHTML=[['default','sortDefault'],['score','sortScore'],
+    ['timing','sortTiming'],['rr','sortRR'],['support','sortSupport']]
+    .map(([v,k])=>`<option value="${v}">${t(k)}</option>`).join('');
+  $('#sortBy').value=sortBy;
+  $('#btnAr').classList.toggle('on',LANG==='ar');
+  $('#btnEn').classList.toggle('on',LANG==='en');
+  if(DATA){ renderFresh(); renderTally(); render(); }
+}
+$('#btnAr').addEventListener('click',()=>{LANG='ar'; applyLang()});
+$('#btnEn').addEventListener('click',()=>{LANG='en'; applyLang()});
+
+function renderFresh(){
+  const d=new Date(DATA.tradeDate+'T00:00:00');
+  const nice=d.toLocaleDateString(LANG==='ar'?'ar-EG':'en-GB',
+    {weekday:'long',day:'numeric',month:'long'});
+  $('#fresh').innerHTML=`<span class="dot"></span>
+    <span>${LANG==='ar'?'إغلاق':'Close of'} <b>${nice}</b></span>
+    <span style="color:var(--ink-faint);font-size:.75rem">· ${t('delayed')}</span>`;
+}
+
+applyLang();
+fetch('decisions.json?v='+Date.now())
+  .then(r=>{if(!r.ok)throw new Error(r.status); return r.json()})
+  .then(d=>{ DATA=d; renderFresh(); renderTally(); render(); })
+  .catch(e=>{$('#grid').innerHTML=
+    `<div class="loading">تعذّر التحميل (${e.message})<br><br>
+     <code style="color:var(--brass)">python3 egx_decision.py --all</code></div>`});
+</script>
+</body>
+</html>

@@ -46,6 +46,7 @@ jobs:
 
           git add egx_data.csv egx_shortlist.csv egx_technical.csv arabic_names.json \
                   dashboard/research dashboard/research.json \
+                  dashboard/decision dashboard/decisions.json \
                   dashboard/data.json dashboard/candles dashboard/news dashboard/news.json dashboard/names_ar.json
 
           # لو مفيش تغيير (عطلة رسمية مثلاً) منعملش commit فاضي

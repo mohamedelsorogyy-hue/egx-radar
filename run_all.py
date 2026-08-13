@@ -75,30 +75,36 @@ def main():
     started = datetime.now()
 
     if not args.skip_fetch:
-        step("1/6  جلب بيانات الشركات", ["egx_fetch.py"])
+        step("1/7  جلب بيانات الشركات", ["egx_fetch.py"])
     else:
         print("⏭  تخطّي الجلب — بستخدم egx_data.csv الموجود")
 
     latest = check_freshness()
 
-    step("2/6  التقييم والفلترة", ["egx_score.py", "--top", "15"])
-    step("3/6  التحليل الفني", ["egx_technical.py", "--top", str(args.top)])
-    step("4/6  بناء داتا الداشبورد",
+    step("2/7  التقييم والفلترة", ["egx_score.py", "--top", "15"])
+    step("3/7  التحليل الفني", ["egx_technical.py", "--top", str(args.top)])
+    step("4/7  بناء داتا الداشبورد",
          ["egx_dashboard_data.py", "--top", str(args.top)])
 
     # التحليل الأساسي: بيجيب القوائم المالية الكاملة لكل سهم.
     # أبطأ خطوة (6 طلبات لكل سهم) فبتيجي بعد ما الداشبورد الأساسي جاهز.
     if not args.skip_research:
         try:
-            step("5/6  التحليل الأساسي", ["egx_research_all.py"])
+            step("5/7  التحليل الأساسي", ["egx_research_all.py"])
         except SystemExit:
             print("⚠️  التحليل الأساسي فشل — باقي الداشبورد شغال")
+
+    # القرارات: بتبني على مخرجات كل اللي قبلها، فلازم تيجي بعدهم
+    try:
+        step("6/7  قرارات التداول", ["egx_decision.py", "--all"])
+    except SystemExit:
+        print("⚠️  القرارات فشلت — باقي الداشبورد شغال")
 
     # الأخبار آخر خطوة عن قصد: لو Google رفض الطلبات، الداشبورد
     # يفضل يتحدّث بالأسعار والتحليل — الأخبار إضافة مش أساس.
     if not args.skip_news:
         try:
-            step("6/6  الأخبار", ["egx_news.py"])
+            step("7/7  الأخبار", ["egx_news.py"])
         except SystemExit:
             print("⚠️  الأخبار فشلت — الداشبورد هيتحدّث من غيرها")
 
