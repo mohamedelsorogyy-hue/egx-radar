@@ -737,6 +737,25 @@ def main():
         show(r)
         return
 
+    # الأسهم المستبعدة من الفلترة — بتدخل القايمة بقرار "تجنّب"
+    # وسبب الاستبعاد. من غير كده كان الداشبورد بيعرض 139 من 224
+    # والباقي بيختفي، والمستخدم يحس إن فيه أسهم ناقصة.
+    excluded = {}
+    try:
+        with open("dashboard/excluded.json", encoding="utf-8") as fh:
+            for it in json.load(fh)["items"]:
+                excluded[it["symbol"]] = it
+    except (FileNotFoundError, ValueError):
+        pass
+
+    raw_rows = {}
+    try:
+        with open("egx_data.csv", encoding="utf-8-sig") as fh:
+            for r in csv.DictReader(fh):
+                raw_rows[r["symbol"]] = r
+    except FileNotFoundError:
+        pass
+
     os.makedirs(OUT_DIR, exist_ok=True)
     reports, summary = [], []
     for symbol in stocks:
@@ -764,8 +783,40 @@ def main():
             "upside": r["fundamental"]["upside"],
         })
 
+    # المستبعدين: قرار "تجنّب" بسبب الفلترة، من غير تحليل فني
+    # (مالهومش داتا كفاية أصلاً — وده هو سبب الاستبعاد).
+    for symbol, info in excluded.items():
+        if symbol in stocks:
+            continue
+        row = raw_rows.get(symbol, {})
+        reasons = info.get("reasons") or []
+        price = None
+        try:
+            price = float(row.get("price") or 0) or None
+        except ValueError:
+            pass
+        summary.append({
+            "symbol": symbol,
+            "name": info.get("name") or row.get("name") or symbol,
+            "sector": None,
+            "price": price,
+            "action": "AVOID",
+            "label": L("مستبعد من الفلترة", "Filtered Out"),
+            "tone": "bad",
+            "reason": L(reasons[0] if reasons else "بيانات غير كافية",
+                        reasons[0] if reasons else "Insufficient data"),
+            "filteredOut": True,
+            "allReasons": reasons,
+            "scores": {"overall": None, "technical": None, "fundamental": None,
+                       "valuation": None, "risk": None, "timing": None},
+            "trendScore": None, "rsi": None,
+            "toResistance": None, "toSupport": None,
+            "riskReward": None, "upside": None,
+        })
+
     order = {"BUY": 0, "WAIT": 1, "AVOID": 2}
     summary.sort(key=lambda x: (order[x["action"]],
+                                1 if x.get("filteredOut") else 0,
                                 -(x["scores"]["overall"] or 0)))
 
     with open(OUT_SUMMARY, "w", encoding="utf-8") as fh:
@@ -778,9 +829,11 @@ def main():
 
     counts = {a: sum(1 for x in summary if x["action"] == a)
               for a in ("BUY", "WAIT", "AVOID")}
-    print(f"✅ {len(summary)} قرار · "
+    filtered = sum(1 for x in summary if x.get("filteredOut"))
+    print(f"✅ {len(summary)} سهم · "
           f"🟢 {counts['BUY']} دخول · 🟡 {counts['WAIT']} انتظار · "
-          f"🔴 {counts['AVOID']} تجنّب")
+          f"🔴 {counts['AVOID']} تجنّب "
+          f"(منهم {filtered} مستبعد من الفلترة)")
 
 
 if __name__ == "__main__":

@@ -75,6 +75,7 @@ h1{font-family:var(--display); font-weight:700; line-height:1;
 .ty .l{font-size:.76rem; color:var(--ink-faint); margin-top:.45rem}
 .ty.buy .n{color:var(--jade)} .ty.wait .n{color:var(--amber)}
 .ty.avoid .n{color:var(--rust)} .ty.all .n{color:var(--brass)}
+.ty.ana .n{color:var(--steel)}
 
 .tools{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
   margin:2rem 0 1.3rem; padding-bottom:1.1rem; border-bottom:1px solid var(--ridge)}
@@ -97,6 +98,10 @@ h1{font-family:var(--display); font-weight:700; line-height:1;
 .dc.good::before{background:var(--jade)}
 .dc.warn::before{background:var(--amber)}
 .dc.bad::before{background:var(--rust)}
+.dc.out{opacity:.62}
+.dc.out:hover{opacity:1}
+.out-note{font-size:.68rem; color:var(--ink-faint); margin-top:.75rem;
+  padding-top:.7rem; border-top:1px solid var(--ridge)}
 
 .dc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.7rem}
 .dc-sym{font-family:var(--mono); font-size:1.25rem; font-weight:800; letter-spacing:-.03em}
@@ -358,6 +363,11 @@ const T={
   sortTiming:{ar:'أفضل توقيت دخول',en:'Best entry timing'},
   sortRR:{ar:'أفضل عائد/مخاطرة',en:'Best risk/reward'},
   sortSupport:{ar:'الأقرب للدعم',en:'Closest to support'},
+  filtered:{ar:'مستبعد',en:'FILTERED'},
+  filteredNote:{ar:'اتشال من الفلترة — مافيش تحليل فني ليه',
+                en:'Removed by filters — no technical analysis'},
+  analyzed:{ar:'اتحلّلوا',en:'Analyzed'},
+  coverage:{ar:'من كل أسهم السوق',en:'of all listed stocks'},
   delayed:{ar:'الأسعار إغلاق آخر جلسة — مش لحظية',en:'Last close — not live'},
 };
 const t=k=>T[k]?T[k][LANG]:k;
@@ -385,6 +395,23 @@ const norm=s=>(s||'').toString().toLowerCase()
 
 function card(s){
   const sc=s.scores;
+  // السهم المستبعد من الفلترة مالوش درجات — بنعرض سبب الاستبعاد بدلها
+  if(s.filteredOut){
+    return `<article class="dc bad out" data-sym="${s.symbol}">
+      <div class="dc-top">
+        <div style="min-width:0">
+          <div class="dc-sym">${s.symbol}</div>
+          <div class="dc-name">${s.name||''}</div>
+        </div>
+        <span class="act bad">${t('filtered')}</span>
+      </div>
+      <div class="dc-price">
+        <span class="dc-px">${fmt(s.price)}</span><span class="dc-cur">EGP</span>
+      </div>
+      <div class="dc-reason">${(s.allReasons||[tx(s.reason)]).join(' · ')}</div>
+      <div class="out-note">${t('filteredNote')}</div>
+    </article>`;
+  }
   const bars=['technical','fundamental','valuation','risk','timing'].map(k=>{
     const v=sc[k];
     return `<div class="bx">
@@ -410,7 +437,8 @@ function card(s){
 
 function render(){
   let list=[...DATA.stocks];
-  if(filter) list=list.filter(s=>s.action===filter);
+  if(filter==='ANALYZED') list=list.filter(s=>!s.filteredOut);
+  else if(filter) list=list.filter(s=>s.action===filter);
   if(query){
     const q=norm(query);
     list=list.filter(s=>norm(s.symbol).includes(q)||norm(s.name).includes(q)
@@ -426,8 +454,10 @@ function render(){
 function renderTally(){
   const c={BUY:0,WAIT:0,AVOID:0};
   DATA.stocks.forEach(s=>c[s.action]++);
+  const analyzed=DATA.stocks.filter(s=>!s.filteredOut).length;
   const cells=[
     {k:'',n:DATA.stocks.length,l:t('all'),cls:'all'},
+    {k:'ANALYZED',n:analyzed,l:t('analyzed'),cls:'ana'},
     {k:'BUY',n:c.BUY,l:t('BUY'),cls:'buy'},
     {k:'WAIT',n:c.WAIT,l:t('WAIT'),cls:'wait'},
     {k:'AVOID',n:c.AVOID,l:t('AVOID'),cls:'avoid'},
@@ -444,6 +474,24 @@ const row=(k,v,cls='')=>`<div class="row"><span class="k">${k}</span>
   <span class="v ${cls}">${v}</span></div>`;
 
 async function openPanel(sym){
+  const brief=DATA.stocks.find(x=>x.symbol===sym);
+  if(brief&&brief.filteredOut){
+    $('#panel').classList.add('on'); $('#scrim').classList.add('on');
+    $('#panel').innerHTML=`<div class="p-in"><button class="p-close">✕</button>
+      <div class="dc-sym" style="font-size:2rem">${sym}</div>
+      <div style="color:var(--ink-dim);font-size:.88rem;margin-top:.35rem">${brief.name||''}</div>
+      <div class="verdict bad" style="margin-top:1.4rem">
+        <div class="big">${t('filtered')}</div>
+        <div class="sm">${tx(brief.label)}</div>
+        <ul>${(brief.allReasons||[]).map(x=>`<li>${x}</li>`).join('')}</ul>
+      </div>
+      <p class="hint">${LANG==='ar'
+        ?'السهم ده اتشال قبل التحليل عشان واحد من الأسباب دي — يعني مفيش عنده درجات ولا خطة دخول. الفلاتر دي بتحمي من أسهم الخروج منها صعب أو أرقامها غير موثوقة.'
+        :'This stock was removed before analysis for the reason(s) above, so it has no scores or entry plan. These filters protect against stocks that are hard to exit or have unreliable numbers.'}</p>
+    </div>`;
+    $('.p-close').addEventListener('click',closePanel);
+    return;
+  }
   $('#panel').classList.add('on'); $('#scrim').classList.add('on');
   $('#panel').innerHTML=`<div class="p-in"><button class="p-close">✕</button>
     <div class="dc-sym" style="font-size:2rem">${sym}</div>
