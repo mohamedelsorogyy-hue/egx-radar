@@ -35,8 +35,11 @@ UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
-WORKERS = 5
-RETRIES = 3
+# 4 بدل 5: الضغط الزيادة كان بيسبب انقطاع في الاتصال
+WORKERS = 4
+# 5 محاولات بدل 3: فقدنا 11 سهم في تشغيل واحد بسبب
+# انقطاعات مؤقتة، والسهم اللي بيفشل بيختفي من الداشبورد خالص
+RETRIES = 5
 
 SHORTLIST = "egx_shortlist.csv"
 OUT_FILE = "egx_technical.csv"
@@ -56,7 +59,7 @@ def http_get(url):
                     "Referer": f"{BASE}/quote/EGX/COMI/history/",
                 },
             )
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=45) as resp:
                 return json.loads(resp.read().decode("utf-8"))
         # OSError بتغطي انقطاع الشبكة و socket.timeout و URLError و HTTPError.
         # في بايثون 3.9 الـ socket.timeout مش نوع من TimeoutError، فكان

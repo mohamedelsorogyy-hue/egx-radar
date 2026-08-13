@@ -232,8 +232,18 @@ def main():
 
     # آخر يوم تداول مفروض يكون فيه جلسة (البورصة المصرية: الأحد–الخميس).
     # المقارنة بيه بتقول للمستخدم صراحةً: الأرقام دي جلسة النهاردة ولا أقدم؟
-    today = datetime.now(timezone.utc).date()
-    probe = today
+    # التوقيت بتوقيت القاهرة (UTC+3 صيفاً) لأن مواعيد البورصة بيه.
+    cairo_now = datetime.now(timezone.utc) + timedelta(hours=3)
+    probe = cairo_now.date()
+
+    # لو النهاردة يوم تداول بس السوق لسه ما قفلش (قبل 2:30 ظهراً)،
+    # يبقى جلسة النهاردة مش موجودة أصلاً — المتوقع هو الجلسة اللي فاتت.
+    # من غير الشرط ده، الشارة كانت بتقول "جلسة النهاردة لسه ما نزلتش"
+    # الساعة 3 الفجر، والجلسة أصلاً ما بدأتش.
+    market_closed = cairo_now.hour >= 15
+    if probe.weekday() not in (4, 5) and not market_closed:
+        probe -= timedelta(days=1)
+
     while probe.weekday() in (4, 5):      # الجمعة والسبت إجازة
         probe -= timedelta(days=1)
     expected = probe.isoformat()
