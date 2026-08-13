@@ -119,6 +119,9 @@ h1{font-family:var(--display); font-weight:700; line-height:1;
 .dc-score{margin-inline-start:auto; font-family:var(--mono); font-size:1.1rem;
   font-weight:800; color:var(--brass)}
 .dc-score small{font-size:.6rem; color:var(--ink-faint); font-weight:400}
+.drift{font-family:var(--mono); font-size:.72rem; font-weight:600;
+  padding:.15rem .4rem; border-radius:5px; background:var(--ridge)}
+.drift.pos{color:var(--jade)} .drift.neg{color:var(--rust)}
 
 .dc-reason{font-size:.79rem; color:var(--ink-dim); line-height:1.6; margin-top:.75rem;
   min-height:2.5em}
@@ -156,6 +159,20 @@ html[dir=ltr] .panel.on,
   border-radius:10px; background:var(--slab); border:1px solid var(--edge);
   color:var(--ink-dim); cursor:pointer; font-size:1.1rem}
 html[dir=ltr] .p-close{float:right}
+
+/* شريط السعر: اللحظي فوق وسعر التحليل تحته */
+.px-band{margin-top:1rem}
+.px-main{display:flex; align-items:baseline; gap:.5rem}
+.px-v{font-family:var(--mono); font-size:2rem; font-weight:800}
+.px-c{font-size:.7rem; color:var(--ink-faint)}
+.px-ch{font-family:var(--mono); font-size:.95rem; font-weight:700}
+.px-meta{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
+  font-size:.72rem; color:var(--ink-faint); margin-top:.4rem}
+.px-sep{opacity:.4}
+.px-meta b{font-family:var(--mono)}
+.drift-warn{margin-top:.9rem; padding:.7rem .95rem; border-radius:10px;
+  font-size:.78rem; line-height:1.6; color:var(--amber);
+  background:rgba(224,160,74,.09); border:1px solid rgba(224,160,74,.25)}
 
 /* لافتة القرار */
 .verdict{margin-top:1.4rem; padding:1.3rem; border-radius:14px;
@@ -363,6 +380,11 @@ const T={
   sortTiming:{ar:'أفضل توقيت دخول',en:'Best entry timing'},
   sortRR:{ar:'أفضل عائد/مخاطرة',en:'Best risk/reward'},
   sortSupport:{ar:'الأقرب للدعم',en:'Closest to support'},
+  live:{ar:'سعر متأخر 15 دقيقة',en:'15-min delayed'},
+  liveNow:{ar:'السوق شغال',en:'Market open'},
+  analysisPrice:{ar:'سعر التحليل',en:'Analysis price'},
+  livePrice:{ar:'السعر دلوقتي',en:'Price now'},
+  moved:{ar:'تحرّك عن سعر التحليل',en:'moved from analysis price'},
   filtered:{ar:'مستبعد',en:'FILTERED'},
   filteredNote:{ar:'اتشال من الفلترة — مافيش تحليل فني ليه',
                 en:'Removed by filters — no technical analysis'},
@@ -395,6 +417,10 @@ const norm=s=>(s||'').toString().toLowerCase()
 
 function card(s){
   const sc=s.scores;
+  const live=LIVE&&LIVE.quotes?LIVE.quotes[s.symbol]:null;
+  // نسبة تحرّك السهم من ساعة ما التحليل اتحسب — لو كبيرة،
+  // المستويات المحسوبة بقت أقل دقة
+  const drift=(live&&s.price)?((live.price-s.price)/s.price*100):null;
   // السهم المستبعد من الفلترة مالوش درجات — بنعرض سبب الاستبعاد بدلها
   if(s.filteredOut){
     return `<article class="dc bad out" data-sym="${s.symbol}">
@@ -427,7 +453,9 @@ function card(s){
       <span class="act ${s.tone}">${t(s.action)}</span>
     </div>
     <div class="dc-price">
-      <span class="dc-px">${fmt(s.price)}</span><span class="dc-cur">EGP</span>
+      <span class="dc-px">${fmt(live?live.price:s.price)}</span><span class="dc-cur">EGP</span>
+      ${live&&drift!=null?`<span class="drift ${drift>=0?'pos':'neg'}"
+        title="${t('moved')}">${pct(drift,1)}</span>`:''}
       <span class="dc-score">${sc.overall??'—'}<small>/100</small></span>
     </div>
     <div class="dc-reason">${tx(s.reason)}</div>
@@ -511,6 +539,8 @@ async function openPanel(sym){
 }
 
 function panelHTML(r){
+  const live=LIVE&&LIVE.quotes?LIVE.quotes[r.symbol]:null;
+  const drift=(live&&r.price)?((live.price-r.price)/r.price*100):null;
   const d=r.decision, sc=r.scores, tr=r.trend, lv=r.levels, f=r.fundamental;
 
   const scoreBars=['overall','technical','fundamental','valuation','risk','timing']
@@ -560,10 +590,25 @@ function panelHTML(r){
     <div style="color:var(--ink-dim);font-size:.88rem;margin-top:.35rem">${r.name||''}</div>
     ${r.sector?`<div style="font-family:var(--mono);font-size:.65rem;color:var(--brass);
       letter-spacing:.1em;margin-top:.5rem">${r.sector}</div>`:''}
-    <div style="display:flex;align-items:baseline;gap:.5rem;margin-top:1rem">
-      <span style="font-family:var(--mono);font-size:2rem;font-weight:800">${fmt(r.price)}</span>
-      <span style="font-size:.7rem;color:var(--ink-faint)">EGP</span>
+    <div class="px-band">
+      <div class="px-main">
+        <span class="px-v">${fmt(live?live.price:r.price)}</span>
+        <span class="px-c">EGP</span>
+        ${live&&live.changePct!=null?`<span class="px-ch ${live.changePct>=0?'pos':'neg'}">
+          ${pct(live.changePct)}</span>`:''}
+      </div>
+      ${live?`<div class="px-meta">
+        <span>${t('livePrice')} · ${t('live')}</span>
+        <span class="px-sep">|</span>
+        <span>${t('analysisPrice')} ${fmt(r.price)}
+          ${drift!=null?`<b class="${drift>=0?'pos':'neg'}">${pct(drift,1)}</b>`:''}</span>
+      </div>`:`<div class="px-meta">${t('analysisPrice')}</div>`}
     </div>
+    ${live&&drift!=null&&Math.abs(drift)>3?`<div class="drift-warn">
+      ${LANG==='ar'
+        ?`⚠️ السهم اتحرّك ${Math.abs(drift).toFixed(1)}% من ساعة ما التحليل اتحسب — المستويات ووقف الخسارة تحت بقوا أقل دقة.`
+        :`⚠️ Moved ${Math.abs(drift).toFixed(1)}% since the analysis was computed — the levels and stop below are less accurate now.`}
+    </div>`:''}
 
     <div class="verdict ${d.tone}">
       <div class="big">${t(d.action)}</div>
@@ -712,10 +757,30 @@ function renderFresh(){
   const d=new Date(DATA.tradeDate+'T00:00:00');
   const nice=d.toLocaleDateString(LANG==='ar'?'ar-EG':'en-GB',
     {weekday:'long',day:'numeric',month:'long'});
+  let extra='';
+  if(LIVE){
+    const lt=new Date(LIVE.generatedAt).toLocaleTimeString(
+      LANG==='ar'?'ar-EG':'en-GB',{hour:'2-digit',minute:'2-digit'});
+    const dot=LIVE.marketOpen?'var(--jade)':'var(--amber)';
+    extra=`<span style="padding-inline-start:.7rem;border-inline-start:1px solid var(--edge)">
+      <span class="dot" style="background:${dot};box-shadow:0 0 0 4px ${dot}22;
+        display:inline-block;margin-inline-end:.4rem"></span>
+      ${tx(LIVE.marketState)} · <b>${t('live')}</b>
+      <span style="color:var(--ink-faint);font-size:.75rem"> ${lt}</span></span>`;
+  }
   $('#fresh').innerHTML=`<span class="dot"></span>
-    <span>${LANG==='ar'?'إغلاق':'Close of'} <b>${nice}</b></span>
-    <span style="color:var(--ink-faint);font-size:.75rem">· ${t('delayed')}</span>`;
+    <span>${t('analysisPrice')}: ${LANG==='ar'?'إغلاق':'close of'} <b>${nice}</b></span>
+    ${extra}`;
 }
+
+let LIVE=null;
+/* الأسعار اللحظية من TradingView — متأخرة 15 دقيقة بدل جلسة كاملة.
+   بتتعرض جنب سعر التحليل عشان تعرف السهم اتحرك قد إيه من ساعة
+   ما الأرقام اتحسبت. */
+fetch('live.json?v='+Date.now())
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(d=>{ LIVE=d; renderFresh(); if(DATA) render(); })
+  .catch(()=>{});
 
 applyLang();
 fetch('decisions.json?v='+Date.now())
