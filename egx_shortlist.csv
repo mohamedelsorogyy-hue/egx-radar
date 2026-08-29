@@ -47,7 +47,7 @@ AMOC,Alexandria Mineral Oils Company,Petroleum Refining,63.0,75.8,43.1,38.4,85.4
 EGAL,Egypt Aluminum,Primary Production of Aluminum,62.4,49.6,78.4,25.2,92.7,3.8,4/4,365,14.02,5.21907,42.17,22.45,12.81,-23.248,0.003,2.34,305004585,Hold,345.5,-5.34,2026-08-26
 RAYA,Raya Holding Company for Financial Investments (S.A.E),,61.2,79.0,54.5,80.0,0.9,1.0,4/4,7.39,12.15,3.47213,42.24,3.89,40.297,50.604,2.826,0.57,88605937,n/a,,,2026-08-26
 TMGH,Talaat Moustafa Group Holding,"Investors, not elsewhere classified",61.0,69.0,41.3,64.5,47.2,4.7,4/4,97.51,13.0,1.20087,13.31,22.62,36.488,17.934,0.441,0.26,152133444,Strong Buy,141.9,45.52,2026-08-26
-ORHD,Orascom Development Egypt S.A.E.,Hotels and Motels,60.6,73.4,60.5,38.8,32.2,5.8,4/4,42.48,8.97,2.35454,30.56,18.95,22.154,-4.391,0.583,0.94,75518990,Strong Buy,58.55,37.83,2026-08-26
+ORHD,Orascom Development Egypt S.A.E.,Hotels and Motels,60.8,73.4,61.4,38.8,32.2,5.8,4/4,42.48,8.97,2.35454,30.56,18.95,22.154,-4.391,0.583,0.94,75518990,Strong Buy,58.55,37.83,2026-08-26
 EHDR,Egyptians for Housing & Development Co.,Real Estate,60.3,40.5,51.9,48.4,93.5,6.4,4/4,2.85,28.52,2.70275,10.97,27.79,14.463,13.628,0.001,3.18,13634027,n/a,,,2026-08-26
 POUL,Cairo Poultry Company S.A.E.,Poultry Slaughtering and Processing,60.0,77.5,64.5,23.0,62.9,2.2,4/4,38.44,8.39,2.24772,34.88,13.73,0.556,-15.453,0.037,0.88,13505048,n/a,,,2026-08-26
 HRHO,EFG Holding Company S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",59.7,83.7,35.8,52.6,28.0,6.5,4/4,25.9,9.55,0.80455,14.37,13.75,25.579,5.58,1.266,1.06,47459808,Strong Buy,38.24,47.64,2026-08-26
@@ -78,7 +78,7 @@ NIPH,EI- Nile Co. for Pharmaceuticals and Chemical Industries,Pharmaceutical Pre
 ELKA,Cairo for Housing and Development Company (S.A.E),Real Estate,48.7,76.0,52.9,4.9,58.5,0,4/4,1.77,3.2,0.52972,18.04,221.15,-13.863,,0.138,,49923769,n/a,,,2026-08-26
 GOUR,Gourmet Egypt.Com Foods,Agriculture Production Livestock and Animal Specialties,48.1,,28.5,87.8,8.4,2.7,3/4,16.28,27.86,,,7.21,52.831,88.995,1.811,1.39,48885812,Strong Buy,15.23,-6.45,2026-08-26
 MOIN,Mohandes Insurance Company,Insurance Carriers,47.7,38.4,53.8,28.5,77.2,1.3,4/4,34.89,24.02,4.5807,21.18,22.62,9.542,-7.429,0.006,0.61,38564894,n/a,,,2026-08-26
-PHAR,Egyptian International Pharmaceutical Industries Company,Pharmaceutical Preparations,47.6,54.0,50.1,42.3,18.1,3.1,4/4,131.2,17.15,3.63344,20.51,12.55,12.078,8.332,1.651,1.16,97976486,n/a,,,2026-08-26
+PHAR,Egyptian International Pharmaceutical Industries Company,Pharmaceutical Preparations,47.6,54.0,49.8,42.3,18.1,3.1,4/4,131.2,17.15,3.63344,20.51,12.55,12.078,8.332,1.651,1.16,97976486,n/a,,,2026-08-26
 TALM,Taaleem Management Services Company S.A.E.,Educational Services,47.4,44.3,54.6,41.5,48.6,0,4/4,17.65,21.07,3.22066,13.84,24.94,32.452,-15.892,0.622,,39272997,n/a,,,2026-08-26
 NINH,Nozha International Hospital,Hospitals,46.6,17.8,67.7,53.3,47.8,0.4,4/4,24.5,43.68,9.22226,26.04,30.67,12.703,25.879,0.006,0.33,45285065,n/a,,,2026-08-26
 AMER,Amer Group Holding Company S.A.E.,Real Estate,45.7,48.0,30.9,76.7,18.9,0,4/4,6.33,33.71,2.44749,15.59,9.97,16.779,276.011,0.922,,107761831,n/a,,,2026-08-26
@@ -92,7 +92,7 @@ EBSC,Osool ESB Securities Brokerage,"Security Brokers, Dealers, and Flotation Co
 NARE,Naeem Real Estate Holding Group,Engineering Services,42.8,54.8,45.7,19.1,52.8,0,4/4,17.19,20.12,0.88104,6.16,39.67,-3.547,-12.113,0.006,,8091866,n/a,,,2026-08-26
 EPCO,Egypt for Poultry,Poultry Slaughtering and Processing,42.8,15.1,6.9,100.0,74.6,0,4/4,11.19,379.65,6.51927,2.03,3.37,396.428,,,,7020181,n/a,,,2026-08-26
 GPIM,GPI for Urban Growth,"Land Subdividers and Developers, Except Cemeteries",42.7,6.8,40.1,62.1,87.1,0,4/4,1.54,215.87,13.4061,8.33,25.76,153.296,4.419,0.002,,71502198,n/a,,,2026-08-26
-UEGC,"El-Saeed Company for Contracting and Real Estate Investment ""SCCD"" (S.A.E.)",Heavy Construction Other Than Building Construction Contractors,42.5,70.6,23.2,26.9,50.7,0,4/4,2.04,34.31,1.07556,3.17,1.94,26.193,-60.694,1.262,,115811079,n/a,,,2026-08-26
+UEGC,"El-Saeed Company for Contracting and Real Estate Investment ""SCCD"" (S.A.E.)",Heavy Construction Other Than Building Construction Contractors,42.4,70.6,22.9,26.9,50.7,0,4/4,2.04,34.31,1.07556,3.17,1.94,26.193,-60.694,1.262,,115811079,n/a,,,2026-08-26
 ALUM,Arab Aluminum Company (S.A.E),"Rolling, Drawing, And Extruding Of Nonferrous Metals",40.7,30.9,30.6,54.9,56.5,0,4/4,29.6,85.88,10.49138,13.01,2.52,25.41,,0.57,,28976002,n/a,,,2026-08-26
 CLHO,Cleopatra Hospitals Group S.A.E.,Hospitals,40.3,26.3,50.2,46.4,17.2,3.1,4/4,17.5,43.76,6.02557,23.23,7.75,29.418,-0.04,0.93,,33669738,Hold,17.48,-0.11,2026-08-26
 EFIC,Egyptian Financial and Industrial SAE,Agricultural Chemicals,39.3,41.2,37.4,16.8,46.9,4.5,4/4,200,66.65,6.43711,12.56,2.5,18.846,-74.358,2.675,1.65,23312800,n/a,,,2026-08-26
@@ -108,14 +108,14 @@ AMES,Alexandria New Medical Center,"Miscellaneous Health And Allied Services, No
 CERA,The Arab Ceramic Co.,Structural Clay Products,34.5,59.6,20.4,21.3,34.4,0,4/4,1.29,42.03,2.9744,7.28,1.4,20.402,-65.632,2.545,,5279044,n/a,,,2026-08-26
 AFMC,Alexandria Flour Mills,Miscellaneous Food Preparations And Kindred Products,33.7,9.2,38.5,44.2,51.6,0.6,4/4,218.79,133.36,25.80416,19.49,13.75,13.519,6.902,,0.33,41039315,n/a,,,2026-08-26
 SIPC,Sabaa International Company for Pharmaceutical and Chemical Industry,Pharmaceutical Preparations,33.7,7.6,15.2,80.3,45.3,0,4/4,4.9,575.77,12.19486,2.13,4.58,41.431,,0.236,,7890602,n/a,,,2026-08-26
-ISMA,Ismailia / Misr Poultry Company S.A.E,Poultry Slaughtering and Processing,33.4,8.6,69.1,15.7,41.0,0,4/4,39.42,82.64,16.88786,23.11,75.95,-21.8,-25.712,,,64596332,n/a,,,2026-08-26
+ISMA,Ismailia / Misr Poultry Company S.A.E,Poultry Slaughtering and Processing,33.3,8.6,68.8,15.7,41.0,0,4/4,39.42,82.64,16.88786,23.11,75.95,-21.8,-25.712,,,64596332,n/a,,,2026-08-26
 INFI,Ismailia National Co. for Food Industries,"Canned, Frozen, And Preserved Fruits, Vegetables, and Food Specialties",33.3,17.4,46.2,14.8,70.4,0.0,4/4,157.03,71.66,12.23596,17.64,11.43,3.284,-50.459,0.061,0.11,16562739,n/a,,,2026-08-26
 BIOC,GlaxoSmithKline S.A.E,Pharmaceutical Preparations,32.3,11.4,29.7,53.1,43.8,0.1,4/4,445,191.39,17.03296,9.15,5.36,2.805,31.112,0.82,0.18,80563245,n/a,,,2026-08-26
 ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",31.6,41.2,14.8,26.0,55.4,0,4/4,0.262,31.13,2.59057,4.52,6.09,-3.222,4.794,1.137,,255038985,n/a,,,2026-08-26
 EEII,Arab Engineering Industries,Refrigeration And Service Industry Machinery,30.8,36.1,17.0,4.8,66.4,3.7,4/4,2.92,155.96,3.50524,2.49,2.23,-18.529,-78.542,0.465,1.23,12476450,n/a,,,2026-08-26
 SNFC,Sharkia National Company for Food Security,Grain Mill Products,29.9,1.1,18.6,55.2,68.0,0,4/4,10.5,819.27,36.70367,4.12,11.66,31.373,5.828,,,14962720,n/a,,,2026-08-26
 KWIN,El Kahera El Watania Investment,"Investors, not elsewhere classified",29.2,17.5,42.2,28.5,27.6,0,4/4,108.5,255.97,5.53518,10.11,15.83,38.788,-79.132,0.398,,60076233,n/a,,,2026-08-26
-UNIP,Universal For Paper and Packaging Materials,"Converted Paper And Paperboard Products, Except Containers And Boxes",28.7,64.5,2.4,4.3,50.5,0,4/4,0.372,29.56,1.72373,,1.15,-8.265,-78.363,1.205,,13282759,n/a,,,2026-08-26
+UNIP,Universal For Paper and Packaging Materials,"Converted Paper And Paperboard Products, Except Containers And Boxes",28.7,64.5,2.4,4.3,50.5,0,4/4,0.372,29.56,1.72373,,1.15,-8.265,-78.363,1.206,,13282759,n/a,,,2026-08-26
 AMII,Arabian Metal Industries and Industrial Investments,Miscellaneous Fabricated Metal Products,24.1,14.8,12.9,20.8,70.8,0,4/4,15.37,2583.49,9.86992,0.38,0.26,27.932,-88.945,0.484,,73481542,n/a,,,2026-08-26
 MEPA,Medical Packaging Company,"Converted Paper And Paperboard Products, Except Containers And Boxes",21.3,21.6,21.7,5.8,45.7,0,4/4,1.8,113.42,5.38165,4.86,10.61,-26.512,-74.541,0.112,,10591123,n/a,,,2026-08-26
 EALR,Arab Company For Land Reclamation,Heavy Construction Other Than Building Construction Contractors,21.2,6.3,11.9,14.9,80.0,0,4/4,402.29,509.05,29.03382,5.57,2.6,9.624,-58.093,0.079,,7541328,n/a,,,2026-08-26
