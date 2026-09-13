@@ -53,7 +53,7 @@ TWSA,Tawasoa For Factoring,"Short-Term Business Credit Institutions, Except Agri
 EFIH,e-finance for Digital and Financial Investments S.A.E.,Computer Processing and Data Preparation and Processing Services,60.4,22.2,77.5,70.5,53.0,4.9,4/4,23.99,35.04,8.18876,36.22,30.7,25.378,47.454,0.021,1.26,33403460,Buy,28.1,17.13,2026-09-10
 CANA,Suez Canal Bank (S.A.E),Commercial Banks,60.4,75.7,58.0,49.9,41.8,1.5,4/4,42.99,7.01,1.85606,35.06,40.12,33.738,0.143,0.488,0.47,10223882,n/a,,,2026-09-10
 EHDR,Egyptians for Housing & Development Co.,Real Estate,60.3,39.6,51.3,49.2,92.6,6.9,4/4,2.94,29.42,2.7881,10.97,27.79,14.463,13.628,0.001,3.48,14796164,n/a,,,2026-09-10
-RREI,Arab Real Estate Investment Co.,Real Estate,59.9,48.2,49.8,95.9,43.4,0,4/4,4.26,19.36,2.50852,14.77,30.58,145.011,,,,6284791,n/a,,,2026-09-10
+RREI,Arab Real Estate Investment Co.,Real Estate,59.9,48.2,49.8,95.9,43.4,0,4/4,4.31,19.36,2.50852,14.77,30.58,145.011,,,,6358556,n/a,,,2026-09-10
 JUFO,Juhayna Food Industries S.A.E.,Dairy Products,59.8,57.7,59.3,57.3,43.6,3.8,4/4,27.35,18.02,4.60194,31.01,6.66,24.076,23.255,0.971,0.71,9727246,Buy,29.32,7.2,2026-09-10
 MPRC,Egyptian Media Production City,Motion Picture and Video Tape Production,59.4,60.0,70.2,60.8,9.8,3.6,4/4,39.97,8.88,1.91511,22.68,61.88,13.198,39.565,,1.16,42389504,n/a,,,2026-09-10
 PRDC,Pioneers Properties For Urban Development - PRE Group,Real Estate,57.6,79.5,18.3,92.1,35.2,0,4/4,8.35,14.16,0.61356,6.15,9.01,39.913,470.355,0.873,,36599319,n/a,,,2026-09-10
@@ -66,7 +66,7 @@ ASCM,"ASEC Company for Mining ASCOM, S.A.E",Metal Mining,54.4,83.9,30.2,77.0,6.3
 MTIE,MM Group for Industry and International Trade S.A.E.,Wholesale Trade-Durable Goods,54.3,60.8,49.7,44.3,42.8,3.7,4/4,8.6,19.13,3.69089,27.37,4.47,19.22,3.587,0.055,,12220789,Buy,8.38,-2.56,2026-09-10
 ELSH,Al-Shams Company for Housing and Urban Development,Real Estate,54.0,40.9,60.8,50.7,64.5,1.1,4/4,13.56,18.59,2.63076,15.04,68.54,29.907,3.469,0.118,0.37,25866703,n/a,,,2026-09-10
 ACAP,A Capital Holding,"Land Subdividers and Developers, Except Cemeteries",52.8,59.5,48.0,75.4,11.0,0,4/4,9.25,14.58,4.20548,,13.63,114.54,19.211,1.509,,23829628,n/a,,,2026-09-10
-BINV,B Investments Holding S.A.E.,"Investors, not elsewhere classified",52.7,46.4,52.8,28.9,62.5,6.4,4/4,51.5,18.23,1.64079,8.74,77.38,0.275,-7.558,0.003,3.03,9050868,n/a,,,2026-09-10
+BINV,B Investments Holding S.A.E.,"Investors, not elsewhere classified",52.7,46.4,52.8,28.9,62.5,6.4,4/4,51.74,18.23,1.64079,8.74,77.38,0.275,-7.558,0.003,3.03,9093046,n/a,,,2026-09-10
 ACGC,Arabia Cotton Ginning Company,Textile Mill Products,52.7,77.3,34.0,13.8,75.2,4.6,4/4,15.42,12.28,1.3101,14.41,11.75,-19.872,-24.417,0.35,1.7,15629450,n/a,,,2026-09-10
 PHDC,Palm Hills Developments S.A.E.,"Land Subdividers and Developers, Except Cemeteries",52.4,78.1,36.8,47.1,9.7,4.7,4/4,14.45,10.23,1.97799,22.17,10.07,26.125,1.088,1.71,0.67,108976337,Strong Buy,17.46,20.83,2026-09-10
 MBEG,M.B For Engineering & Contracting,Switchgear and Switchboard Apparatus,51.8,,32.3,89.3,28.4,0,3/4,7.02,36.45,,11.84,4.86,66.221,,0.949,,7010916,n/a,,,2026-09-10
@@ -110,13 +110,13 @@ ISMA,Ismailia / Misr Poultry Company S.A.E,Poultry Slaughtering and Processing,3
 INFI,Ismailia National Co. for Food Industries,"Canned, Frozen, And Preserved Fruits, Vegetables, and Food Specialties",34.0,18.9,45.9,16.4,69.0,0.1,4/4,146.5,66.85,11.41545,17.64,11.43,3.284,-50.459,0.061,0.11,12513004,n/a,,,2026-09-10
 SIPC,Sabaa International Company for Pharmaceutical and Chemical Industry,Pharmaceutical Preparations,33.1,4.7,14.0,81.1,48.0,0,4/4,5.9,693.27,14.6836,2.13,4.58,41.431,,0.236,,38857459,n/a,,,2026-09-10
 CERA,The Arab Ceramic Co.,Structural Clay Products,32.9,54.2,18.5,22.4,36.4,0,4/4,1.65,53.77,3.80447,7.28,1.4,20.402,-65.632,2.545,,119663278,n/a,,,2026-09-10
-ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",32.8,43.6,15.0,27.4,55.7,0,4/4,0.254,30.42,2.53124,4.52,6.09,-3.222,4.794,1.137,,80860130,n/a,,,2026-09-10
+ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",32.8,43.6,15.0,27.4,55.7,0,4/4,0.256,30.42,2.53124,4.52,6.09,-3.222,4.794,1.137,,81496824,n/a,,,2026-09-10
 NCCW,Nasr Company for Civil Works,Heavy Construction Other Than Building Construction Contractors,32.8,29.2,32.5,19.5,62.9,0,4/4,7.6,37.59,5.9814,16.99,18.0,-14.348,-24.775,0.336,,159156396,n/a,,,2026-09-10
 EEII,Arab Engineering Industries,Refrigeration And Service Industry Machinery,32.3,39.0,16.1,5.9,67.0,4.2,4/4,2.34,150.8,3.38929,2.49,2.23,-18.529,-78.542,0.465,1.32,5127106,n/a,,,2026-09-10
 SNFC,Sharkia National Company for Food Security,Grain Mill Products,30.7,0.8,18.5,55.8,73.0,0,4/4,10.9,850.48,38.1019,4.12,11.66,31.373,5.828,,,8359363,n/a,,,2026-09-10
 KWIN,El Kahera El Watania Investment,"Investors, not elsewhere classified",30.7,20.7,41.2,29.7,31.1,0,4/4,90,212.33,4.59139,10.11,15.83,38.788,-79.132,0.398,,16862400,n/a,,,2026-09-10
 OFH,O B Financial Holding S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",29.9,51.6,5.0,2.8,81.5,0,4/4,1.07,63.63,1.59901,2.54,,,-83.694,0.001,,57486920,n/a,,,2026-09-10
-FCMD,International Company For Medical Industries S.A.E.,"Orthopedic, Prosthetic, and Surgical Appliances and Supplies",27.4,18.8,17.3,46.7,32.4,0,4/4,7.1,146.42,11.58955,14.44,4.2,22.391,,0.194,,47635852,n/a,,,2026-09-10
+FCMD,International Company For Medical Industries S.A.E.,"Orthopedic, Prosthetic, and Surgical Appliances and Supplies",27.4,18.8,17.3,46.7,32.4,0,4/4,7.3,146.42,11.58955,14.44,4.2,22.391,,0.194,,48977708,n/a,,,2026-09-10
 AMII,Arabian Metal Industries and Industrial Investments,Miscellaneous Fabricated Metal Products,26.6,16.0,11.9,20.8,72.7,2.1,4/4,14.49,2435.58,9.30482,0.38,0.26,27.932,-88.945,0.484,0.66,51337505,n/a,,,2026-09-10
 CAED,Cairo Educational Services SAE,Educational Services,21.7,8.4,22.9,25.5,18.0,3.2,4/4,129.59,238.32,17.5885,7.54,4.45,18.851,-48.143,,1.0,42425952,n/a,,,2026-09-10
 MEPA,Medical Packaging Company,"Converted Paper And Paperboard Products, Except Containers And Boxes",20.7,18.0,21.0,6.6,49.0,0,4/4,2.04,128.54,6.0992,4.86,10.61,-26.512,-74.541,0.112,,16697510,n/a,,,2026-09-10
