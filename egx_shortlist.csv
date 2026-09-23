@@ -27,7 +27,7 @@ EAST,Eastern Company S.A.E,Tobacco Products,67.4,53.2,79.2,47.0,39.7,9.9,4/4,31.
 ALCN,Alexandria Container&Cargo Handling Company,Water Transportation,67.3,27.1,97.3,44.8,94.0,4.7,4/4,34.02,14.17,12.50905,,93.34,-8.43,8.956,0.004,5.33,42483836,Hold,28.55,-16.08,2026-09-22
 MHOT,Misr Hotels Company,Hotels and Motels,66.9,42.8,87.9,54.4,42.7,7.7,4/4,17.9,13.0,3.80093,43.24,54.5,7.854,4.409,0.249,4.19,8119977,n/a,,,2026-09-22
 ETEL,Telecom Egypt Company,"Telephone Communications, Except Radiotelephone",66.5,69.1,71.0,76.7,18.6,2.5,4/4,137.5,9.39,3.18629,43.37,21.89,22.366,94.755,0.989,1.09,452730300,Buy,127.8,-7.05,2026-09-22
-ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,66.2,87.1,38.9,87.8,42.9,0,4/4,841,8.48,1.79625,27.48,3.74,62.637,68.071,0.521,,100367463,n/a,,,2026-09-22
+ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,66.2,87.1,38.9,87.8,42.9,0,4/4,841,8.39,1.79625,27.48,3.74,62.637,68.071,0.521,,100367463,n/a,,,2026-09-22
 MPCI,Memphis Pharmaceuticals & Chemical Industries,Pharmaceutical Preparations,66.2,32.0,86.8,53.8,66.1,7.1,4/4,393.11,17.23,12.60124,95.06,30.89,36.209,37.787,0.118,3.36,167168062,n/a,,,2026-09-22
 MPRC,Egyptian Media Production City,Motion Picture and Video Tape Production,66.2,60.0,70.5,62.8,47.4,4.3,4/4,38.21,8.49,1.83079,22.68,61.88,13.198,39.565,0.013,1.31,6748230,n/a,,,2026-09-22
 MCRO,Macro Group Pharmaceuticals (Macro Capital) S.A.E,"Perfumes, Cosmetics, and Other Toilet Preparations",65.6,17.6,72.9,93.7,39.4,9.1,4/4,1.68,8.4,29.63941,85.15,12.94,72.038,,1.719,6.35,133578285,n/a,,,2026-09-22
@@ -50,7 +50,7 @@ EFIH,e-finance for Digital and Financial Investments S.A.E.,Computer Processing 
 PRDC,Pioneers Properties For Urban Development - PRE Group,Real Estate,59.3,81.9,20.5,93.4,34.7,0,4/4,7.55,12.81,0.55477,6.15,9.01,39.913,470.355,0.873,,15217735,n/a,,,2026-09-22
 JUFO,Juhayna Food Industries S.A.E.,Dairy Products,58.9,55.4,58.8,59.7,42.5,3.4,4/4,27.01,17.79,4.54473,31.01,6.66,24.076,23.255,0.971,0.71,14730093,Buy,29.45,9.03,2026-09-22
 CANA,Suez Canal Bank (S.A.E),Commercial Banks,58.6,69.4,58.7,51.9,40.5,1.1,4/4,46.8,7.63,2.02056,35.06,40.12,33.738,0.143,0.488,0.43,7777973,n/a,,,2026-09-22
-EGCH,Egyptian Chemical Industries,Agricultural Chemicals,57.7,71.2,32.6,83.6,37.8,0,4/4,14.02,15.42,0.64325,6.15,15.94,30.553,81.807,0.315,,52179552,n/a,,,2026-09-22
+EGCH,Egyptian Chemical Industries,Agricultural Chemicals,57.7,71.2,32.6,83.6,37.8,0,4/4,13.92,15.42,0.64325,6.15,15.94,30.553,81.807,0.315,,51807372,n/a,,,2026-09-22
 ASCM,"ASEC Company for Mining ASCOM, S.A.E",Metal Mining,56.5,86.1,31.5,81.1,6.6,0,4/4,58.86,8.96,1.21801,13.72,8.16,40.289,,1.721,,5600529,n/a,,,2026-09-22
 SWDY,El Sewedy Electric Company,Drawing and Insulating of Nonferrous Wire,54.8,61.8,45.0,55.2,48.6,1.7,4/4,125.59,16.49,3.53414,28.52,5.08,26.627,4.725,1.111,0.8,10571036,Sell,104.0,-17.19,2026-09-22
 ELSH,Al-Shams Company for Housing and Urban Development,Real Estate,54.6,41.5,62.5,52.4,61.8,1.0,4/4,12.7,17.41,2.46391,15.04,68.54,29.907,3.469,0.118,0.39,9060091,n/a,,,2026-09-22
@@ -72,7 +72,7 @@ MOIN,Mohandes Insurance Company,Insurance Carriers,48.7,36.5,55.1,31.5,74.4,2.1,
 NINH,Nozha International Hospital,Hospitals,48.7,21.4,67.3,55.6,48.8,0.9,4/4,20.41,36.39,7.68271,26.04,30.67,12.703,25.879,0.006,0.36,7656567,n/a,,,2026-09-22
 AMER,Amer Group Holding Company S.A.E.,Real Estate,48.2,54.4,31.7,77.7,19.6,0,4/4,5.2,27.69,2.01058,15.59,9.97,16.779,276.011,0.922,,40964498,n/a,,,2026-09-22
 CNFN,Contact Financial Holding S.A.E.,Personal Credit Institutions,48.0,74.7,23.9,22.2,26.8,8.9,4/4,4.51,16.96,1.14953,9.77,5.42,14.845,-50.933,2.058,5.6,6985760,n/a,,,2026-09-22
-ICFC,International Company for Fertilizers and Chemicals S.A.E,Miscellaneous Non-durable Goods,47.3,,44.4,59.3,32.9,0,3/4,23,11.74,,24.28,5.62,45.735,3.928,0.137,,10034946,n/a,,,2026-09-22
+ICFC,International Company for Fertilizers and Chemicals S.A.E,Miscellaneous Non-durable Goods,47.3,,44.4,59.3,32.9,0,3/4,22.89,11.74,,24.28,5.62,45.735,3.928,0.137,,9986953,n/a,,,2026-09-22
 IFAP,International Company for Agricultural Crops,Food and Kindred Products,47.2,49.2,34.6,48.2,53.4,2.0,4/4,20.59,19.63,2.32853,14.79,17.94,40.985,-10.717,0.104,0.59,5913880,n/a,,,2026-09-22
 OCPH,October Pharma S.A.E,Pharmaceutical Preparations,46.4,30.0,62.1,52.9,27.0,1.6,4/4,240.64,34.98,8.70014,28.29,11.31,22.508,11.727,0.64,0.52,5835761,n/a,,,2026-09-22
 TALM,Taaleem Management Services Company S.A.E.,Educational Services,46.1,37.1,55.1,44.4,49.2,0,4/4,20.86,24.91,3.8064,13.84,24.94,32.452,-15.892,0.622,,33061723,n/a,,,2026-09-22
@@ -104,7 +104,7 @@ NCCW,Nasr Company for Civil Works,Heavy Construction Other Than Building Constru
 EEII,Arab Engineering Industries,Refrigeration And Service Industry Machinery,32.1,36.9,16.9,6.4,65.0,4.6,4/4,2.25,145.0,3.25893,2.49,2.23,-18.529,-78.542,0.465,1.38,6117163,n/a,,,2026-09-22
 SNFC,Sharkia National Company for Food Security,Grain Mill Products,31.7,1.2,20.4,58.6,70.8,0,4/4,11.54,900.42,40.33908,4.12,11.66,31.373,5.828,,,13722526,n/a,,,2026-09-22
 OFH,O B Financial Holding S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",29.3,48.2,6.0,3.5,80.9,0,4/4,1.09,64.82,1.6289,2.54,,,-83.694,0.001,,249737514,n/a,,,2026-09-22
-FCMD,International Company For Medical Industries S.A.E.,"Orthopedic, Prosthetic, and Surgical Appliances and Supplies",27.9,18.2,18.4,48.6,31.4,0,4/4,7.3,147.03,11.63717,14.44,4.2,22.391,,0.194,,18405913,n/a,,,2026-09-22
+FCMD,International Company For Medical Industries S.A.E.,"Orthopedic, Prosthetic, and Surgical Appliances and Supplies",27.9,18.2,18.4,48.6,31.4,0,4/4,7.33,147.03,11.63717,14.44,4.2,22.391,,0.194,,18481554,n/a,,,2026-09-22
 AMII,Arabian Metal Industries and Industrial Investments,Miscellaneous Fabricated Metal Products,27.0,14.3,12.7,22.9,71.6,2.4,4/4,14.88,2501.13,9.55526,0.38,0.26,27.932,-88.945,0.484,0.67,23828252,n/a,,,2026-09-22
 EALR,Arab Company For Land Reclamation,Heavy Construction Other Than Building Construction Contractors,21.6,6.4,11.2,17.7,79.2,0,4/4,369.73,467.85,26.68392,5.57,2.6,9.624,-58.093,0.079,,7689645,n/a,,,2026-09-22
 MEPA,Medical Packaging Company,"Converted Paper And Paperboard Products, Except Containers And Boxes",20.5,16.9,22.3,6.8,47.1,0,4/4,1.9,119.72,5.68063,4.86,10.61,-26.512,-74.541,0.112,,9325048,n/a,,,2026-09-22
