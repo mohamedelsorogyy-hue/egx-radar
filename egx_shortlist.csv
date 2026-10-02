@@ -1,114 +1,114 @@
 ﻿symbol,name,industry,score,scoreValue,scoreQuality,scoreGrowth,scoreSafety,scoreBonus,dataCoverage,price,peRatio,pbRatio,roe,netMargin,revenueGrowth,netIncomeGrowth,debtEquity,dividendYield,dollarVolume,analystRating,priceTarget,upsidePct,lastTradeDate
 ARCC,Arabian Cement Company S.A.E.,"Cement, Hydraulic",81.6,63.1,90.9,80.0,58.8,6.5,4/4,62.63,5.83,5.2776,102.88,33.38,26.68,96.775,0.268,4.36,23207108,Buy,78.0,24.54,2026-10-01
-MBSC,Misr Beni Suef Cement Co. S.A.E,"Cement, Hydraulic",81.4,67.4,94.8,72.1,61.1,5.6,4/4,290.13,4.41,3.29301,121.81,57.48,12.664,171.3,0.029,2.02,92951849,Hold,396.35,36.61,2026-10-01
-MFPC,Misr Fertilizer Production Company,Agricultural Chemicals,80.6,60.9,78.6,81.8,85.4,5.5,4/4,44.9,8.37,2.8606,35.21,45.61,46.245,43.334,0.003,5.56,31914336,Buy,46.77,4.16,2026-10-01
-HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",79.8,54.2,81.3,91.5,51.7,8.5,4/4,7.25,8.73,3.08816,38.64,73.71,342.311,90.025,0.844,6.0,63425313,Strong Buy,10.78,48.69,2026-10-01
+MBSC,Misr Beni Suef Cement Co. S.A.E,"Cement, Hydraulic",81.5,67.7,94.8,72.1,61.1,5.6,4/4,290.13,4.41,3.29301,121.81,57.48,12.664,171.3,0.029,2.02,92951849,Hold,396.35,36.61,2026-10-01
+MFPC,Misr Fertilizer Production Company,Agricultural Chemicals,80.7,61.2,78.6,81.8,85.4,5.5,4/4,44.9,8.37,2.8606,35.21,45.61,46.245,43.334,0.003,5.56,31914336,Buy,46.77,4.16,2026-10-01
+HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",79.8,54.5,81.3,91.5,51.7,8.5,4/4,7.25,8.73,3.08816,38.64,73.71,342.311,90.025,0.844,6.0,63425313,Strong Buy,10.78,48.69,2026-10-01
 MCQE,Misr Cement (Qena) Company (S.A.E),"Cement, Hydraulic",79.8,67.8,86.8,92.3,49.5,2.9,4/4,179.5,7.01,4.05446,87.84,24.51,42.917,222.126,0.065,0.53,39990266,Hold,213.45,18.91,2026-10-01
 EGAL,Egypt Aluminum,Primary Production of Aluminum,78.8,58.0,85.7,70.4,90.0,4.6,4/4,336,9.11,4.16243,55.06,29.15,23.051,52.09,0.006,2.34,65893968,Buy,391.5,16.52,2026-10-01
 HDBK,Housing and Development Bank- Egypt (S.A.E),Commercial Banks,75.8,67.0,79.6,64.9,87.6,2.5,4/4,104.35,5.57,2.36532,49.51,60.67,26.685,24.265,0.026,2.25,16692870,Buy,77.59,-25.64,2026-10-01
-AXPH,Alexandria Co. For Pharmaceuticals & Chemical Industries,Pharmaceutical Preparations,73.7,46.2,78.2,69.4,78.8,7.2,4/4,1442.15,14.45,6.64211,49.3,15.99,24.945,43.306,0.006,4.18,6287774,n/a,,,2026-10-01
-QNBE,Qatar National Bank,Commercial Banks,73.3,82.9,61.2,54.6,75.6,5.1,4/4,58,4.42,1.00917,29.55,49.19,19.689,20.814,0.037,3.38,7105116,Strong Buy,67.43,16.26,2026-10-01
+AXPH,Alexandria Co. For Pharmaceuticals & Chemical Industries,Pharmaceutical Preparations,73.9,46.8,78.2,69.4,78.8,7.2,4/4,1442.15,14.45,6.64211,49.3,15.99,24.945,43.306,0.006,4.18,6287774,n/a,,,2026-10-01
+QNBE,Qatar National Bank,Commercial Banks,73.4,83.1,61.2,54.6,75.6,5.1,4/4,58,4.42,1.00917,29.55,49.19,19.689,20.814,0.037,3.38,7105116,Strong Buy,67.43,16.26,2026-10-01
 RACC,Raya Customer Experience,Computer Processing and Data Preparation and Processing Services,72.3,86.4,56.9,68.2,40.6,6.2,4/4,8.85,7.11,1.41455,28.43,7.99,24.138,34.326,0.659,3.33,5106140,n/a,,,2026-10-01
 COMI,Commercial International Bank Egypt (CIB) S.A.E.,Commercial Banks,71.5,64.2,72.1,66.3,42.6,7.6,4/4,126.3,6.56,1.82371,42.45,47.75,24.412,44.613,0.167,4.7,431105726,Buy,180.11,42.6,2026-10-01
-ISMQ,Iron & Steel for Mines & Quarries,Metal Mining,71.2,29.1,91.4,52.3,92.7,8.1,4/4,7.89,15.5,10.97196,72.38,47.17,18.286,11.385,,5.2,27859046,n/a,,,2026-10-01
+ISMQ,Iron & Steel for Mines & Quarries,Metal Mining,71.5,29.9,91.4,52.3,92.7,8.1,4/4,7.89,15.5,10.97196,72.38,47.17,18.286,11.385,,5.2,27859046,n/a,,,2026-10-01
+EFID,Edita Food Industries Company (S.A.E),Bakery Products,70.8,54.6,76.3,78.2,28.1,7.8,4/4,18.4,12.21,6.08649,62.13,13.17,37.426,88.978,0.989,2.99,97112348,Buy,37.6,104.35,2026-10-01
 ZMID,Zahraa El Maadi Investment and Development Company SAE,Real Estate,70.8,50.6,84.7,74.8,36.6,6.1,4/4,7.7,11.17,2.92094,35.2,62.65,40.342,33.228,,3.25,82711182,n/a,,,2026-10-01
-EFID,Edita Food Industries Company (S.A.E),Bakery Products,70.7,54.3,76.3,78.2,28.1,7.8,4/4,18.4,12.21,6.08649,62.13,13.17,37.426,88.978,0.989,2.99,97112348,Buy,37.6,104.35,2026-10-01
-ENGC,Industrial Engineering Company for Construction and Development (ICON) (S.A.E.),Fabricated Structural Metal Products,70.2,86.4,63.0,51.0,40.9,6.5,4/4,34.47,6.21,1.3256,34.39,10.55,17.35,8.59,0.541,3.43,16587929,n/a,,,2026-10-01
-CIEB,Credit Agricole - Egypt Bank (S.A.E.),Commercial Banks,69.2,79.3,65.1,29.3,66.7,8.6,4/4,23.49,4.72,1.31539,32.98,47.63,-0.134,-5.132,0.098,13.36,9731085,Strong Buy,32.91,40.1,2026-10-01
-SCEM,Sinai Cement Co. (S.A.E),"Cement, Hydraulic",68.6,70.8,87.6,44.1,66.9,0,4/4,75.91,5.99,2.7804,58.37,34.96,26.502,8.196,0.025,,29947937,n/a,,,2026-10-01
+ENGC,Industrial Engineering Company for Construction and Development (ICON) (S.A.E.),Fabricated Structural Metal Products,70.3,86.7,63.0,51.0,40.9,6.5,4/4,34.47,6.21,1.3256,34.39,10.55,17.35,8.59,0.541,3.43,16587929,n/a,,,2026-10-01
+CIEB,Credit Agricole - Egypt Bank (S.A.E.),Commercial Banks,69.1,78.7,65.1,29.3,66.7,8.6,4/4,23.49,4.81,1.34115,32.98,47.63,-0.134,-5.132,0.098,13.36,9731085,Strong Buy,32.91,40.1,2026-10-01
+SCEM,Sinai Cement Co. (S.A.E),"Cement, Hydraulic",68.7,71.1,87.6,44.1,66.9,0,4/4,75.91,5.99,2.7804,58.37,34.96,26.502,8.196,0.025,,29947937,n/a,,,2026-10-01
+WCDF,Middle & West Delta Flour Mills,Bakery Products,68.6,60.6,70.4,44.2,65.9,8.3,4/4,630.26,10.04,4.49553,48.29,17.33,6.397,10.785,,5.5,5010567,n/a,,,2026-10-01
 ABUK,Abu Qir Fertilizers & Chemical Industries Company (S.A.E),Agricultural Chemicals,68.4,44.9,80.0,53.4,79.0,5.7,4/4,85.78,13.29,4.7246,39.34,32.02,20.667,8.725,0.003,6.9,41447266,Buy,88.97,3.72,2026-10-01
-WCDF,Middle & West Delta Flour Mills,Bakery Products,68.4,60.1,70.4,44.2,65.9,8.3,4/4,630.26,10.04,4.49553,48.29,17.33,6.397,10.785,,5.5,5010567,n/a,,,2026-10-01
 ADIB,Abu Dhabi Islamic Bank - Egypt - S.A.E,Commercial Banks,68.3,73.2,67.3,63.3,35.4,5.0,4/4,49,5.22,1.71349,38.8,54.0,37.498,30.389,0.245,,59323369,Strong Buy,59.72,21.88,2026-10-01
 OCDI,"Sixth of October for Development and Investment Company ""SODIC"" (S.A.E.)",Real Estate,68.3,74.1,47.7,82.4,42.9,4.7,4/4,25.5,8.64,2.07359,27.32,17.9,111.961,25.514,0.719,2.04,31842844,n/a,,,2026-10-01
 EAST,Eastern Company S.A.E,Tobacco Products,68.2,55.9,80.4,46.4,40.1,9.7,4/4,29.47,9.22,6.45584,80.62,22.37,33.934,-11.063,1.738,9.67,40502242,Strong Buy,52.2,77.13,2026-10-01
 EXPA,Export Development Bank of Egypt (S.A.E.),Commercial Banks,68.2,69.9,60.4,77.0,66.0,0,4/4,20.92,3.93,1.0359,29.85,46.79,41.02,33.079,0.07,,38708506,n/a,,,2026-10-01
-MASR,Madinet Masr For Housing and Development,"Land Subdividers and Developers, Except Cemeteries",68.1,84.4,60.5,56.3,27.0,6.5,4/4,7.49,5.52,1.2333,29.34,24.05,37.391,3.793,0.547,1.96,59563394,Strong Buy,11.4,52.2,2026-10-01
-MICH,Misr Chemical Industries Co.,Chemicals and Allied Products,67.8,52.6,80.8,28.7,74.5,9.4,4/4,44.99,10.26,3.39239,37.47,43.75,12.978,-23.061,0.179,7.08,5612682,n/a,,,2026-10-01
-MPCI,Memphis Pharmaceuticals & Chemical Industries,Pharmaceutical Preparations,67.1,35.5,87.6,53.5,66.6,6.8,4/4,328.6,14.4,10.53336,95.06,30.89,36.209,37.787,0.118,3.81,97210067,n/a,,,2026-10-01
-MHOT,Misr Hotels Company,Hotels and Motels,67.0,45.1,87.2,54.4,42.5,7.3,4/4,16.84,12.23,3.57585,43.24,54.5,7.854,4.409,0.249,4.31,16092893,n/a,,,2026-10-01
+MASR,Madinet Masr For Housing and Development,"Land Subdividers and Developers, Except Cemeteries",68.2,84.7,60.5,56.3,27.0,6.5,4/4,7.49,5.52,1.2333,29.34,24.05,37.391,3.793,0.547,1.96,59563394,Strong Buy,11.4,52.2,2026-10-01
+MICH,Misr Chemical Industries Co.,Chemicals and Allied Products,67.9,52.9,80.8,28.7,74.5,9.4,4/4,44.99,10.26,3.39239,37.47,43.75,12.978,-23.061,0.179,7.08,5612682,n/a,,,2026-10-01
+MHOT,Misr Hotels Company,Hotels and Motels,67.2,45.6,87.2,54.4,42.5,7.3,4/4,16.84,12.23,3.57585,43.24,54.5,7.854,4.409,0.249,4.31,16092893,n/a,,,2026-10-01
 MCRO,Macro Group Pharmaceuticals (Macro Capital) S.A.E,"Perfumes, Cosmetics, and Other Toilet Preparations",67.0,27.8,58.2,84.2,73.3,9.1,4/4,1.52,10.64,6.73538,28.24,12.89,52.355,102.978,0.054,6.8,65168699,n/a,,,2026-10-01
+MPCI,Memphis Pharmaceuticals & Chemical Industries,Pharmaceutical Preparations,66.8,34.5,87.6,53.5,66.6,6.8,4/4,328.6,15.19,11.10747,95.06,30.89,36.209,37.787,0.118,3.81,97210067,n/a,,,2026-10-01
 ALCN,Alexandria Container&Cargo Handling Company,Water Transportation,66.3,26.5,97.5,43.1,93.9,4.3,4/4,33.01,13.75,12.13768,,93.34,-8.43,8.956,0.004,5.32,24018571,Hold,28.55,-13.51,2026-10-01
 ORWE,Oriental Weavers Carpets Company (S.A.E),"Home Furniture, Furnishings, and Equipment Stores",66.1,85.8,37.0,49.4,66.1,7.0,4/4,26.7,9.26,0.85052,15.06,7.15,7.224,53.56,0.387,4.49,37700213,Buy,36.35,36.14,2026-10-01
 GGCC,Giza General - Contracting and Real Estate Investment S.A.E,Real Estate,65.7,77.8,44.4,79.9,60.1,0,4/4,0.665,9.1,1.75335,21.45,12.64,24.992,112.621,0.703,,11533054,n/a,,,2026-10-01
 CPCI,Kahira Pharmaceuticals & Chemical Industries Company,Pharmaceutical Preparations,65.4,36.7,77.9,67.4,59.0,5.3,4/4,576.31,17.06,7.41022,47.65,21.11,30.298,25.161,0.145,2.81,8344392,n/a,,,2026-10-01
 ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,65.2,87.9,36.9,86.3,41.5,0,4/4,790.1,7.95,1.65977,27.48,3.74,62.637,68.071,0.521,,112642187,n/a,,,2026-10-01
-ETEL,Telecom Egypt Company,"Telephone Communications, Except Radiotelephone",65.0,66.7,70.1,75.4,18.3,2.4,4/4,134,9.47,3.21433,43.37,21.89,22.366,94.755,0.989,1.08,129472810,Buy,134.94,0.7,2026-10-01
+ETEL,Telecom Egypt Company,"Telephone Communications, Except Radiotelephone",65.0,66.9,70.1,75.4,18.3,2.4,4/4,134,9.47,3.21433,43.37,21.89,22.366,94.755,0.989,1.08,129472810,Buy,134.94,0.7,2026-10-01
+OBRI,El-Ebour Co. for Real Estate Investment S.A.E.,"Land Subdividers and Developers, Except Cemeteries",65.0,69.6,31.0,93.2,76.7,0,4/4,24,13.43,3.03801,25.55,4.01,105.951,152.863,0.134,,6508632,n/a,,,2026-10-01
 DTPP,Delta Co. For Printing & Packaging S.A.E,Commercial Printing,64.9,48.5,72.5,64.5,45.1,5.7,4/4,276.65,15.93,6.50788,54.22,10.8,12.618,74.32,1.352,3.08,27756848,n/a,,,2026-10-01
-OBRI,El-Ebour Co. for Real Estate Investment S.A.E.,"Land Subdividers and Developers, Except Cemeteries",64.9,69.4,31.0,93.2,76.7,0,4/4,24,13.43,3.03801,25.55,4.01,105.951,152.863,0.134,,6508632,n/a,,,2026-10-01
 RAYA,Raya Holding Company for Financial Investments (S.A.E),"Computer Programming, Data Processing, And Other Computer Related Services",64.7,82.2,51.7,80.0,20.4,1.5,4/4,6.2,10.19,2.91302,42.24,3.89,40.297,50.604,2.826,0.6,54577422,n/a,,,2026-10-01
 BONY,Bonyan for Development and Trade,Real Estate Operators (except Developers) And Lessors,64.5,71.5,51.3,30.4,72.6,9.2,4/4,3.89,3.78,0.58563,16.72,208.6,11.885,-6.545,0.087,,23737484,Strong Buy,6.27,61.18,2026-10-01
 MPRC,Egyptian Media Production City,Motion Picture and Video Tape Production,64.1,56.7,68.1,61.8,49.2,3.8,4/4,38.14,8.67,1.8696,22.68,61.88,13.198,39.565,0.013,1.28,24280000,n/a,,,2026-10-01
 ACAMD,"Arab Co.,for asset management and development","Land Subdividers and Developers, Except Cemeteries",64.1,22.8,92.4,,50.8,7.9,3/4,2.02,21.55,35.65846,191.88,36.59,,,0.019,4.93,30070542,n/a,,,2026-10-01
-FWRY,Fawry for Banking Technology and Electronic Payments S.A.E.,Computer Processing and Data Preparation and Processing Services,63.8,32.5,75.9,79.9,23.8,7.8,4/4,18.25,21.58,6.63676,44.77,28.49,44.884,45.517,0.485,,132507045,Strong Buy,26.68,46.19,2026-10-01
-POUL,Cairo Poultry Company S.A.E.,Poultry Slaughtering and Processing,63.8,77.3,63.7,24.7,62.6,5.9,4/4,9.9,2.16,2.16248,34.88,13.73,0.556,-15.453,0.037,3.21,41860210,n/a,,,2026-10-01
-SAUD,alBaraka Bank Egypt S.A.E.,Commercial Banks,63.8,84.6,52.8,46.5,48.2,3.8,4/4,22.16,4.8,0.99624,26.19,39.25,16.225,7.156,0.412,3.68,9882673,Buy,19.7,-11.1,2026-10-01
-SMFR,Samad Misr EGYFERT.S.A.E,Agricultural Chemicals,63.6,57.1,25.1,91.1,49.6,8.7,4/4,208.93,25.23,0.99918,6.48,13.16,98.75,103.944,,5.69,5632335,n/a,,,2026-10-01
+FWRY,Fawry for Banking Technology and Electronic Payments S.A.E.,Computer Processing and Data Preparation and Processing Services,63.9,32.8,75.9,79.9,23.8,7.8,4/4,18.25,21.58,6.63676,44.77,28.49,44.884,45.517,0.485,,132507045,Strong Buy,26.68,46.19,2026-10-01
+SAUD,alBaraka Bank Egypt S.A.E.,Commercial Banks,63.9,84.9,52.8,46.5,48.2,3.8,4/4,22.16,4.8,0.99624,26.19,39.25,16.225,7.156,0.412,3.68,9882673,Buy,19.7,-11.1,2026-10-01
+POUL,Cairo Poultry Company S.A.E.,Poultry Slaughtering and Processing,63.7,76.7,63.7,24.7,62.6,5.9,4/4,9.9,2.24,2.24549,34.88,13.73,0.556,-15.453,0.037,3.21,41860210,n/a,,,2026-10-01
+SMFR,Samad Misr EGYFERT.S.A.E,Agricultural Chemicals,63.7,57.4,25.1,91.1,49.6,8.7,4/4,208.93,25.23,0.99918,6.48,13.16,98.75,103.944,,5.69,5632335,n/a,,,2026-10-01
 ROTO,Rowad Tourism Company,Hotels and Motels,63.2,52.8,31.2,88.4,81.3,3.7,4/4,37.06,18.47,2.4064,16.58,15.83,47.264,,0.14,1.25,12887281,n/a,,,2026-10-01
 GIHD,Gharbia Islamic Housing Development Company,"Land Subdividers and Developers, Except Cemeteries",62.8,22.9,71.2,96.4,69.9,0,4/4,62.25,29.54,6.3116,23.93,84.67,247.786,211.409,,,11548309,n/a,,,2026-10-01
 ORHD,Orascom Development Egypt S.A.E.,Hotels and Motels,61.7,75.0,60.6,41.5,33.5,5.6,4/4,37.59,7.94,2.0835,30.56,18.95,22.154,-4.391,0.583,0.99,86155040,Strong Buy,56.25,49.64,2026-10-01
-CIRA,Cairo For Investment And Real Estate Developments-CIRA Education,Real Estate,61.6,33.7,69.3,96.0,27.9,2.5,4/4,38.08,23.36,7.30534,36.48,15.89,64.145,291.653,1.313,0.87,15531804,n/a,,,2026-10-01
-TMGH,Talaat Moustafa Group Holding,"Investors, not elsewhere classified",61.0,68.2,40.1,65.9,46.4,5.0,4/4,86.98,11.69,1.08006,13.31,22.62,36.488,17.934,0.441,0.29,226649527,Strong Buy,141.9,63.14,2026-10-01
+CIRA,Cairo For Investment And Real Estate Developments-CIRA Education,Real Estate,61.7,34.0,69.3,96.0,27.9,2.5,4/4,38.08,23.36,7.30534,36.48,15.89,64.145,291.653,1.313,0.87,15531804,n/a,,,2026-10-01
+EHDR,Egyptians for Housing & Development Co.,Real Estate,61.1,42.1,51.0,48.9,92.3,7.1,4/4,2.41,25.09,2.52442,10.97,26.07,14.463,13.628,0.001,3.98,7605239,n/a,,,2026-10-01
+TMGH,Talaat Moustafa Group Holding,"Investors, not elsewhere classified",61.0,68.2,40.1,65.9,46.4,5.0,4/4,87.7,11.69,1.08006,13.31,22.62,36.488,17.934,0.441,0.29,228525678,Strong Buy,141.9,61.8,2026-10-01
 TYCN,Tycoon Holding Company For Financial Investments,"Security and Commodity Brokers, Dealers, Exchanges, and Services",61.0,6.1,94.2,98.8,41.5,0,4/4,13.01,113.89,47.13061,52.2,70.43,192.091,308.048,0.063,,11054129,n/a,,,2026-10-01
-EHDR,Egyptians for Housing & Development Co.,Real Estate,60.9,41.5,51.0,48.9,92.3,7.1,4/4,2.41,25.09,2.52442,10.97,26.07,14.463,13.628,0.001,3.98,7605239,n/a,,,2026-10-01
-AMOC,Alexandria Mineral Oils Company,Petroleum Refining,60.6,69.4,41.0,40.8,84.7,4.6,4/4,13.29,11.65,4.0716,33.29,3.68,12.273,-1.2,0.007,5.69,179700203,Buy,11.68,-12.11,2026-10-01
-UEFM,Upper Egypt Mills Company J.S.C,Bakery Products,60.4,56.5,64.1,23.3,76.4,7.0,4/4,490,13.37,5.03139,43.26,10.1,-33.685,-9.815,,3.92,5074930,n/a,,,2026-10-01
+AMOC,Alexandria Mineral Oils Company,Petroleum Refining,60.5,69.1,41.0,40.8,84.7,4.6,4/4,13.29,11.65,4.0716,33.29,3.68,12.273,-1.2,0.007,5.69,179700203,Buy,11.68,-12.11,2026-10-01
+UEFM,Upper Egypt Mills Company J.S.C,Bakery Products,60.5,56.8,64.1,23.3,76.4,7.0,4/4,490,13.37,5.03139,43.26,10.1,-33.685,-9.815,,3.92,5074930,n/a,,,2026-10-01
 EFIH,e-finance for Digital and Financial Investments S.A.E.,Computer Processing and Data Preparation and Processing Services,60.1,22.4,77.3,70.5,52.3,4.7,4/4,22.22,32.45,7.58459,36.22,30.7,25.378,47.454,0.021,1.23,46172671,Buy,28.1,26.46,2026-10-01
 TWSA,Tawasoa For Factoring,"Short-Term Business Credit Institutions, Except Agricultural",59.8,,52.4,68.5,47.2,2.8,3/4,7.5,41.63,,12.76,28.68,35.448,13.097,0.461,0.95,6810870,n/a,,,2026-10-01
 HRHO,EFG Holding Company S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",59.4,84.4,34.6,53.8,27.9,6.1,4/4,23.8,8.92,0.75175,14.37,13.75,25.579,5.58,1.266,1.15,89595505,Strong Buy,36.69,54.16,2026-10-01
 JUFO,Juhayna Food Industries S.A.E.,Dairy Products,59.3,57.7,59.2,57.6,42.0,3.5,4/4,24.6,16.52,4.21999,31.01,6.66,24.076,23.255,0.971,0.77,13585399,Buy,29.45,19.72,2026-10-01
-GRCA,Grand Capital for Financial Investments,"Security Brokers, Dealers, and Flotation Companies",58.2,36.9,92.7,66.1,18.7,0,4/4,33.94,11.82,4.28768,44.63,312.55,28.313,,,,6694869,n/a,,,2026-10-01
-PRDC,Pioneers Properties For Urban Development - PRE Group,Real Estate,58.1,80.0,19.1,93.7,33.3,0,4/4,7.22,12.49,0.54081,6.15,9.01,39.913,470.355,0.873,,13033075,n/a,,,2026-10-01
+PRDC,Pioneers Properties For Urban Development - PRE Group,Real Estate,58.3,80.5,19.1,93.7,33.3,0,4/4,7.22,12.49,0.54081,6.15,9.01,39.913,470.355,0.873,,13033075,n/a,,,2026-10-01
 CANA,Suez Canal Bank (S.A.E),Commercial Banks,57.6,67.3,58.1,51.8,39.1,1.1,4/4,45.91,7.49,1.98213,35.06,40.12,33.738,0.143,0.488,0.44,10224570,n/a,,,2026-10-01
+GRCA,Grand Capital for Financial Investments,"Security Brokers, Dealers, and Flotation Companies",57.6,34.7,92.7,66.1,18.7,0,4/4,33.94,12.89,4.67425,44.63,312.55,28.313,,,,6694869,n/a,,,2026-10-01
 OLFI,Obour Land for Food Industries S.A.E.,Dairy Products,57.5,61.3,68.7,33.2,18.0,7.5,4/4,21.61,11.56,5.54049,56.54,6.18,13.319,-9.17,2.655,8.1,21416461,Hold,26.48,22.54,2026-10-01
-CEFM,Middle Egypt Flour Mills,Miscellaneous Food Preparations And Kindred Products,56.3,52.6,61.2,34.9,45.5,6.6,4/4,132.84,15.08,4.3326,28.74,14.11,12.45,-1.841,,3.58,6817880,n/a,,,2026-10-01
-EGCH,Egyptian Chemical Industries,Agricultural Chemicals,56.2,68.8,31.2,82.0,38.0,0,4/4,13.38,15.08,0.62939,6.15,15.94,30.553,81.807,0.315,,48283456,n/a,,,2026-10-01
-SWDY,El Sewedy Electric Company,Drawing and Insulating of Nonferrous Wire,55.5,67.1,42.7,53.7,48.2,1.9,4/4,105,13.78,2.95473,28.52,5.08,26.627,4.725,1.111,0.83,121108155,Sell,104.0,-0.95,2026-10-01
+EGCH,Egyptian Chemical Industries,Agricultural Chemicals,56.4,69.6,31.2,82.0,38.0,0,4/4,13.38,15.08,0.62939,6.15,15.94,30.553,81.807,0.315,,48283456,n/a,,,2026-10-01
+CEFM,Middle Egypt Flour Mills,Miscellaneous Food Preparations And Kindred Products,55.6,50.4,61.2,34.9,45.5,6.6,4/4,132.84,15.84,4.55177,28.74,14.11,12.45,-1.841,,3.58,6817880,n/a,,,2026-10-01
 CCAP,QALA For Financial Investments,"Investors, not elsewhere classified",54.2,71.3,40.3,52.9,49.8,0,4/4,6.63,112.06,0.33001,26.33,0.13,23.944,,0.987,,743283751,n/a,,,2026-10-01
+SWDY,El Sewedy Electric Company,Drawing and Insulating of Nonferrous Wire,54.1,62.4,42.7,53.7,48.2,1.9,4/4,105,15.75,3.37684,28.52,5.08,26.627,4.725,1.111,0.83,121108155,Sell,104.0,-0.95,2026-10-01
 ELSH,Al-Shams Company for Housing and Urban Development,Real Estate,54.1,42.8,59.5,52.0,62.5,1.0,4/4,11.25,16.26,2.30095,15.04,68.54,29.907,3.469,0.118,0.42,9984668,n/a,,,2026-10-01
-MTIE,MM Group for Industry and International Trade S.A.E.,Wholesale Trade-Durable Goods,53.1,60.5,48.8,45.0,42.0,2.8,4/4,7.83,17.42,3.36043,27.37,4.47,19.22,3.587,0.055,,15719485,Buy,8.38,7.02,2026-10-01
+MTIE,MM Group for Industry and International Trade S.A.E.,Wholesale Trade-Durable Goods,53.3,61.0,48.8,45.0,42.0,2.8,4/4,7.83,17.42,3.36043,27.37,4.47,19.22,3.587,0.055,,15719485,Buy,8.38,7.02,2026-10-01
 PHDC,Palm Hills Developments S.A.E.,"Land Subdividers and Developers, Except Cemeteries",51.9,77.0,36.1,48.3,9.2,4.5,4/4,13,9.4,1.81783,22.17,10.07,26.125,1.088,1.71,0.75,66071733,Strong Buy,17.93,37.92,2026-10-01
 ASCM,"ASEC Company for Mining ASCOM, S.A.E",Metal Mining,51.9,90.5,43.4,43.8,5.5,0,4/4,55.87,5.15,1.05823,,11.84,19.779,,1.801,,8217527,n/a,,,2026-10-01
-GTWL,Golden Textiles & Clothes Wool,Textile Mill Products,51.5,50.0,37.8,61.4,60.3,0.8,4/4,145.94,24.54,2.52863,12.03,11.37,22.972,25.456,0.802,0.29,374583760,n/a,,,2026-10-01
-ASPI,Aspire Capital Holding for Financial Investments,"Security Brokers, Dealers, and Flotation Companies",51.3,65.5,44.6,54.5,30.9,0,4/4,0.342,5.96,1.79974,17.18,22.1,23.784,29.51,2.442,,21276617,n/a,,,2026-10-01
-ACGC,Arabia Cotton Ginning Company,Textile Mill Products,51.2,74.4,33.5,14.6,72.3,4.3,4/4,14.7,11.7,1.24893,14.41,11.75,-19.872,-24.417,0.35,1.59,20494725,n/a,,,2026-10-01
+ACGC,Arabia Cotton Ginning Company,Textile Mill Products,51.6,75.8,33.5,14.6,72.3,4.3,4/4,14.7,11.56,1.23364,14.41,11.75,-19.872,-24.417,0.35,1.59,20494725,n/a,,,2026-10-01
+GTWL,Golden Textiles & Clothes Wool,Textile Mill Products,51.6,50.5,37.8,61.4,60.3,0.8,4/4,145.94,24.54,2.52863,12.03,11.37,22.972,25.456,0.802,0.29,374583760,n/a,,,2026-10-01
+ASPI,Aspire Capital Holding for Financial Investments,"Security Brokers, Dealers, and Flotation Companies",51.2,65.2,44.6,54.5,30.9,0,4/4,0.342,5.96,1.79974,17.18,22.1,23.784,29.51,2.442,,21276617,n/a,,,2026-10-01
 ZEOT,Extracted Oil & Derivatives Co.,Fats And Oils,51.0,44.0,18.2,78.5,72.1,1.9,4/4,11.65,54.79,8.43995,16.62,1.0,37.473,,0.097,0.72,10356850,n/a,,,2026-10-01
 BINV,B Investments Holding S.A.E.,"Investors, not elsewhere classified",50.0,41.4,53.2,28.0,62.9,5.2,4/4,59.92,21.11,1.90019,8.74,77.38,0.275,-7.558,0.003,2.51,33155653,n/a,,,2026-10-01
 LCSW,Lecico Egypt (S.A.E.),Pottery And Related Products,49.7,87.1,28.8,27.2,54.7,0,4/4,33.3,9.23,1.12113,9.83,3.35,18.511,-37.129,1.277,,26228112,n/a,,,2026-10-01
-TAQA,TAQA Arabia S.A.E.,"Petroleum and Petroleum Products Wholesalers, Except Bulk Stations and Terminals",49.4,58.8,41.0,76.8,1.9,0,4/4,16.59,17.28,4.14222,30.99,4.34,30.005,52.367,2.625,,88884425,n/a,,,2026-10-01
+TAQA,TAQA Arabia S.A.E.,"Petroleum and Petroleum Products Wholesalers, Except Bulk Stations and Terminals",49.5,59.1,41.0,76.8,1.9,0,4/4,16.59,17.28,4.14222,30.99,4.34,30.005,52.367,2.625,,88884425,n/a,,,2026-10-01
 GOUR,Gourmet Egypt.Com Foods,Agriculture Production Livestock and Animal Specialties,49.3,,31.1,87.9,7.5,3.0,3/4,14.9,27.35,,,7.21,52.831,88.995,1.811,1.36,43710566,Buy,15.13,1.54,2026-10-01
 ELKA,Cairo for Housing and Development Company (S.A.E),Real Estate,49.3,75.7,53.2,7.4,58.6,0,4/4,1.49,2.87,0.47585,18.04,221.15,-13.863,,0.138,,9478531,n/a,,,2026-10-01
-NINH,Nozha International Hospital,Hospitals,48.8,22.4,67.2,53.9,50.4,0.9,4/4,19,34.32,7.24606,26.04,30.67,12.703,25.879,0.006,0.38,9279942,n/a,,,2026-10-01
+NINH,Nozha International Hospital,Hospitals,48.9,22.7,67.2,53.9,50.4,0.9,4/4,19,34.32,7.24606,26.04,30.67,12.703,25.879,0.006,0.38,9279942,n/a,,,2026-10-01
 GBCO,GB Corp,Motor Vehicles and Passenger Car Bodies,48.6,84.0,22.1,38.6,16.4,4.6,4/4,30,13.29,0.92704,6.94,2.64,31.45,-30.489,1.333,1.13,304788720,Buy,38.14,27.13,2026-10-01
 NIPH,EI- Nile Co. for Pharmaceuticals and Chemical Industries,Pharmaceutical Preparations,48.6,14.8,57.7,91.0,16.2,1.7,4/4,316,68.93,14.99827,26.02,10.72,113.769,159.601,1.227,0.6,189133900,n/a,,,2026-10-01
-MOIN,Mohandes Insurance Company,Insurance Carriers,48.2,37.8,53.0,31.7,75.4,1.8,4/4,33.68,23.18,4.42183,21.18,22.62,9.542,-7.429,0.006,0.6,7513536,n/a,,,2026-10-01
-AMER,Amer Group Holding Company S.A.E.,Real Estate,48.2,56.7,30.0,77.0,19.9,0,4/4,4.29,24.07,1.74766,15.59,9.97,16.779,276.011,0.922,,49355163,n/a,,,2026-10-01
+MOIN,Mohandes Insurance Company,Insurance Carriers,48.5,38.6,53.0,31.7,75.4,1.8,4/4,33.68,23.18,4.42183,21.18,22.62,9.542,-7.429,0.006,0.6,7513536,n/a,,,2026-10-01
+AMER,Amer Group Holding Company S.A.E.,Real Estate,48.4,57.2,30.0,77.0,19.9,0,4/4,4.29,24.07,1.74766,15.59,9.97,16.779,276.011,0.922,,49355163,n/a,,,2026-10-01
 SCFM,South Cairo and Giza Flour Mills and Bakeries Company,Bakery Products,48.1,28.4,45.0,89.3,25.2,0,4/4,238.84,21.08,25.58572,,19.44,49.429,,,,5003698,n/a,,,2026-10-01
-PHAR,Egyptian International Pharmaceutical Industries Company,Pharmaceutical Preparations,47.7,57.3,48.9,43.2,17.1,2.5,4/4,113.9,14.89,3.15434,20.51,12.55,12.078,8.332,1.651,1.3,133458680,Hold,108.2,-5.0,2026-10-01
-CNFN,Contact Financial Holding S.A.E.,Personal Credit Institutions,47.0,74.2,21.9,21.7,25.2,9.0,4/4,4.01,15.53,1.05267,9.77,5.42,14.845,-50.933,2.058,6.11,6218243,n/a,,,2026-10-01
-ICFC,International Company for Fertilizers and Chemicals S.A.E,Miscellaneous Non-durable Goods,46.5,,42.4,58.9,33.9,0,3/4,20.72,10.63,,24.28,5.62,45.735,3.928,0.137,,11798610,n/a,,,2026-10-01
-TALM,Taaleem Management Services Company S.A.E.,Educational Services,46.3,40.5,53.2,44.0,48.0,0,4/4,18.99,22.67,3.46518,13.84,24.94,32.452,-15.892,0.622,,34142406,n/a,,,2026-10-01
+PHAR,Egyptian International Pharmaceutical Industries Company,Pharmaceutical Preparations,48.0,58.1,48.9,43.2,17.1,2.5,4/4,113.9,14.89,3.15434,20.51,12.55,12.078,8.332,1.651,1.3,133458680,Hold,108.2,-5.0,2026-10-01
+CNFN,Contact Financial Holding S.A.E.,Personal Credit Institutions,47.2,74.8,21.9,21.7,25.2,9.0,4/4,4.01,15.53,1.05267,9.77,5.42,14.845,-50.933,2.058,6.11,6218243,n/a,,,2026-10-01
+ICFC,International Company for Fertilizers and Chemicals S.A.E,Miscellaneous Non-durable Goods,46.5,,42.4,58.9,33.9,0,3/4,21.98,10.63,,24.28,5.62,45.735,3.928,0.137,,12516093,n/a,,,2026-10-01
+TALM,Taaleem Management Services Company S.A.E.,Educational Services,45.6,38.0,53.2,44.0,48.0,0,4/4,18.99,25.06,3.83012,13.84,24.94,32.452,-15.892,0.622,,34142406,n/a,,,2026-10-01
 EMFD,Emaar Misr for Development Company (S.A.E.),"Land Subdividers and Developers, Except Cemeteries",43.9,67.6,38.9,15.7,53.5,0,4/4,13.56,11.12,1.0282,10.53,30.8,-5.962,-38.438,0.052,,113676300,n/a,,,2026-10-01
 UEGC,"El-Saeed Company for Contracting and Real Estate Investment ""SCCD"" (S.A.E.)",Heavy Construction Other Than Building Construction Contractors,43.7,74.3,22.1,28.9,50.4,0,4/4,1.48,26.24,0.82248,3.17,1.94,26.193,-60.694,1.262,,32086373,n/a,,,2026-10-01
 GPIM,GPI for Urban Growth,"Land Subdividers and Developers, Except Cemeteries",42.6,4.5,40.0,64.3,87.7,0,4/4,1.83,257.92,16.01768,8.33,25.76,153.296,4.419,0.002,,19137825,n/a,,,2026-10-01
 WKOL,Wadi Kom Ombo For Land Reclamation Co.,Heavy Construction Other Than Building Construction Contractors,40.7,16.1,39.0,6.7,96.7,8.0,4/4,277.26,136.18,8.68749,22.53,5.52,-14.721,-60.125,,5.16,5959426,n/a,,,2026-10-01
-EFIC,Egyptian Financial and Industrial SAE,Agricultural Chemicals,39.9,42.2,36.9,18.0,46.0,4.8,4/4,164.98,54.98,5.30998,12.56,2.5,18.846,-74.358,2.675,2.12,59251082,n/a,,,2026-10-01
-CLHO,Cleopatra Hospitals Group S.A.E.,Hospitals,39.8,35.4,43.8,38.5,19.0,3.6,4/4,15.15,47.02,5.33811,20.02,6.01,26.814,-24.208,0.933,,21172519,Hold,17.48,15.38,2026-10-01
-SKPC,Sidi Kerir Petrochemicals Co.,Industrial Organic Chemicals,39.5,57.1,16.2,11.6,67.0,4.6,4/4,15.84,34.05,2.6445,8.91,3.43,2.436,-73.579,0.352,3.09,77085122,Hold,17.33,9.41,2026-10-01
-NAPR,National Printing Company S.A.E.,Paperboard Containers And Boxes,39.5,49.6,34.9,21.1,59.0,0,4/4,49.93,40.33,3.57794,12.62,3.41,2.245,-26.722,1.214,,12592096,n/a,,,2026-10-01
-NHPS,National Company for Housing Professional Syndicates SAE,Real Estate,39.1,36.8,24.4,20.1,39.0,9.9,4/4,68.2,24.11,4.93263,19.79,,,-37.724,,10.42,23185613,n/a,,,2026-10-01
+CLHO,Cleopatra Hospitals Group S.A.E.,Hospitals,39.9,35.7,43.8,38.5,19.0,3.6,4/4,15.15,47.02,5.33811,20.02,6.01,26.814,-24.208,0.933,,21172519,Hold,17.48,15.38,2026-10-01
+NAPR,National Printing Company S.A.E.,Paperboard Containers And Boxes,39.7,50.2,34.9,21.1,59.0,0,4/4,49.93,40.33,3.57794,12.62,3.41,2.245,-26.722,1.214,,12592096,n/a,,,2026-10-01
+EFIC,Egyptian Financial and Industrial SAE,Agricultural Chemicals,39.6,41.1,36.9,18.0,46.0,4.8,4/4,164.98,57.19,5.52304,12.56,2.5,18.846,-74.358,2.675,2.12,59251082,n/a,,,2026-10-01
+SKPC,Sidi Kerir Petrochemicals Co.,Industrial Organic Chemicals,39.4,56.6,16.2,11.6,67.0,4.6,4/4,15.84,34.83,2.7046,8.91,3.43,2.436,-73.579,0.352,3.09,77085122,Hold,17.33,9.41,2026-10-01
 MOSC,Misr Oils & Soap,"Soap, Detergents, And Cleaning Preparations; Perfumes, Cosmetics, and Other Toilet Preparations",38.5,48.1,60.2,20.7,4.9,0.1,4/4,261.78,21.45,13.45677,83.49,2.26,7.369,,,0.18,12423293,n/a,,,2026-10-01
-RMDA,Tenth of Ramadan for Pharmaceutical Industries and Diagnostic Reagents (Rameda) (S.A.E),Pharmaceutical Preparations,38.1,30.5,46.5,33.2,27.9,2.5,4/4,5.35,36.58,4.66612,14.95,6.86,22.686,-24.668,1.017,0.74,38498365,Buy,5.75,7.48,2026-10-01
-BTFH,Beltone Holding S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",37.8,56.4,13.5,37.1,50.6,0,4/4,2.79,43.36,1.22076,3.49,5.37,107.669,-68.521,2.628,,89690685,n/a,,,2026-10-01
+NHPS,National Company for Housing Professional Syndicates SAE,Real Estate,38.3,34.3,24.4,20.1,39.0,9.9,4/4,68.2,25.46,5.20819,19.79,,,-37.724,,10.42,23185613,n/a,,,2026-10-01
+RMDA,Tenth of Ramadan for Pharmaceutical Industries and Diagnostic Reagents (Rameda) (S.A.E),Pharmaceutical Preparations,38.2,30.7,46.5,33.2,27.9,2.5,4/4,5.35,36.58,4.66612,14.95,6.86,22.686,-24.668,1.017,0.74,38498365,Buy,5.75,7.48,2026-10-01
+BTFH,Beltone Holding S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",37.7,55.8,13.5,37.1,50.6,0,4/4,2.79,43.98,1.23826,3.49,5.37,107.669,-68.521,2.628,,89690685,n/a,,,2026-10-01
 AMES,Alexandria New Medical Center,"Miscellaneous Health And Allied Services, Not Elsewhere Classified",36.3,5.3,50.1,53.9,38.9,0.4,4/4,45.48,108.28,38.40049,19.86,10.88,17.862,19.089,0.07,0.21,103314324,n/a,,,2026-10-01
 KRDI,AlKhair River for Development Agricultural Investment and Environmental Services,Agricultural Production Crops,36.3,45.0,23.3,18.2,75.3,0,4/4,0.409,34.77,1.68379,6.83,5.95,12.646,-60.027,0.324,,41844215,n/a,,,2026-10-01
 UNIP,Universal For Paper and Packaging Materials,"Converted Paper And Paperboard Products, Except Containers And Boxes",35.6,64.4,3.3,9.4,50.1,5.4,4/4,0.34,27.82,1.62179,,1.15,-8.265,-78.363,1.206,2.86,6888101,n/a,,,2026-10-01
 ISMA,Ismailia / Misr Poultry Company S.A.E,,35.1,14.9,67.3,17.8,39.6,0,4/4,23.01,48.18,9.85768,23.11,75.95,-21.8,-25.712,0.536,,14392249,n/a,,,2026-10-01
-INFI,Ismailia National Co. for Food Industries,"Canned, Frozen, And Preserved Fruits, Vegetables, and Food Specialties",34.8,22.8,45.0,17.3,67.2,0.0,4/4,118.88,54.25,9.26327,17.64,11.43,3.284,-50.459,0.061,0.13,11486304,n/a,,,2026-10-01
+INFI,Ismailia National Co. for Food Industries,"Canned, Frozen, And Preserved Fruits, Vegetables, and Food Specialties",34.8,23.1,45.0,17.3,67.2,0.0,4/4,118.88,54.25,9.26327,17.64,11.43,3.284,-50.459,0.061,0.13,11486304,n/a,,,2026-10-01
 SIPC,Sabaa International Company for Pharmaceutical and Chemical Industry,Pharmaceutical Preparations,34.0,6.1,13.9,84.3,46.0,0,4/4,5,587.52,12.44373,2.13,4.58,41.431,,0.236,,30202580,n/a,,,2026-10-01
-CERA,The Arab Ceramic Co.,Structural Clay Products,33.6,55.8,19.3,22.8,35.7,0,4/4,1.27,45.94,3.25109,7.28,1.4,20.402,-65.632,2.545,,135247049,n/a,,,2026-10-01
-NCCW,Nasr Company for Civil Works,Heavy Construction Other Than Building Construction Contractors,32.7,29.7,32.6,19.5,61.0,0,4/4,7.03,34.77,5.53279,16.99,18.0,-14.348,-24.775,0.336,,23887174,n/a,,,2026-10-01
-ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",32.5,42.8,15.7,27.6,53.9,0,4/4,0.23,27.33,2.27416,4.52,6.09,-3.222,4.794,1.137,,53633705,n/a,,,2026-10-01
-EEII,Arab Engineering Industries,Refrigeration And Service Industry Machinery,32.2,39.2,16.5,6.5,64.6,4.2,4/4,2.07,133.4,2.99821,2.49,2.23,-18.529,-78.542,0.465,1.47,13188105,n/a,,,2026-10-01
+CERA,The Arab Ceramic Co.,Structural Clay Products,33.7,56.1,19.3,22.8,35.7,0,4/4,1.27,45.94,3.25109,7.28,1.4,20.402,-65.632,2.545,,135247049,n/a,,,2026-10-01
+NCCW,Nasr Company for Civil Works,Heavy Construction Other Than Building Construction Contractors,32.8,30.0,32.6,19.5,61.0,0,4/4,7.03,34.77,5.53279,16.99,18.0,-14.348,-24.775,0.336,,23887174,n/a,,,2026-10-01
+ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",32.6,43.0,15.7,27.6,53.9,0,4/4,0.23,27.33,2.27416,4.52,6.09,-3.222,4.794,1.137,,53633705,n/a,,,2026-10-01
+EEII,Arab Engineering Industries,Refrigeration And Service Industry Machinery,32.3,39.5,16.5,6.5,64.6,4.2,4/4,2.07,133.4,2.99821,2.49,2.23,-18.529,-78.542,0.465,1.47,13188105,n/a,,,2026-10-01
 BIOC,GlaxoSmithKline S.A.E,Pharmaceutical Preparations,32.1,13.4,28.1,53.4,40.0,0.2,4/4,350.11,138.33,12.31081,9.15,5.36,2.805,31.112,0.82,0.21,378371930,n/a,,,2026-10-01
 KWIN,El Kahera El Watania Investment,"Investors, not elsewhere classified",31.4,22.1,41.6,31.6,29.4,0,4/4,76.52,188.22,4.07002,10.11,15.83,38.788,-79.132,0.398,,8876932,n/a,,,2026-10-01
 SNFC,Sharkia National Company for Food Security,Grain Mill Products,31.3,1.7,19.5,57.0,71.5,0,4/4,11.36,886.38,39.70987,4.12,11.66,31.373,5.828,,,10960787,n/a,,,2026-10-01
@@ -118,9 +118,9 @@ AFMC,Alexandria Flour Mills,Miscellaneous Food Preparations And Kindred Products
 FCMD,International Company For Medical Industries S.A.E.,"Orthopedic, Prosthetic, and Surgical Appliances and Supplies",26.3,14.8,16.7,48.8,31.0,0,4/4,7.71,154.65,12.24047,14.44,4.2,22.391,,0.194,,19003192,n/a,,,2026-10-01
 ICID,International Co. For Investment & Development,Real Estate,22.7,6.6,33.5,21.6,35.0,0,4/4,18.76,277.98,9.92829,5.57,48.84,16.273,-54.257,,,10373192,n/a,,,2026-10-01
 CAED,Cairo Educational Services SAE,Educational Services,22.4,9.8,23.1,26.2,17.1,3.4,4/4,113.25,208.27,15.37077,7.54,4.45,18.851,-48.143,,1.15,19442307,n/a,,,2026-10-01
-KABO,El-Nasr Clothing & Textiles Co. (KABO),Apparel and Other Finished Products Made From Fabrics and Similar Materials,19.1,24.8,4.4,19.4,36.8,0,4/4,9.5,171.52,5.19441,2.36,2.3,21.364,-80.102,0.485,,47357396,n/a,,,2026-10-01
-CRST,Creast Mark For Contracting And Real Estate Development,"Water, Sewer, Pipeline, and Communications and Power Line Construction",18.7,9.1,25.5,2.7,51.1,0,4/4,2.74,100.45,11.03785,3.23,20.14,-68.612,-81.212,0.047,,404458072,n/a,,,2026-10-01
+KABO,El-Nasr Clothing & Textiles Co. (KABO),Apparel and Other Finished Products Made From Fabrics and Similar Materials,19.2,25.1,4.4,19.4,36.8,0,4/4,9.5,171.52,5.19441,2.36,2.3,21.364,-80.102,0.485,,47357396,n/a,,,2026-10-01
+CRST,Creast Mark For Contracting And Real Estate Development,"Water, Sewer, Pipeline, and Communications and Power Line Construction",18.8,9.4,25.5,2.7,51.1,0,4/4,2.74,100.45,11.03785,3.23,20.14,-68.612,-81.212,0.047,,404458072,n/a,,,2026-10-01
 IDRE,Ismailia Development and Real Estate Co,"Land Subdividers and Developers, Except Cemeteries",17.6,3.9,28.7,0.0,52.0,0,4/4,47.48,1834.93,11.4888,0.6,37.83,-76.117,-89.086,,,6175296,n/a,,,2026-10-01
+CCRS,Gulf Canadian Company for Arab Real Estate Investment,Real Estate,17.2,28.1,7.1,,15.4,0,3/4,2.31,156.31,4.47913,6.16,,,,,,11221264,n/a,,,2026-10-01
 MEPA,Medical Packaging Company,"Converted Paper And Paperboard Products, Except Containers And Boxes",16.8,19.4,13.0,2.4,43.3,0,4/4,1.62,195.79,4.73594,2.45,5.41,-25.131,-85.345,0.173,,8155553,n/a,,,2026-10-01
-CCRS,Gulf Canadian Company for Arab Real Estate Investment,Real Estate,16.8,27.3,7.1,,15.4,0,3/4,2.31,156.31,4.47913,6.16,,,,,,11221264,n/a,,,2026-10-01
-SPIN,Alexandria Spinning & Weaving Co.,Textile Mill Products,13.5,12.5,6.1,8.3,35.8,0.5,4/4,16.38,1188.77,7.84227,0.66,0.73,-10.15,,0.53,0.27,6688265,n/a,,,2026-10-01
+SPIN,Alexandria Spinning & Weaving Co.,Textile Mill Products,13.5,12.5,6.1,8.3,35.8,0.5,4/4,16.38,1194.58,7.88057,0.66,0.73,-10.15,,0.53,0.27,6688265,n/a,,,2026-10-01
