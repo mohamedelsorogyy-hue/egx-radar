@@ -21,8 +21,8 @@ ADIB,Abu Dhabi Islamic Bank - Egypt - S.A.E,Commercial Banks,68.7,73.3,67.6,63.7
 OCDI,"Sixth of October for Development and Investment Company ""SODIC"" (S.A.E.)",Real Estate,68.5,74.1,48.1,82.6,43.0,4.8,4/4,26.92,8.64,2.07359,27.32,17.9,111.961,25.514,0.719,2.04,33616054,n/a,,,2026-10-01
 SCEM,Sinai Cement Co. (S.A.E),"Cement, Hydraulic",68.4,69.6,87.7,44.6,67.2,0,4/4,80.18,6.33,2.9368,58.37,34.96,26.502,8.196,0.025,,31632533,n/a,,,2026-10-01
 MASR,Madinet Masr For Housing and Development,"Land Subdividers and Developers, Except Cemeteries",68.1,83.9,60.9,56.8,26.4,6.6,4/4,7.65,5.63,1.25965,29.34,24.05,37.391,3.793,0.547,1.96,60835776,Strong Buy,11.4,49.02,2026-10-01
-MICH,Misr Chemical Industries Co.,Chemicals and Allied Products,68.0,53.0,81.0,28.6,74.8,9.4,4/4,45.93,10.47,3.46327,37.47,43.75,12.978,-23.061,0.179,7.08,5729951,n/a,,,2026-10-01
 EAST,Eastern Company S.A.E,Tobacco Products,67.9,54.6,80.6,46.4,40.1,9.7,4/4,29.47,9.53,6.67322,80.62,22.37,33.934,-11.063,1.738,9.67,40502242,Strong Buy,52.2,77.13,2026-10-01
+MICH,Misr Chemical Industries Co.,Chemicals and Allied Products,67.9,53.0,81.0,28.6,74.4,9.4,4/4,45.93,10.47,3.46327,37.47,43.75,12.978,-23.061,0.179,7.08,5729951,n/a,,,2026-10-01
 MCRO,Macro Group Pharmaceuticals (Macro Capital) S.A.E,"Perfumes, Cosmetics, and Other Toilet Preparations",67.3,28.4,58.5,84.4,73.6,9.1,4/4,1.57,10.64,6.73538,28.24,12.89,52.355,102.978,0.054,6.8,67312406,n/a,,,2026-10-01
 EXPA,Export Development Bank of Egypt (S.A.E.),Commercial Banks,67.2,70.2,60.7,71.9,66.3,0,4/4,21.03,3.93,1.0359,29.85,46.79,32.853,33.079,0.07,,38912040,n/a,,,2026-10-01
 MHOT,Misr Hotels Company,Hotels and Motels,67.2,45.3,87.3,54.6,42.6,7.4,4/4,17.39,12.63,3.69263,43.24,54.5,7.854,4.409,0.249,4.31,16618493,n/a,,,2026-10-01
@@ -107,7 +107,7 @@ ISMA,Ismailia / Misr Poultry Company S.A.E,,34.9,14.3,67.8,17.6,39.3,0,4/4,25.4,
 INFI,Ismailia National Co. for Food Industries,"Canned, Frozen, And Preserved Fruits, Vegetables, and Food Specialties",34.3,21.0,45.5,17.1,67.4,0.0,4/4,123.74,56.46,9.64197,17.64,11.43,3.284,-50.459,0.061,0.13,11955883,n/a,,,2026-10-01
 SIPC,Sabaa International Company for Pharmaceutical and Chemical Industry,Pharmaceutical Preparations,34.2,6.3,14.3,84.4,46.0,0,4/4,5.13,602.8,12.76727,2.13,4.58,41.431,,0.236,,30987847,n/a,,,2026-10-01
 CERA,The Arab Ceramic Co.,Structural Clay Products,33.6,55.9,19.7,22.5,35.4,0,4/4,1.41,45.94,3.25109,7.28,1.4,20.402,-65.632,2.545,,150156172,n/a,,,2026-10-01
-ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",32.6,42.5,16.1,27.9,53.8,0,4/4,0.239,28.4,2.36315,4.52,6.09,-3.222,4.794,1.137,,55732415,n/a,,,2026-10-01
+ARAB,Arab Developers Holding,"Land Subdividers and Developers, Except Cemeteries",32.7,42.5,16.1,27.9,54.2,0,4/4,0.239,28.4,2.36315,4.52,6.09,-3.222,4.794,1.137,,55732415,n/a,,,2026-10-01
 NCCW,Nasr Company for Civil Works,Heavy Construction Other Than Building Construction Contractors,32.5,28.9,32.8,19.3,60.9,0,4/4,7.2,35.61,5.66659,16.99,18.0,-14.348,-24.775,0.336,,24464815,n/a,,,2026-10-01
 EEII,Arab Engineering Industries,Refrigeration And Service Industry Machinery,32.2,39.2,16.6,6.4,64.0,4.2,4/4,2.12,136.62,3.07063,2.49,2.23,-18.529,-78.542,0.465,1.47,13506658,n/a,,,2026-10-01
 BIOC,GlaxoSmithKline S.A.E,Pharmaceutical Preparations,31.9,12.2,28.7,53.6,40.0,0.2,4/4,350.11,150.58,13.40092,9.15,5.36,2.805,31.112,0.82,0.21,378371930,n/a,,,2026-10-01
