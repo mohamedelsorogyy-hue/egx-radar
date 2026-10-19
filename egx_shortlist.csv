@@ -1,7 +1,7 @@
 ﻿symbol,name,industry,score,scoreValue,scoreQuality,scoreGrowth,scoreSafety,scoreBonus,dataCoverage,price,peRatio,pbRatio,roe,netMargin,revenueGrowth,netIncomeGrowth,debtEquity,dividendYield,dollarVolume,analystRating,priceTarget,upsidePct,lastTradeDate
 EGAL,Egypt Aluminum,Primary Production of Aluminum,81.2,60.1,85.8,70.8,89.9,6.2,4/4,281.9,7.51,3.43096,55.06,29.15,23.051,52.09,0.006,2.84,234682314,Hold,399.0,41.54,2026-10-18
-HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",80.7,52.7,84.0,92.3,52.3,8.7,4/4,6.81,7.97,2.81908,38.64,73.71,342.311,90.025,0.844,6.57,49365949,Strong Buy,10.78,58.3,2026-10-18
-MFPC,Misr Fertilizer Production Company,Agricultural Chemicals,80.0,57.7,80.8,81.8,82.9,5.6,4/4,42.2,7.87,2.68858,35.21,45.61,46.245,43.334,0.003,6.01,55213130,Buy,46.77,10.83,2026-10-18
+HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",80.6,52.4,84.0,92.3,52.3,8.7,4/4,6.81,7.97,2.81908,38.64,73.71,342.311,90.025,0.844,6.57,49365949,Strong Buy,10.78,58.3,2026-10-18
+MFPC,Misr Fertilizer Production Company,Agricultural Chemicals,79.9,57.4,80.8,81.8,82.9,5.6,4/4,42.2,7.87,2.68858,35.21,45.61,46.245,43.334,0.003,6.01,55213130,Buy,46.77,10.83,2026-10-18
 ARCC,Arabian Cement Company S.A.E.,"Cement, Hydraulic",79.9,58.9,91.0,81.0,59.5,5.7,4/4,65.39,5.65,5.11263,102.88,33.38,26.68,96.775,0.268,4.5,25036458,Buy,78.0,19.28,2026-10-18
 MCQE,Misr Cement (Qena) Company (S.A.E),"Cement, Hydraulic",79.6,66.0,86.8,92.2,49.8,3.2,4/4,163,6.02,3.48233,87.84,24.51,42.917,222.126,0.065,0.61,68635225,Hold,213.45,30.95,2026-10-18
 IRON,Egyptian Iron and Steel Company,"Steel Works, Blast Furnaces, And Rolling And Finishing Mills",77.4,32.4,95.5,97.3,98.2,0,4/4,25.1,13.11,,,83.48,112.585,,,,15680874,n/a,,,2026-10-18
@@ -29,7 +29,7 @@ MPRC,Egyptian Media Production City,Motion Picture and Video Tape Production,65.
 SCEM,Sinai Cement Co. (S.A.E),"Cement, Hydraulic",65.4,60.4,87.6,44.0,66.6,0,4/4,85.66,6.76,3.13752,58.37,34.96,26.502,8.196,0.025,,94642650,n/a,,,2026-10-18
 DTPP,Delta Co. For Printing & Packaging S.A.E,Commercial Printing,65.4,46.5,73.9,64.7,45.2,6.3,4/4,244.19,14.06,5.7443,54.22,10.8,12.618,74.32,1.352,3.69,31869237,n/a,,,2026-10-18
 ALCN,Alexandria Container&Cargo Handling Company,Water Transportation,65.0,22.8,97.3,43.0,93.6,4.2,4/4,32.33,13.46,11.88764,,93.34,-8.43,8.956,0.004,5.61,8886644,Hold,28.55,-11.69,2026-10-18
-ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,64.4,81.9,39.3,86.3,42.7,0,4/4,856.2,8.69,1.77571,27.48,3.74,62.637,68.071,0.521,,145732090,n/a,,,2026-10-18
+ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,64.6,82.8,39.3,86.3,42.7,0,4/4,856.2,8.51,1.73462,27.48,3.74,62.637,68.071,0.521,,145732090,n/a,,,2026-10-18
 GIHD,Gharbia Islamic Housing Development Company,"Land Subdividers and Developers, Except Cemeteries",64.2,21.4,73.5,96.7,77.0,0,4/4,48.73,22.66,4.84277,23.93,84.67,247.786,211.409,,,6710072,n/a,,,2026-10-18
 SAUD,alBaraka Bank Egypt S.A.E.,Commercial Banks,63.9,82.0,53.7,47.3,49.1,4.0,4/4,21,4.54,0.94409,26.19,39.25,16.225,7.156,0.412,4.05,22322895,Buy,19.7,-6.19,2026-10-18
 OBRI,El-Ebour Co. for Real Estate Investment S.A.E.,"Land Subdividers and Developers, Except Cemeteries",63.9,64.1,32.8,93.9,75.6,0,4/4,25.4,13.25,2.99788,25.55,4.01,105.951,152.863,0.134,,10270261,n/a,,,2026-10-18
@@ -54,10 +54,10 @@ EFIH,e-finance for Digital and Financial Investments S.A.E.,Computer Processing 
 CANA,Suez Canal Bank (S.A.E),Commercial Banks,57.6,65.4,59.5,51.1,42.7,0.9,4/4,42.1,6.87,1.81764,35.06,40.12,33.738,0.143,0.488,0.48,19210062,n/a,,,2026-10-18
 EGCH,Egyptian Chemical Industries,Agricultural Chemicals,57.4,72.0,31.4,82.1,39.1,0,4/4,11.01,12.19,0.50878,6.15,15.94,30.553,81.807,0.315,,90883212,n/a,,,2026-10-18
 CSAG,Canal Shipping Agencies Company,Water Transportation,56.6,30.1,69.7,63.0,11.5,9.2,4/4,34.79,9.2,6.09391,69.47,684.93,46.248,5.089,,8.33,5918440,n/a,,,2026-10-18
-EHDR,Egyptians for Housing & Development Co.,Real Estate,56.5,43.7,51.0,30.7,84.8,7.7,4/4,2.09,20.89,2.10201,11.37,26.07,11.358,-5.301,0.019,4.79,9176461,n/a,,,2026-10-18
+EHDR,Egyptians for Housing & Development Co.,Real Estate,56.6,43.7,51.0,30.7,85.3,7.7,4/4,2.09,20.89,2.10201,11.37,26.07,11.358,-5.301,0.019,4.79,9176461,n/a,,,2026-10-18
 SWDY,El Sewedy Electric Company,Drawing and Insulating of Nonferrous Wire,55.1,61.9,46.0,54.6,46.5,2.1,4/4,105.55,13.86,2.97021,28.52,5.08,26.627,4.725,1.111,0.95,52491387,Sell,104.0,-1.47,2026-10-18
-GTWL,Golden Textiles & Clothes Wool,Textile Mill Products,54.6,57.9,39.9,61.8,59.9,0.8,4/4,117.85,16.87,1.73791,12.03,11.37,22.972,25.456,0.802,0.42,91891180,n/a,,,2026-10-18
 CCAP,QALA For Financial Investments,"Investors, not elsewhere classified",54.5,70.6,42.6,52.3,49.8,0,4/4,5.93,96.59,0.29291,26.33,0.13,23.944,,0.987,,672860087,n/a,,,2026-10-18
+GTWL,Golden Textiles & Clothes Wool,Textile Mill Products,54.5,57.6,39.9,61.8,59.9,0.8,4/4,117.85,16.87,1.73791,12.03,11.37,22.972,25.456,0.802,0.42,91891180,n/a,,,2026-10-18
 ELSH,Al-Shams Company for Housing and Urban Development,Real Estate,54.2,40.8,60.9,51.4,64.1,1.2,4/4,10.45,14.33,2.02739,15.04,68.54,29.907,3.469,0.118,0.48,9515248,n/a,,,2026-10-18
 MBEG,M.B For Engineering & Contracting,Switchgear and Switchboard Apparatus,53.7,,34.3,92.8,27.2,0,3/4,5.3,27.52,,11.84,4.86,66.221,,0.949,,10037924,n/a,,,2026-10-18
 ASCM,"ASEC Company for Mining ASCOM, S.A.E",Metal Mining,52.7,92.9,45.5,41.4,5.2,0,4/4,46.59,4.24,0.88246,,11.84,19.779,,1.801,,12605018,n/a,,,2026-10-18
@@ -76,12 +76,12 @@ BINV,B Investments Holding S.A.E.,"Investors, not elsewhere classified",48.5,37.
 ELKA,Cairo for Housing and Development Company (S.A.E),Real Estate,48.4,76.0,54.0,4.5,55.1,0,4/4,1.46,2.64,0.43694,18.04,221.15,-13.863,,0.138,,19601370,n/a,,,2026-10-18
 AMER,Amer Group Holding Company S.A.E.,Real Estate,47.9,54.0,32.3,76.8,19.0,0,4/4,4.16,22.15,1.60846,15.59,9.97,16.779,276.011,0.922,,35740931,n/a,,,2026-10-18
 MOIN,Mohandes Insurance Company,Insurance Carriers,47.8,36.9,54.5,29.4,75.3,1.8,4/4,29.17,20.08,3.82972,21.18,22.62,9.542,-7.429,0.006,0.73,8361376,n/a,,,2026-10-18
-ICFC,International Company for Fertilizers and Chemicals S.A.E,Miscellaneous Non-durable Goods,47.4,,45.4,58.0,34.0,0,3/4,21.85,10.54,,24.28,5.62,45.735,3.928,0.137,,12850072,n/a,,,2026-10-18
+ICFC,International Company for Fertilizers and Chemicals S.A.E,Miscellaneous Non-durable Goods,47.4,,45.4,58.0,34.0,0,3/4,20.54,10.54,,24.28,5.62,45.735,3.928,0.137,,12079656,n/a,,,2026-10-18
 GBCO,GB Corp,Motor Vehicles and Passenger Car Bodies,47.2,81.4,21.8,36.9,15.6,4.7,4/4,28.98,12.84,0.89552,6.94,2.64,31.45,-30.489,1.333,1.21,126011532,Buy,38.14,31.61,2026-10-18
 CNFN,Contact Financial Holding S.A.E.,Personal Credit Institutions,45.9,72.5,23.4,19.6,23.2,8.8,4/4,3.89,14.63,0.9915,9.77,5.42,14.845,-50.933,2.058,6.49,6600984,n/a,,,2026-10-18
 EGAS,Egypt Gas Company SAE,Natural Gas Transmission and Distribution,44.7,66.4,8.8,50.8,43.0,3.0,4/4,50.01,21.35,1.44266,7.21,3.34,24.668,4.461,0.225,1.0,5823664,n/a,,,2026-10-18
 TALM,Taaleem Management Services Company S.A.E.,Educational Services,44.0,32.6,54.8,42.8,47.2,0,4/4,20.01,23.89,3.6513,13.84,24.94,32.452,-15.892,0.622,,15845619,n/a,,,2026-10-18
-AALR,"General Company For Land Reclamation, Development & Reconstruction",Heavy Construction Other Than Building Construction Contractors,43.6,8.8,12.8,93.7,91.2,0,4/4,214.91,243.25,,,3.43,69.526,,-0.283,,25914493,n/a,,,2026-10-18
+AALR,"General Company For Land Reclamation, Development & Reconstruction",Heavy Construction Other Than Building Construction Contractors,43.5,8.8,12.8,93.7,90.7,0,4/4,214.91,243.25,,,3.43,69.526,,-0.283,,25914493,n/a,,,2026-10-18
 EMFD,Emaar Misr for Development Company (S.A.E.),"Land Subdividers and Developers, Except Cemeteries",43.4,67.6,39.2,13.4,53.5,0,4/4,11.75,9.63,0.89096,10.53,30.8,-5.962,-38.438,0.052,,32480760,n/a,,,2026-10-18
 SEIG,Saudi Egyptian Investment & Finance Co. S.A.E,"Security and Commodity Brokers, Dealers, Exchanges, and Services",43.2,34.7,56.9,40.6,24.8,1.9,4/4,199.11,23.32,1.81755,10.32,68.36,4.167,5.783,,0.75,6837238,n/a,,,2026-10-18
 UEGC,"El-Saeed Company for Contracting and Real Estate Investment ""SCCD"" (S.A.E.)",Heavy Construction Other Than Building Construction Contractors,43.1,72.0,24.0,27.9,49.0,0,4/4,1.54,25.9,0.81194,3.17,1.94,26.193,-60.694,1.262,,164315382,n/a,,,2026-10-18
