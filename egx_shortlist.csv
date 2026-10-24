@@ -1,7 +1,7 @@
 ﻿symbol,name,industry,score,scoreValue,scoreQuality,scoreGrowth,scoreSafety,scoreBonus,dataCoverage,price,peRatio,pbRatio,roe,netMargin,revenueGrowth,netIncomeGrowth,debtEquity,dividendYield,dollarVolume,analystRating,priceTarget,upsidePct,lastTradeDate
 MCQE,Misr Cement (Qena) Company (S.A.E),,83.3,68.2,86.1,92.1,72.9,3.0,4/4,163.05,6.02,3.4834,87.84,24.51,42.917,222.126,0.065,0.61,51172427,Hold,213.45,30.91,2026-10-22
 HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",80.7,53.6,82.2,92.3,53.1,8.9,4/4,6.75,7.9,2.79425,38.64,73.71,342.311,90.025,0.844,6.63,58476856,Strong Buy,10.78,59.7,2026-10-22
-MFPC,Misr Fertilizer Production Company,,79.7,55.5,78.2,82.4,93.8,4.9,4/4,45.31,8.45,2.88672,35.21,45.61,46.245,43.334,0.003,5.6,53422031,Buy,46.77,3.22,2026-10-22
+MFPC,Misr Fertilizer Production Company,,79.6,55.5,78.2,82.4,93.8,4.8,4/4,45.31,8.45,2.88672,35.21,45.61,46.245,43.334,0.003,5.6,53422031,Buy,46.77,3.22,2026-10-22
 ARCC,Arabian Cement Company S.A.E.,"Cement, Hydraulic",79.5,59.8,90.2,80.6,60.1,5.3,4/4,65.11,5.62,5.09073,102.88,33.38,26.68,96.775,0.268,4.52,12232281,Buy,78.0,19.8,2026-10-22
 EGAL,Egypt Aluminum,,79.1,57.9,84.4,70.9,89.6,5.2,4/4,301.28,8.02,3.66683,55.06,29.15,23.051,52.09,0.006,2.66,188877252,Hold,399.0,32.43,2026-10-22
 IRON,Egyptian Iron and Steel Company,"Steel Works, Blast Furnaces, And Rolling And Finishing Mills",77.3,32.3,96.2,95.2,100.0,0,4/4,25.86,13.51,,,83.48,112.585,,,,6062256,n/a,,,2026-10-22
@@ -29,8 +29,8 @@ EAST,Eastern Company S.A.E,Tobacco Products,65.6,48.5,80.0,46.8,37.1,9.8,4/4,30.
 ALCN,Alexandria Container&Cargo Handling Company,Water Transportation,65.5,23.8,98.1,42.7,93.3,4.3,4/4,32.77,13.65,12.04943,,93.34,-8.43,8.956,0.004,5.54,10426431,Hold,28.55,-12.88,2026-10-22
 GIHD,Gharbia Islamic Housing Development Company,"Land Subdividers and Developers, Except Cemeteries",65.4,25.8,71.9,96.1,80.0,0,4/4,43.53,20.24,4.32599,23.93,84.67,247.786,211.409,,,7995982,n/a,,,2026-10-22
 ABUK,Abu Qir Fertilizers & Chemical Industries Company (S.A.E),Agricultural Chemicals,64.9,36.8,80.2,52.6,77.9,5.0,4/4,92.9,14.19,5.04385,39.34,32.02,20.667,8.725,0.003,6.46,119058689,Buy,88.97,-4.23,2026-10-22
-ETEL,Telecom Egypt Company,"Telephone Communications, Except Radiotelephone",64.1,65.1,69.9,74.9,18.4,2.1,4/4,133.9,9.05,3.10287,43.37,21.89,22.366,94.755,0.989,1.12,597339415,Buy,134.94,0.78,2026-10-22
-ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,64.1,83.9,36.7,86.7,41.7,0,4/4,840,7.36,1.62309,27.48,3.74,62.637,68.071,0.521,,143164560,n/a,,,2026-10-22
+ETEL,Telecom Egypt Company,"Telephone Communications, Except Radiotelephone",64.3,65.1,69.9,74.9,18.4,2.3,4/4,133.9,9.05,3.10287,43.37,21.89,22.366,94.755,0.989,1.12,597339415,Buy,141.54,5.71,2026-10-22
+ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,64.1,83.9,36.7,86.7,41.7,0,4/4,840,7.39,1.62309,27.48,3.74,62.637,68.071,0.521,,143164560,n/a,,,2026-10-22
 POUL,Cairo Poultry Company S.A.E.,Poultry Slaughtering and Processing,64.1,80.5,63.3,23.4,59.6,6.2,4/4,9.66,2.11,2.11006,34.88,13.73,0.556,-15.453,0.037,3.42,62304527,n/a,,,2026-10-22
 ROTO,Rowad Tourism Company,Hotels and Motels,63.5,53.1,30.8,88.6,80.8,4.1,4/4,31.2,15.55,2.02589,16.58,15.83,47.264,,0.14,1.6,14370034,n/a,,,2026-10-22
 SAUD,alBaraka Bank Egypt S.A.E.,Commercial Banks,63.4,83.7,51.6,46.6,48.5,3.9,4/4,20.82,4.51,0.936,26.19,39.25,16.225,7.156,0.412,4.08,14822799,Buy,19.7,-5.38,2026-10-22
