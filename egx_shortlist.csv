@@ -1,6 +1,6 @@
 ﻿symbol,name,industry,score,scoreValue,scoreQuality,scoreGrowth,scoreSafety,scoreBonus,dataCoverage,price,peRatio,pbRatio,roe,netMargin,revenueGrowth,netIncomeGrowth,debtEquity,dividendYield,dollarVolume,analystRating,priceTarget,upsidePct,lastTradeDate
 MCQE,Misr Cement (Qena) Company (S.A.E),,83.8,67.3,86.9,91.8,74.5,3.4,4/4,148,5.46,3.16187,87.84,24.51,42.917,222.126,0.065,0.68,50423600,Hold,213.45,44.22,2026-10-25
-HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",80.9,53.4,82.7,92.1,52.7,9.2,4/4,6.12,7.16,2.53345,38.64,73.71,342.311,90.025,0.844,7.31,116023199,Strong Buy,10.78,76.14,2026-10-25
+HELI,Heliopolis Co. for Housing & Development,"Land Subdividers and Developers, Except Cemeteries",80.8,53.1,82.7,92.1,52.7,9.2,4/4,6.12,7.16,2.53345,38.64,73.71,342.311,90.025,0.844,7.31,116023199,Strong Buy,10.78,76.14,2026-10-25
 ARCC,Arabian Cement Company S.A.E.,"Cement, Hydraulic",78.7,59.6,91.1,79.1,57.3,5.1,4/4,61.99,5.35,4.84679,102.88,33.38,26.68,96.775,0.268,4.74,30584564,Buy,78.0,25.83,2026-10-25
 EGAL,Egypt Aluminum,,78.5,55.9,85.6,69.7,91.2,4.9,4/4,290.1,7.72,3.53076,55.06,29.15,23.051,52.09,0.006,2.76,96795926,Hold,399.0,37.54,2026-10-25
 MBSC,Misr Beni Suef Cement Co. S.A.E,"Cement, Hydraulic",78.1,62.6,94.6,70.2,56.6,4.9,4/4,278.21,4.13,3.0826,121.81,57.48,12.664,171.3,0.029,2.16,43684256,Hold,396.35,42.46,2026-10-25
@@ -30,7 +30,7 @@ GIHD,Gharbia Islamic Housing Development Company,"Land Subdividers and Developer
 SCEM,Sinai Cement Co. (S.A.E),"Cement, Hydraulic",65.4,63.3,87.7,41.8,64.6,0,4/4,76.36,6.03,2.79688,58.37,34.96,26.502,8.196,0.025,,22621115,n/a,,,2026-10-25
 OBRI,El-Ebour Co. for Real Estate Investment S.A.E.,"Land Subdividers and Developers, Except Cemeteries",65.3,70.3,31.7,93.4,75.8,0,4/4,20,10.44,2.36054,25.55,4.01,105.951,152.863,0.134,,11411120,n/a,,,2026-10-25
 ETEL,Telecom Egypt Company,"Telephone Communications, Except Radiotelephone",64.4,64.2,71.2,74.1,19.2,2.3,4/4,124.06,8.38,2.87485,43.37,21.89,22.366,94.755,0.989,1.21,392981760,Buy,141.54,14.09,2026-10-25
-ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,64.0,83.3,37.9,85.7,41.2,0,4/4,815,7.13,1.62309,27.48,3.74,62.637,68.071,0.521,,176271460,n/a,,,2026-10-25
+ORAS,Orascom Construction PLC,Building Construction General Contractors and Operative Builders,64.1,83.6,37.9,85.7,41.2,0,4/4,815,7.13,1.62309,27.48,3.74,62.637,68.071,0.521,,176271460,n/a,,,2026-10-25
 ALCN,Alexandria Container&Cargo Handling Company,Water Transportation,63.7,19.6,97.3,41.7,93.3,4.2,4/4,32,13.33,11.7663,,93.34,-8.43,8.956,0.004,5.67,22707328,Hold,28.55,-10.78,2026-10-25
 ROTO,Rowad Tourism Company,Hotels and Motels,63.6,56.8,31.0,85.7,80.0,3.9,4/4,26.69,13.3,1.73305,16.58,15.83,47.264,,0.14,1.87,10719291,n/a,,,2026-10-25
 ABUK,Abu Qir Fertilizers & Chemical Industries Company (S.A.E),Agricultural Chemicals,63.5,34.4,80.9,51.0,76.0,4.8,4/4,89.52,13.68,4.86033,39.34,32.02,20.667,8.725,0.003,6.7,95443449,Buy,88.97,-0.61,2026-10-25
